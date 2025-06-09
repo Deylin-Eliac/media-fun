@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kirito-Bot-MD</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Iconos de Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
     * {
       margin: 0;
@@ -39,6 +41,16 @@
       color: #ccc;
     }
 
+    .bot-logo {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      object-fit: cover;
+      border: 3px solid #00ffcc;
+      box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+    }
+
     .bot-info {
       background-color: rgba(255, 255, 255, 0.05);
       padding: 2rem;
@@ -67,6 +79,9 @@
     }
 
     .buttons a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       text-decoration: none;
       background-color: #00ffcc;
       color: #0f2027;
@@ -85,11 +100,14 @@
       padding: 1rem;
       color: #888;
       font-size: 0.9rem;
+      text-align: center;
     }
   </style>
 </head>
 <body>
   <header>
+    <!-- Reemplaza la URL de abajo con la imagen real de tu bot -->
+    <img src="https://i.ibb.co/2tP1ZKj/kirito-bot-logo.jpg" alt="Kirito Bot Logo" class="bot-logo">
     <h1>Kirito-Bot-MD</h1>
     <p>Tu asistente avanzado para WhatsApp</p>
   </header>
@@ -99,13 +117,18 @@
     <p>Automatiza tareas, responde comandos, crea stickers, descarga contenido y mucho más, todo desde tu WhatsApp.</p>
 
     <div class="buttons">
-      <a href="https://wa.me/50433191934" target="_blank">Contacta al creador</a>
-      <a href="https://www.paypal.com/donate/?hosted_button_id=XXXXXXX" target="_blank">💖 Donar vía PayPal</a>
+      <a href="https://wa.me/50433191934" target="_blank">
+        <i class="fab fa-whatsapp"></i> Contacta al creador
+      </a>
+      <a href="https://www.paypal.com/donate/?hosted_button_id=XXXXXXX" target="_blank">
+        <i class="fab fa-paypal"></i> Donar vía PayPal
+      </a>
     </div>
   </section>
 
   <footer>
-    &copy; 2025 Kirito-Bot-MD. Todos los derechos reservados.
+    &copy; 2025 Kirito-Bot-MD. Todos los derechos reservados.<br>
+    Sitio creado por <strong>Mode</strong>
   </footer>
 </body>
 </html>
