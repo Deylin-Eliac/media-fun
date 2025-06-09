@@ -34,10 +34,10 @@
     .full-banner {
       width: 100%;
       height: auto;
-      border-radius: 10px;
-      box-shadow: 0 0 15px #00fff0;
       margin: 1rem 0;
       animation: fadeIn 1.2s ease-in-out;
+      border: none;
+      box-shadow: 0 0 10px #00fff0;
     }
 
     ul {
@@ -67,7 +67,6 @@
     details {
       background-color: #1a1a1a;
       border: 1px solid #333;
-      border-radius: 10px;
       padding: 1rem;
       margin: 1rem 0;
     }
@@ -82,15 +81,16 @@
     pre {
       background: #141414;
       padding: 1rem;
-      border-radius: 8px;
       overflow-x: auto;
       font-size: 0.9rem;
       margin-top: 0.5rem;
     }
 
     img.contributor, img.author {
-      border-radius: 50%;
       margin: 0.5rem;
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
       transition: transform 0.3s ease;
       box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
     }
@@ -139,7 +139,7 @@
 
   <div class="center">
     <a href="https://www.mediafire.com/file/3hsvi3xkpq3a64o/termux_118.a">
-      <img src="https://qu.ax/finc.jpg" height="125px" alt="Descargar Termux">
+      <img src="https://qu.ax/finc.jpg" height="125px" alt="Descargar Termux" style="border: none;">
     </a>
   </div>
 
@@ -203,14 +203,14 @@ pm2 logs
   <h2>👤 Autor</h2>
   <div class="center">
     <a href="https://github.com/deylin-eliac">
-      <img src="https://github.com/deylin-eliac.png" width="130" height="130" class="author" alt="Deylin">
+      <img src="https://github.com/deylin-eliac.png" class="author" alt="Deylin">
     </a>
   </div>
 
   <h2>🎖 Agradecimientos</h2>
   <div class="center">
     <a href="https://github.com/The-King-Destroy">
-      <img src="https://github.com/The-King-Destroy.png" width="130" height="130" class="author" alt="Destroy">
+      <img src="https://github.com/The-King-Destroy.png" class="author" alt="Destroy">
     </a>
   </div>
 
