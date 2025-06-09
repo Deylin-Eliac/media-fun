@@ -1,124 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kirito-Bot-MD</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<h1 align="center">✰ Kirito Bot MD ✰</h1>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
 
----
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
 
-<p align="center">
-  <img src="https://files.catbox.moe/hnif5j.jpg" alt="Kirito Bot MD Logo">
-</p>
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      color: #00ffcc;
+    }
 
----
+    header p {
+      font-size: 1.2rem;
+      color: #ccc;
+    }
 
-# *Acerca de Kirito Bot MD*
+    .bot-info {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      text-align: center;
+    }
 
-> Un bot de WhatsApp potente y versátil, inspirado en el universo de Sword Art Online. Desarrollado para ofrecer una experiencia ágil, segura y funcional.
+    .bot-info h2 {
+      color: #00ffcc;
+      margin-bottom: 1rem;
+    }
 
-*   *Desarrollador:* Deylin Eliac
-*   *Plataforma:* WhatsApp
-*   *Inspiración:* Sword Art Online
-*   *Características Clave:* Agilidad, Funcionalidad, Seguridad
+    .bot-info p {
+      font-size: 1rem;
+      color: #ddd;
+      margin-bottom: 1.5rem;
+    }
 
----
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
 
-## *Licencia*
+    .buttons a {
+      text-decoration: none;
+      background-color: #00ffcc;
+      color: #0f2027;
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
 
-Este proyecto se distribuye bajo la [Licencia Pública General GNU Affero v3](./LICENSE).
+    .buttons a:hover {
+      background-color: #00ccb3;
+    }
 
----
+    footer {
+      margin-top: auto;
+      padding: 1rem;
+      color: #888;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Kirito-Bot-MD</h1>
+    <p>Tu asistente avanzado para WhatsApp</p>
+  </header>
 
-<a
-href="https://www.mediafire.com/file/3hsvi3xkpq3a64o/termux_118.a"><img src="https://qu.ax/finc.jpg" height="125px"></a>
+  <section class="bot-info">
+    <h2>🤖 ¿Qué puede hacer Kirito-Bot?</h2>
+    <p>Automatiza tareas, responde comandos, crea stickers, descarga contenido y mucho más, todo desde tu WhatsApp.</p>
 
-# *Instalación en Termux*
+    <div class="buttons">
+      <a href="https://wa.me/51999999999" target="_blank">Probar Bot</a>
+      <a href="https://www.paypal.com/donate/?hosted_button_id=XXXXXXX" target="_blank">💖 Donar vía PayPal</a>
+    </div>
+  </section>
 
-<details>
-  <summary><b>*Guía de Instalación Paso a Paso*</b></summary>
-
-  1.  `termux-setup-storage`
-  2.  `pkg update -y && pkg upgrade -y`
-  3.  `pkg install git nodejs ffmpeg imagemagick yarn -y`
-  4.  `git clone https://github.com/Deylin-Eliac/Kirito-Bot-MD`
-  5.  `cd Kirito-Bot-MD`
-  6.  `yarn install`
-  7.  `yarn start`
-
-  *Nota:* Los errores en rojo durante el escaneo del código QR son normales.
-
-  *Reiniciar el bot:*
-
-  ```bash
-  cd Kirito-Bot-MD
-  yarn start
-  ```
-
-  *Escanear un nuevo código QR:*
-
-  ```bash
-  cd Kirito-Bot-MD
-  rm -rf kiritoSession
-  yarn start
-  ```
-
-  *Mantener el bot activo en segundo plano:*
-
-  ```bash
-  npm i -g pm2
-  pm2 start index.js
-  pm2 save
-  pm2 logs
-  ```
-</details>
-
----
-
-# *Comunidad*
-
-*   *Canal Oficial de WhatsApp:* [Únete aquí 👑](https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m)
-
----
-
-
-
-# *Estadísticas del Proyecto*
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Deylin-Eliac&repo=Kirito-Bot-MD&show_icons=true&theme=radical&hide_border=true" alt="GitHub Stats">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=Deylin-Eliac&theme=radical&hide_border=true" alt="GitHub Streak">
-</p>
-
-<p align="center">
-  <a href="https://github.com/Deylin-Eliac">
-    <img src="https://img.shields.io/badge/GitHub-Deylin-181717?style=for-the-badge&logo=github">
-  </a>
-  <a href="https://wa.me/50433191934">
-    <img src="https://img.shields.io/badge/WhatsApp-Contactar-25D366?style=for-the-badge&logo=whatsapp">
-  </a>
-  <a href="mailto:deylibaquedano801@gmail.com">
-    <img src="https://img.shields.io/badge/Email-Enviar%20correo-EA4335?style=for-the-badge&logo=gmail">
-  </a>
-</p>
-
----
-
-### 🌟 DESARROLLADORES
-<a href="https://github.com/deylin-eliac/kirito-bot-MD/graphs/contributors">
-<img src="https://contrib.rocks/image?repo=deylin-eliac/kirito-bot-MD" /> 
-</a>
-
----
-
-# *Autor y desarrollador*
-
-
-<a href="https://github.com/deylin-eliac">
-  <img src="https://github.com/deylin-eliac.png" width="130" height="130" alt="Deylin-eliac"/>
-</a>
-
-
----
-
-# *Agradecimientos*
-
-<a href="https://github.com/The-King-Destroy">
-  <img src="https://github.com/The-King-Destroy.png" width="130" height="130" alt="Destroy"/>
-</a>
+  <footer>
+    &copy; 2025 Kirito-Bot-MD. Todos los derechos reservados.
+  </footer>
+</body>
+</html>
