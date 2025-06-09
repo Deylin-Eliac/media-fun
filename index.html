@@ -2,47 +2,51 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kirito Bot MD</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #0f0f0f;
-      color: #ffffff;
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 0 1rem;
+      padding: 0;
     }
 
-    h1, h2, h3 {
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0d0d0d;
+      color: #ffffff;
+      padding: 1rem;
+    }
+
+    h1, h2 {
       text-align: center;
-      color: #00ffd5;
-      text-shadow: 0 0 10px #00ffd5;
+      color: #00fff0;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 10px #00fff0;
       animation: fadeInDown 1s ease;
     }
 
     p, li {
-      font-size: 1rem;
       line-height: 1.6;
-      animation: fadeIn 1.2s ease;
+      margin-bottom: 1rem;
     }
 
-    .center {
-      text-align: center;
-      margin: 2rem 0;
+    .full-banner {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00fff0;
+      margin: 1rem 0;
+      animation: fadeIn 1.2s ease-in-out;
     }
 
-    .logo {
-      max-width: 250px;
-      border-radius: 20px;
-      box-shadow: 0 0 15px #00ffd5;
-      transition: transform 0.3s ease;
-    }
-
-    .logo:hover {
-      transform: scale(1.05);
+    ul {
+      padding-left: 1.2rem;
+      margin-bottom: 1.5rem;
     }
 
     a {
-      color: #00ffd5;
+      color: #00fff0;
       text-decoration: none;
       transition: color 0.3s ease;
     }
@@ -51,17 +55,47 @@
       color: #ffffff;
     }
 
-    .badge {
+    .center {
+      text-align: center;
+      margin: 1.5rem 0;
+    }
+
+    .badges a img {
+      margin: 0.4rem;
+    }
+
+    details {
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    details summary {
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    pre {
+      background: #141414;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    img.contributor, img.author {
+      border-radius: 50%;
       margin: 0.5rem;
+      transition: transform 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
     }
 
-    .contrib img, .autor img {
-      border-radius: 15px;
-      transition: transform 0.4s ease;
-      box-shadow: 0 4px 20px rgba(0, 255, 213, 0.4);
-    }
-
-    .contrib img:hover, .autor img:hover {
+    img.contributor:hover, img.author:hover {
       transform: scale(1.05);
     }
 
@@ -75,24 +109,13 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    details {
-      background-color: #1b1b1b;
-      border: 1px solid #333;
-      border-radius: 10px;
-      padding: 1rem;
-      margin: 1rem 0;
-    }
-
-    details summary {
-      font-weight: bold;
-      font-size: 1.1rem;
-      cursor: pointer;
-    }
-
-    hr {
-      border: none;
-      border-top: 1px solid #333;
-      margin: 2rem 0;
+    @media (max-width: 768px) {
+      h1, h2 {
+        font-size: 1.4rem;
+      }
+      pre {
+        font-size: 0.8rem;
+      }
     }
   </style>
 </head>
@@ -100,26 +123,19 @@
 
   <h1>✰ Kirito Bot MD ✰</h1>
 
-  <div class="center">
-    <img src="https://files.catbox.moe/hnif5j.jpg" alt="Kirito Bot MD Logo" class="logo">
-  </div>
+  <img src="https://files.catbox.moe/hnif5j.jpg" alt="Kirito Bot MD Logo" class="full-banner">
 
-  <hr>
-
-  <h2>🔍 Acerca de Kirito Bot MD</h2>
-  <p class="center"><em>Un bot de WhatsApp potente y versátil, inspirado en el universo de Sword Art Online. Desarrollado para ofrecer una experiencia ágil, segura y funcional.</em></p>
-
+  <h2>🔍 Acerca del Proyecto</h2>
+  <p><em>Un bot de WhatsApp potente y versátil, inspirado en el universo de Sword Art Online.</em></p>
   <ul>
     <li><strong>Desarrollador:</strong> Deylin Eliac</li>
     <li><strong>Plataforma:</strong> WhatsApp</li>
     <li><strong>Inspiración:</strong> Sword Art Online</li>
-    <li><strong>Características Clave:</strong> Agilidad, Funcionalidad, Seguridad</li>
+    <li><strong>Características:</strong> Agilidad, Seguridad, Funcionalidad</li>
   </ul>
 
-  <hr>
-
   <h2>📜 Licencia</h2>
-  <p>Este proyecto se distribuye bajo la <a href="./LICENSE">Licencia Pública General GNU Affero v3</a>.</p>
+  <p>Distribuido bajo <a href="./LICENSE">Licencia GNU Affero v3</a>.</p>
 
   <div class="center">
     <a href="https://www.mediafire.com/file/3hsvi3xkpq3a64o/termux_118.a">
@@ -129,26 +145,26 @@
 
   <h2>📦 Instalación en Termux</h2>
   <details>
-    <summary>Guía de Instalación Paso a Paso</summary>
+    <summary>Guía paso a paso</summary>
     <pre>
-1.  termux-setup-storage
-2.  pkg update -y && pkg upgrade -y
-3.  pkg install git nodejs ffmpeg imagemagick yarn -y
-4.  git clone https://github.com/Deylin-Eliac/Kirito-Bot-MD
-5.  cd Kirito-Bot-MD
-6.  yarn install
-7.  yarn start
+1. termux-setup-storage
+2. pkg update -y && pkg upgrade -y
+3. pkg install git nodejs ffmpeg imagemagick yarn -y
+4. git clone https://github.com/Deylin-Eliac/Kirito-Bot-MD
+5. cd Kirito-Bot-MD
+6. yarn install
+7. yarn start
 
-🔁 Reiniciar el bot:
+🔁 Reiniciar:
 cd Kirito-Bot-MD
 yarn start
 
-📷 Escanear un nuevo código QR:
+📷 Nuevo QR:
 cd Kirito-Bot-MD
 rm -rf kiritoSession
 yarn start
 
-📡 Mantener el bot activo en segundo plano:
+📡 Segundo plano:
 npm i -g pm2
 pm2 start index.js
 pm2 save
@@ -156,57 +172,45 @@ pm2 logs
     </pre>
   </details>
 
-  <hr>
-
   <h2>💬 Comunidad</h2>
-  <ul>
-    <li><strong>Canal Oficial de WhatsApp:</strong> <a href="https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m">Únete aquí 👑</a></li>
-  </ul>
+  <p><strong>WhatsApp Oficial:</strong> <a href="https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m">Unirse al canal 👑</a></p>
 
-  <hr>
-
-  <h2>📊 Estadísticas del Proyecto</h2>
+  <h2>📊 Estadísticas</h2>
   <div class="center">
-    <img src="https://github-readme-stats.vercel.app/api?username=Deylin-Eliac&repo=Kirito-Bot-MD&show_icons=true&theme=radical&hide_border=true">
-    <img src="https://github-readme-streak-stats.herokuapp.com/?user=Deylin-Eliac&theme=radical&hide_border=true">
+    <img src="https://github-readme-stats.vercel.app/api?username=Deylin-Eliac&repo=Kirito-Bot-MD&show_icons=true&theme=radical&hide_border=true" width="90%">
+    <img src="https://github-readme-streak-stats.herokuapp.com/?user=Deylin-Eliac&theme=radical&hide_border=true" width="90%">
   </div>
 
-  <div class="center">
-    <a href="https://github.com/Deylin-Eliac" class="badge">
+  <div class="center badges">
+    <a href="https://github.com/Deylin-Eliac">
       <img src="https://img.shields.io/badge/GitHub-Deylin-181717?style=for-the-badge&logo=github">
     </a>
-    <a href="https://wa.me/50433191934" class="badge">
+    <a href="https://wa.me/50433191934">
       <img src="https://img.shields.io/badge/WhatsApp-Contactar-25D366?style=for-the-badge&logo=whatsapp">
     </a>
-    <a href="mailto:deylibaquedano801@gmail.com" class="badge">
+    <a href="mailto:deylibaquedano801@gmail.com">
       <img src="https://img.shields.io/badge/Email-Enviar%20correo-EA4335?style=for-the-badge&logo=gmail">
     </a>
   </div>
 
-  <hr>
-
   <h2>🌟 Desarrolladores</h2>
-  <div class="center contrib">
+  <div class="center">
     <a href="https://github.com/deylin-eliac/kirito-bot-MD/graphs/contributors">
-      <img src="https://contrib.rocks/image?repo=deylin-eliac/kirito-bot-MD" />
+      <img src="https://contrib.rocks/image?repo=deylin-eliac/kirito-bot-MD" class="contributor" width="100%">
     </a>
   </div>
 
-  <hr>
-
-  <h2>👤 Autor y desarrollador</h2>
-  <div class="center autor">
+  <h2>👤 Autor</h2>
+  <div class="center">
     <a href="https://github.com/deylin-eliac">
-      <img src="https://github.com/deylin-eliac.png" width="130" height="130" alt="Deylin-eliac" />
+      <img src="https://github.com/deylin-eliac.png" width="130" height="130" class="author" alt="Deylin">
     </a>
   </div>
-
-  <hr>
 
   <h2>🎖 Agradecimientos</h2>
-  <div class="center autor">
+  <div class="center">
     <a href="https://github.com/The-King-Destroy">
-      <img src="https://github.com/The-King-Destroy.png" width="130" height="130" alt="Destroy" />
+      <img src="https://github.com/The-King-Destroy.png" width="130" height="130" class="author" alt="Destroy">
     </a>
   </div>
 
