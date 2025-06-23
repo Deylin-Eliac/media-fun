@@ -2,129 +2,109 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kirito-Bot-MD</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding: 2rem;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-      color: #00ffcc;
-    }
-
-    header p {
-      font-size: 1.2rem;
-      color: #ccc;
-    }
-
-    .bot-logo {
-  width: 300px; 
-  height: 300px;
-  margin-bottom: 1rem;
-  object-fit: cover;
-  border: 3px solid #00ffcc;
-  box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
-}
-
-    .bot-info {
-      background-color: rgba(255, 255, 255, 0.05);
-      padding: 2rem;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      max-width: 600px;
-      text-align: center;
-    }
-
-    .bot-info h2 {
-      color: #00ffcc;
-      margin-bottom: 1rem;
-    }
-
-    .bot-info p {
-      font-size: 1rem;
-      color: #ddd;
-      margin-bottom: 1.5rem;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .buttons a {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      background-color: #00ffcc;
-      color: #0f2027;
-      padding: 0.8rem 1.5rem;
-      border-radius: 30px;
-      font-weight: bold;
-      transition: 0.3s ease;
-    }
-
-    .buttons a:hover {
-      background-color: #00ccb3;
-    }
-
-    footer {
-      margin-top: auto;
-      padding: 1rem;
-      color: #888;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APIs desarrolladas por Deylin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <header>
-    
-    <img src="https://kirito-bot-md.vercel.app/kirito-bot-MD.jpg" alt="Kirito Bot Logo" class="bot-logo">
-    <h1>Kirito-Bot-MD</h1>
-    <p>Tu asistente avanzado para WhatsApp</p>
-    <section class="bot-info">
-            <i class="fas fa-robot"></i><h2> ¿Qué puede hacer Kirito-Bot?</h2>
-    <p>Automatiza tareas, responde comandos, crea stickers, descarga contenido y mucho más, todo desde tu WhatsApp.</p>
-    <div class="buttons">
-      <a href="https://wa.me/50433191934" target="_blank">
-        <i class="fab fa-whatsapp"></i> Contacta al creador
-      </a>
-      <a href="https://paypal.me/DeylinB?country.x=HN&locale.x=es_XC" target="_blank">
-        <i class="fab fa-paypal"></i> Donar vía PayPal
-      </a>
-    </div>
-  </section>
+<body class="bg-gray-900 text-white font-sans">
 
-  <footer>
-    &copy; 2025 Kirito-Bot-MD. Todos los derechos reservados.<br>
-    Sitio creado por <strong>Mode</strong>
-  </footer>
+  <div class="max-w-4xl mx-auto py-12 px-6">
+    <h1 class="text-4xl font-bold text-center text-cyan-400 mb-6">
+      🌐 APIs desarrolladas por Deylin
+    </h1>
+
+    <!-- API CARD TEMPLATE -->
+    <div class="space-y-6">
+
+      <!-- API 1 -->
+      <div class="bg-gray-800 p-5 rounded-2xl shadow-lg">
+        <div class="flex items-center mb-2">
+          <svg class="w-6 h-6 text-pink-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v16h16V4H4z"/></svg>
+          <h2 class="text-xl font-semibold">Pinterest</h2>
+        </div>
+        <p class="text-sm text-gray-300 mb-4">Buscador de imágenes en Pinterest.</p>
+        <a href="https://anime-xi-wheat.vercel.app/api/pinterest?q=anime" target="_blank" class="bg-pink-500 hover:bg-pink-600 text-white py-2 px-4 rounded-md transition">Probar API</a>
+      </div>
+
+      <!-- API 2 -->
+      <div class="bg-gray-800 p-5 rounded-2xl shadow-lg">
+        <div class="flex items-center mb-2">
+          <svg class="w-6 h-6 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+          <h2 class="text-xl font-semibold">Generador de Imágenes IA</h2>
+        </div>
+        <p class="text-sm text-gray-300 mb-4">Genera imágenes con inteligencia artificial.</p>
+        <a href="https://anime-xi-wheat.vercel.app/api/ia-img?prompt=dragon" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition">Probar API</a>
+      </div>
+
+      <!-- API 3 -->
+      <div class="bg-gray-800 p-5 rounded-2xl shadow-lg">
+        <div class="flex items-center mb-2">
+          <svg class="w-6 h-6 text-purple-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+          <h2 class="text-xl font-semibold">Gemini IA</h2>
+        </div>
+        <p class="text-sm text-gray-300 mb-4">Responde preguntas, analiza imágenes y genera contenido visual.</p>
+        <a href="https://g-mini-ia.vercel.app/api/gemini" target="_blank" class="bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded-md transition">Probar API</a>
+      </div>
+
+      <!-- API 4 -->
+      <div class="bg-gray-800 p-5 rounded-2xl shadow-lg">
+        <div class="flex items-center mb-2">
+          <svg class="w-6 h-6 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 10h18M3 6h18M3 14h18M3 18h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+          <h2 class="text-xl font-semibold">Mode-IA</h2>
+        </div>
+        <p class="text-sm text-gray-300 mb-4">IA para responder preguntas en formato texto.</p>
+        <a href="https://mode-ia.onrender.com/mode-ia?prompt=¿Qué+es+HTML?" target="_blank" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md transition">Probar API</a>
+      </div>
+
+      <!-- API 5 -->
+      <div class="bg-gray-800 p-5 rounded-2xl shadow-lg">
+        <div class="flex items-center mb-2">
+          <svg class="w-6 h-6 text-red-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16v-6z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+          <h2 class="text-xl font-semibold">Buscador YouTube</h2>
+        </div>
+        <p class="text-sm text-gray-300 mb-4">Busca contenido en YouTube.</p>
+        <a href="https://ytumode-api.vercel.app/api/search?q=musica" target="_blank" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md transition">Probar API</a>
+      </div>
+
+      <!-- Clausuradas -->
+      <div class="bg-gray-800 p-5 rounded-2xl shadow-lg border border-red-400">
+        <div class="flex items-center mb-2">
+          <svg class="w-6 h-6 text-yellow-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+          <h2 class="text-xl font-semibold text-yellow-400">APIs Clausuradas</h2>
+        </div>
+        <ul class="text-sm text-gray-300 list-disc list-inside space-y-1">
+          <li><a class="text-blue-400 underline" href="https://mode-api-sigma.vercel.app/api/mp3?url=">Descarga MP3 desde YouTube</a> ⚠️ Clausurado.</li>
+          <li><a class="text-blue-400 underline" href="https://mode-api-sigma.vercel.app/api/index?url=">Descarga MP4 desde YouTube</a> ⚠️ Clausurado.</li>
+        </ul>
+      </div>
+
+      <!-- API 8 -->
+      <div class="bg-gray-800 p-5 rounded-2xl shadow-lg">
+        <div class="flex items-center mb-2">
+          <svg class="w-6 h-6 text-yellow-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9.75 9.75h.008v.008H9.75V9.75zM14.25 9.75h.008v.008h-.008V9.75zM9.75 14.25h.008v.008H9.75v-.008zM14.25 14.25h.008v.008h-.008v-.008z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+          <h2 class="text-xl font-semibold">Memes Aleatorios</h2>
+        </div>
+        <p class="text-sm text-gray-300 mb-4">Obtén un meme aleatorio.</p>
+        <a href="https://g-mini-ia.vercel.app/api/meme" target="_blank" class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-md transition">Probar API</a>
+      </div>
+
+      <!-- API 9 -->
+      <div class="bg-gray-800 p-5 rounded-2xl shadow-lg">
+        <div class="flex items-center mb-2">
+          <svg class="w-6 h-6 text-teal-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 10h.01M12 10h.01M16 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+          <h2 class="text-xl font-semibold">Info de Número Telefónico</h2>
+        </div>
+        <p class="text-sm text-gray-300 mb-4">Obtén país y bandera desde un número telefónico.</p>
+        <a href="https://g-mini-ia.vercel.app/api/infonumero?numero=50498765432" target="_blank" class="bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded-md transition">Probar API</a>
+      </div>
+
+    </div>
+
+    <!-- Advertencia -->
+    <div class="mt-10 text-sm text-red-400 bg-red-900 border border-red-500 p-4 rounded-xl">
+      🔒 Nota: Usa estas APIs con precaución. Evita hacer múltiples solicitudes en un corto período de tiempo para prevenir bloqueos o fallos del servicio.
+    </div>
+  </div>
+
 </body>
 </html>
