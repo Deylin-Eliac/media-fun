@@ -1,122 +1,185 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kirito Landing ⚡</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🔥 Landing Brutal 🔥</title>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" rel="stylesheet" />
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
       font-family: 'Orbitron', sans-serif;
-      background: radial-gradient(ellipse at center, #000 0%, #111 100%);
-      color: white;
-      scroll-snap-type: y mandatory;
+      height: 100%;
       overflow-x: hidden;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
     }
-    section {
-      scroll-snap-align: start;
-    }
-    .glow-button {
-      background: linear-gradient(90deg, #ff00cc, #3333ff);
-      padding: 1rem 2rem;
-      border-radius: 9999px;
-      font-weight: bold;
-      color: white;
+    header {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: url('https://images.unsplash.com/photo-1605902711622-cfb43c4437d4?fit=crop&w=1500&q=80') no-repeat center center/cover;
       position: relative;
-      z-index: 1;
-      overflow: hidden;
+      text-align: center;
     }
-    .glow-button::before {
+    header::before {
       content: "";
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: conic-gradient(from 0deg, #ff00cc, #3333ff, #ff00cc);
-      animation: spin 4s linear infinite;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
       z-index: 0;
-      opacity: 0.3;
     }
-    .glow-button span {
+    header h1 {
+      font-size: 4rem;
+      z-index: 1;
+      text-shadow: 0 0 20px #00f7ff;
+      animation: glitch 2s infinite;
+    }
+    header p {
+      font-size: 1.3rem;
+      z-index: 1;
+      margin: 20px 0;
+    }
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(-2px, -2px); }
+      60% { transform: translate(2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
+    }
+    .btn {
+      display: inline-block;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(45deg, #ff00cc, #3333ff);
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
       position: relative;
       z-index: 1;
+      box-shadow: 0 0 20px #00f7ff, 0 0 40px #00f7ff inset;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px #00f7ff, 0 0 60px #00f7ff inset;
     }
-    .tilt:hover {
-      transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
-      transition: all 0.3s ease-in-out;
+    section {
+      padding: 100px 20px;
+      text-align: center;
     }
-    .card-glow {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 1rem;
-      padding: 2rem;
-      transition: all 0.3s;
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-top: 50px;
     }
-    .card-glow:hover {
-      border-color: #00f0ff;
-      box-shadow: 0 0 15px #00f0ff88;
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 30px;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.4s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .card i {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: #00f7ff;
+    }
+    .divider {
+      width: 100%;
+      height: 100px;
+      background: url('https://www.svgrepo.com/show/273878/wave.svg') no-repeat center center;
+      background-size: cover;
+    }
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      background: #111;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2.5rem;
+      }
+      .btn {
+        font-size: 1rem;
+        padding: 12px 25px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Hero -->
-  <section class="h-screen flex flex-col items-center justify-center text-center relative px-6">
-    <h1 class="text-4xl md:text-6xl font-bold text-white animate-pulse drop-shadow-lg">
-      ⚔️ Bienvenido al Universo Kirito-Bot
-    </h1>
-    <p class="mt-4 text-lg text-gray-300 max-w-xl mx-auto">
-      Automatiza, domina y diviértete con el mejor bot para WhatsApp. Totalmente personalizable, brutalmente poderoso.
-    </p>
-    <a href="https://github.com/Deylin-Eliac/Kirito-Bot-MD" target="_blank" class="mt-8 glow-button inline-block text-xl">
-      <span>🚀 Ir al Repositorio</span>
-    </a>
-  </section>
+  <header>
+    <h1 data-aos="zoom-in">🚀 ¡Bienvenido a la Experiencia!</h1>
+    <p data-aos="fade-up" data-aos-delay="400">Una landing que hará temblar el Internet</p>
+    <a href="#explora" class="btn" data-aos="fade-up" data-aos-delay="700">Explorar</a>
+  </header>
 
-  <!-- Features -->
-  <section class="min-h-screen bg-gradient-to-b from-black to-gray-900 py-20 px-6">
-    <h2 class="text-4xl text-center mb-12 text-cyan-400 font-bold">🔥 ¿Qué lo hace único?</h2>
-    <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-      <div class="card-glow tilt">
-        <i class="uil uil-whatsapp text-4xl text-green-400 mb-4"></i>
-        <h3 class="text-xl font-bold mb-2">Conexión Directa</h3>
-        <p>Se enlaza a tu WhatsApp sin complicaciones. Código QR o emparejamiento, tú eliges.</p>
+  <div class="divider"></div>
+
+  <section id="explora">
+    <h2 data-aos="fade-up">🌟 Características Épicas</h2>
+    <div class="features">
+      <div class="card" data-aos="fade-up" data-aos-delay="100">
+        <i class="uil uil-bolt-alt"></i>
+        <h3>Velocidad Impactante</h3>
+        <p>Optimizada para cargas instantáneas con animaciones suaves.</p>
       </div>
-      <div class="card-glow tilt">
-        <i class="uil uil-robot text-4xl text-purple-400 mb-4"></i>
-        <h3 class="text-xl font-bold mb-2">Respuestas Inteligentes</h3>
-        <p>Contesta con IA, comandos automáticos y funciones avanzadas estilo anime/gamer.</p>
+      <div class="card" data-aos="fade-up" data-aos-delay="300">
+        <i class="uil uil-mobile-android"></i>
+        <h3>100% Responsive</h3>
+        <p>Diseñada para verse brutal desde cualquier dispositivo.</p>
       </div>
-      <div class="card-glow tilt">
-        <i class="uil uil-brain text-4xl text-pink-400 mb-4"></i>
-        <h3 class="text-xl font-bold mb-2">Sistema Modular</h3>
-        <p>Agrega o quita funciones en segundos. Organizado por plugins fáciles de entender.</p>
+      <div class="card" data-aos="fade-up" data-aos-delay="500">
+        <i class="uil uil-rocket"></i>
+        <h3>Estilo Sci-Fi</h3>
+        <p>Tipografías y efectos visuales inspirados en el futuro.</p>
+      </div>
+      <div class="card" data-aos="fade-up" data-aos-delay="700">
+        <i class="uil uil-star"></i>
+        <h3>Diseño Glorioso</h3>
+        <p>Estética increíble con gradientes, glassmorphism y más.</p>
       </div>
     </div>
   </section>
 
-  <!-- Call to Action -->
-  <section class="h-screen bg-black text-center flex flex-col items-center justify-center px-6">
-    <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 animate-bounce">
-      💥 ¡Es momento de dominar WhatsApp!
-    </h2>
-    <a href="https://whatsapp.com/channel/0029VbB46nl2ER6dZac6Nd1o" target="_blank" class="glow-button text-xl">
-      <span>🔔 Únete al Canal Oficial</span>
-    </a>
+  <div class="divider"></div>
+
+  <section>
+    <h2 data-aos="fade-down">🔥 ¿Estás Listo?</h2>
+    <p data-aos="zoom-in">Esta página no solo impresiona, ¡impacta!</p>
+    <a href="#" class="btn" data-aos="flip-left" data-aos-delay="300">ÚNETE AHORA</a>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-400 text-sm py-6 text-center">
-    Kirito-Bot MD ⚔️ — Código abierto por <a href="https://github.com/Deylin-Eliac" target="_blank" class="text-cyan-400 hover:underline">Deylin B. O.</a> — 2025
+  <footer>
+    &copy; 2025 Kirito Design. Hecho con 💜 y café.
   </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1200,
+      once: true
+    });
+  </script>
 
 </body>
 </html>
