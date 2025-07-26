@@ -2,131 +2,154 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="kirito-Bot MD - Developed by Deylin" />
-  <title>kirito-Bot MD - Landing Page</title>
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <!-- TailwindCSS CDN -->
+  <meta name="description" content="kirito-Bot MD - Desarrollado por Deylin" />
+  <title>kirito-Bot MD - Landing Épica</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <!-- TailwindCSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Unicons -->
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   <style>
-    /* Custom Variables */
     :root {
       --primary: #00e5ff;
       --accent: #39ff14;
-      --bg-dark: #080a0f;
-      --text-light: #f5f5f5;
-    }
-    /* Animated gradient background */
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      --dark-bg: #0a0d14;
+      --light-text: #e0e6ed;
     }
     body {
+      margin: 0; padding: 0;
       font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #04051a, #0d0f1f, #04051a);
-      background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite;
-      color: var(--text-light);
+      background: var(--dark-bg);
+      color: var(--light-text);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
     }
-    .btn-tech {
-      @apply px-6 py-3 rounded-2xl font-semibold tracking-wide relative overflow-hidden;
-      background: var(--primary);
-      color: var(--bg-dark);
-      box-shadow: 0 4px 15px rgba(0, 229, 255, 0.4);
+    /* Hero Glitch Text */
+    .glitch {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      position: relative;
+      color: var(--primary);
+      animation: glitchAnim 2s infinite;
+    }
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0; top: 0;
+      opacity: 0.8;
+    }
+    .glitch::before { animation: glitchSlice 1.5s infinite; clip-path: inset(0 0 50% 0); color: #39ff14; }
+    .glitch::after { animation: glitchSlice 1.8s infinite; clip-path: inset(50% 0 0 0); color: #ff0266; }
+    @keyframes glitchAnim {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px,2px); }
+      40% { transform: translate(-2px,-2px); }
+      60% { transform: translate(2px,2px); }
+      80% { transform: translate(2px,-2px); }
+      100% { transform: translate(0); }
+    }
+    @keyframes glitchSlice {
+      0% { transform: translate(0); }
+      20% { transform: translate(-5px,5px); }
+      40% { transform: translate(-5px,-5px); }
+      60% { transform: translate(5px,5px); }
+      80% { transform: translate(5px,-5px); }
+      100% { transform: translate(0); }
+    }
+    /* Scroll Snap Sections */
+    main { scroll-snap-type: y mandatory; height: 100vh; overflow-y: scroll; }
+    section { scroll-snap-align: start; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    /* CTA Button */
+    .btn-cta {
+      @apply px-8 py-4 rounded-full font-bold text-lg;
+      background: linear-gradient(45deg, var(--accent), var(--primary));
+      color: var(--dark-bg);
+      box-shadow: 0 0 20px rgba(57,255,20,0.6);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .btn-cta:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(57,255,20,0.8); }
+    /* Feature Cards Horizontal Scroll */
+    .features-scroll { display: flex; overflow-x: auto; gap: 1rem; padding: 2rem; }
+    .features-scroll::-webkit-scrollbar { height: 6px; }
+    .features-scroll::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+    .feat-card {
+      flex: 0 0 80%;
+      background: rgba(15,18,30,0.8);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 0 15px rgba(0,229,255,0.3);
       transition: transform 0.3s;
     }
-    .btn-tech:hover {
-      transform: translateY(-3px);
-    }
-    .btn-tech::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: var(--accent);
-      mix-blend-mode: screen;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .btn-tech:hover::after {
-      opacity: 0.2;
-    }
-    /* Section separators */
-    .section {
-      padding: 4rem 1rem;
-    }
+    .feat-card:hover { transform: translateY(-8px); }
+    /* Wave Divider */
+    .wave { position: relative; width: 100%; height: 100px; }
+    .wave svg { position: absolute; width: 100%; height: 100%; }
   </style>
 </head>
 <body>
-  <header class="text-center section">
-    <h1 class="text-4xl md:text-6xl font-bold mb-4">kirito-Bot MD</h1>
-    <p class="text-lg md:text-2xl text-gray-300">Advanced WhatsApp Assistant<br>Developed by Deylin</p>
-  </header>
-  <main class="max-w-md mx-auto">
-    <section class="section space-y-6">
-      <a href="https://whatsapp.com/channel/0029VbB46nl2ER6dZac6Nd1o" target="_blank" class="btn-tech block text-center">Join our WhatsApp Channel</a>
-      <a href="https://github.com/Deylin-Eliac/Kirito-Bot-MD/stargazers" target="_blank" class="btn-tech block text-center">⭐ Star on GitHub</a>
-      <a href="https://wa.me/50433191934" target="_blank" class="btn-tech block text-center">Contact Support</a>
-    </section>
-    <section class="section text-center">
-      <h2 class="text-2xl font-semibold mb-2">Features</h2>
-      <ul class="list-disc list-inside space-y-2 text-gray-300">
-        <li>Automated QR & Pairing Code Connection</li>
-        <li>Multi-image Albums & Sticker Packs</li>
-        <li>Dynamic Welcome & Farewell Messages</li>
-        <li>Advanced Download & Search APIs</li>
-      </ul>
-    </section>
-  </main>
-  <footer class="text-center py-6 text-sm text-gray-500">
-    &copy; 2025 Deylin B. O. | Powered by Baileys & LowDB
-  </footer>
-  <!-- Floating animation dots -->
-  <canvas id="background-canvas" class="fixed inset-0 -z-10"></canvas>
-  <script>
-    // Simple particle animation
-    const canvas = document.getElementById('background-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.3;
-        this.vy = (Math.random() - 0.5) * 0.3;
-        this.size = Math.random() * 2 + 1;
-        this.alpha = Math.random() * 0.5 + 0.2;
-      }
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-      }
-      draw() {
-        ctx.fillStyle = `rgba(0, 229, 255, ${this.alpha})`;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-    function initParticles() {
-      particles = [];
-      for (let i = 0; i < 100; i++) particles.push(new Particle());
-    }
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => { p.update(); p.draw(); });
-      requestAnimationFrame(animate);
-    }
-    initParticles();
-    animate();
-  </script>
-</body>
+  <main>
+    <!-- Hero Section -->
+    <section class="bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=800&q=80');">
+      <div class="text-center p-6 bg-black bg-opacity-50 rounded-xl" data-aos="zoom-in">
+        <h1 class="glitch" data-text="kirito-Bot MD">kirito-Bot MD</h1>
+        <p class="mt-4 text-xl">Revoluciona tu WhatsApp con inteligencia y rapidez</p>
+        <a href="#cta" class="btn-cta mt-6 inline-block" data-aos="fade-up" data-aos-delay="200">
+          <i class="uil uil-rocket mr-2"></i> ¡Descúbrelo Ahora!
+        </a>
+      </div>
+    </section><!-- Wave -->
+<div class="wave"><svg viewBox="0 0 120 28"><path fill="#0a0d14" d="M0 0v28h120V0c-19.6 13.5-43.9 13.5-62 0S19.6 0 0 0z"/></svg></div>
+
+<!-- Features Scroll -->
+<section class="bg-gradient-to-b from-black to-gray-900 flex-col" id="features">
+  <h2 class="text-3xl font-semibold mb-4 text-center" data-aos="fade-right">Características Épicas</h2>
+  <div class="features-scroll" data-aos="fade-left" data-aos-duration="1200">
+    <div class="feat-card">
+      <i class="uil uil-qrcode" style="font-size:2rem;color:#00e5ff;"></i>
+      <h3 class="text-2xl font-bold mt-2">Conexión Instantánea</h3>
+      <p>Empareja tu bot con QR o código en segundos.</p>
+    </div>
+    <div class="feat-card">
+      <i class="uil uil-image" style="font-size:2rem;color:#00e5ff;"></i>
+      <h3 class="text-2xl font-bold mt-2">Envía Álbumes</h3>
+      <p>Comparte múltiples imágenes y stickers sin esfuerzo.</p>
+    </div>
+    <div class="feat-card">
+      <i class="uil uil-comment-add" style="font-size:2rem;color:#00e5ff;"></i>
+      <h3 class="text-2xl font-bold mt-2">Mensajes Dinámicos</h3>
+      <p>Bienvenida y despedida con metadatos enriquecidos.</p>
+    </div>
+    <div class="feat-card">
+      <i class="uil uil-cloud-download-alt" style="font-size:2rem;color:#00e5ff;"></i>
+      <h3 class="text-2xl font-bold mt-2">Descargas Rápidas</h3>
+      <p>APIs para YouTube, Instagram y más.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action -->
+<section class="text-center bg-black py-20" id="cta">
+  <h2 class="text-4xl font-bold mb-6" data-aos="fade-up">Únete a la Revolución Kirito</h2>
+  <div class="flex justify-center gap-6" data-aos="fade-up" data-aos-delay="200">
+    <a href="https://whatsapp.com/channel/0029VbB46nl2ER6dZac6Nd1o" target="_blank" class="btn-cta">
+      <i class="uil uil-whatsapp text-xl mr-2"></i> Canal WhatsApp
+    </a>
+    <a href="https://github.com/Deylin-Eliac/Kirito-Bot-MD/stargazers" target="_blank" class="btn-cta">
+      <i class="uil uil-star text-xl mr-2"></i> Star en GitHub
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<section class="text-center py-6 text-gray-500 text-sm">
+  &copy; 2025 Deylin B. O. | Hecho con ❤️ y Baileys & LowDB
+</section>
+
+  </main>  <!-- AOS -->  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>  <script>
+    AOS.init({ duration: 1000, once: true });
+  </script></body>
 </html>
