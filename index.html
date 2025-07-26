@@ -3,98 +3,120 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kirito Bot MD - Landing Épica</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <link href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
+  <title>Kirito Landing ⚡</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
     body {
-      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      scroll-snap-type: y mandatory;
-      scroll-behavior: smooth;
+      margin: 0;
       font-family: 'Orbitron', sans-serif;
-    }
-    @keyframes gradientBG {
-      0% { background-position: 0% 50% }
-      50% { background-position: 100% 50% }
-      100% { background-position: 0% 50% }
-    }
-    .glitch {
-      position: relative;
+      background: radial-gradient(ellipse at center, #000 0%, #111 100%);
       color: white;
-      font-size: 3rem;
-      text-transform: uppercase;
-      animation: glitch 1s infinite;
+      scroll-snap-type: y mandatory;
+      overflow-x: hidden;
     }
-    @keyframes glitch {
-      0% { text-shadow: 2px 0 red, -2px 0 blue; }
-      25% { text-shadow: -2px 0 red, 2px 0 blue; }
-      50% { text-shadow: 2px 0 red, -2px 0 blue; }
-      75% { text-shadow: -2px 0 red, 2px 0 blue; }
-      100% { text-shadow: 2px 0 red, -2px 0 blue; }
+    section {
+      scroll-snap-align: start;
+    }
+    .glow-button {
+      background: linear-gradient(90deg, #ff00cc, #3333ff);
+      padding: 1rem 2rem;
+      border-radius: 9999px;
+      font-weight: bold;
+      color: white;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .glow-button::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, #ff00cc, #3333ff, #ff00cc);
+      animation: spin 4s linear infinite;
+      z-index: 0;
+      opacity: 0.3;
+    }
+    .glow-button span {
+      position: relative;
+      z-index: 1;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .tilt:hover {
+      transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+      transition: all 0.3s ease-in-out;
+    }
+    .card-glow {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      padding: 2rem;
+      transition: all 0.3s;
+    }
+    .card-glow:hover {
+      border-color: #00f0ff;
+      box-shadow: 0 0 15px #00f0ff88;
     }
   </style>
 </head>
-<body class="text-white">
+<body>
 
-  <!-- HERO -->
-  <section class="h-screen flex flex-col justify-center items-center text-center px-6" data-aos="fade-up">
-    <h1 class="glitch mb-4">Kirito Bot MD</h1>
-    <p class="text-lg max-w-md mb-6">Conquista WhatsApp con el bot más poderoso, personalizable y lleno de funciones que te dejarán sin palabras.</p>
-    <a href="https://github.com/Deylin-Eliac/Kirito-Bot-MD" class="bg-purple-600 hover:bg-purple-800 text-white py-3 px-6 rounded-full text-lg transition-all duration-300 shadow-xl">
-      🚀 Descargar Ahora
+  <!-- Hero -->
+  <section class="h-screen flex flex-col items-center justify-center text-center relative px-6">
+    <h1 class="text-4xl md:text-6xl font-bold text-white animate-pulse drop-shadow-lg">
+      ⚔️ Bienvenido al Universo Kirito-Bot
+    </h1>
+    <p class="mt-4 text-lg text-gray-300 max-w-xl mx-auto">
+      Automatiza, domina y diviértete con el mejor bot para WhatsApp. Totalmente personalizable, brutalmente poderoso.
+    </p>
+    <a href="https://github.com/Deylin-Eliac/Kirito-Bot-MD" target="_blank" class="mt-8 glow-button inline-block text-xl">
+      <span>🚀 Ir al Repositorio</span>
     </a>
   </section>
 
-  <!-- WAVE DIVIDER -->
-  <svg class="w-full" viewBox="0 0 1440 320"><path fill="#1a1a2e" fill-opacity="1" d="M0,224L60,218.7C120,213,240,203,360,181.3C480,160,600,128,720,117.3C840,107,960,117,1080,133.3C1200,149,1320,171,1380,181.3L1440,192L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>
-
-  <!-- FEATURES -->
-  <section class="h-screen bg-[#1a1a2e] flex items-center px-6" data-aos="fade-up">
-    <div class="w-full">
-      <h2 class="text-3xl font-bold text-center mb-8">🔥 Características Brutales</h2>
-      <div class="overflow-x-auto flex space-x-4 snap-x snap-mandatory px-2">
-        <div class="min-w-[250px] bg-[#0f3460] p-6 rounded-xl shadow-xl snap-start" data-aos="zoom-in">
-          <i class="uil uil-whatsapp text-4xl mb-4 text-green-400"></i>
-          <h3 class="text-xl mb-2">Conexión Directa</h3>
-          <p>Emparejamiento instantáneo por QR o código sin depender de APIs pagas.</p>
-        </div>
-        <div class="min-w-[250px] bg-[#0f3460] p-6 rounded-xl shadow-xl snap-start" data-aos="zoom-in" data-aos-delay="100">
-          <i class="uil uil-bolt text-4xl mb-4 text-yellow-300"></i>
-          <h3 class="text-xl mb-2">Ultra Rápido</h3>
-          <p>Procesamiento veloz, incluso en dispositivos con pocos recursos.</p>
-        </div>
-        <div class="min-w-[250px] bg-[#0f3460] p-6 rounded-xl shadow-xl snap-start" data-aos="zoom-in" data-aos-delay="200">
-          <i class="uil uil-smile text-4xl mb-4 text-pink-400"></i>
-          <h3 class="text-xl mb-2">Comandos Divertidos</h3>
-          <p>Más de 150 comandos para stickers, memes, audios, IA y más.</p>
-        </div>
+  <!-- Features -->
+  <section class="min-h-screen bg-gradient-to-b from-black to-gray-900 py-20 px-6">
+    <h2 class="text-4xl text-center mb-12 text-cyan-400 font-bold">🔥 ¿Qué lo hace único?</h2>
+    <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+      <div class="card-glow tilt">
+        <i class="uil uil-whatsapp text-4xl text-green-400 mb-4"></i>
+        <h3 class="text-xl font-bold mb-2">Conexión Directa</h3>
+        <p>Se enlaza a tu WhatsApp sin complicaciones. Código QR o emparejamiento, tú eliges.</p>
+      </div>
+      <div class="card-glow tilt">
+        <i class="uil uil-robot text-4xl text-purple-400 mb-4"></i>
+        <h3 class="text-xl font-bold mb-2">Respuestas Inteligentes</h3>
+        <p>Contesta con IA, comandos automáticos y funciones avanzadas estilo anime/gamer.</p>
+      </div>
+      <div class="card-glow tilt">
+        <i class="uil uil-brain text-4xl text-pink-400 mb-4"></i>
+        <h3 class="text-xl font-bold mb-2">Sistema Modular</h3>
+        <p>Agrega o quita funciones en segundos. Organizado por plugins fáciles de entender.</p>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="h-screen flex flex-col justify-center items-center text-center bg-[#16213e] px-6" data-aos="zoom-in">
-    <h2 class="text-3xl font-bold mb-4">¿Estás listo para probar el futuro?</h2>
-    <p class="mb-6 text-lg max-w-md">No esperes más. Únete a nuestra comunidad y potencia tu experiencia en WhatsApp con Kirito-Bot-MD.</p>
-    <div class="flex gap-4">
-      <a href="https://whatsapp.com/channel/0029VbB46nl2ER6dZac6Nd1o" class="bg-green-500 hover:bg-green-600 px-5 py-3 rounded-full font-semibold text-black shadow-md transition-all">
-        📣 Canal Oficial
-      </a>
-      <a href="https://github.com/Deylin-Eliac/Kirito-Bot-MD" class="bg-white hover:bg-gray-200 px-5 py-3 rounded-full font-semibold text-black shadow-md transition-all">
-        💻 GitHub
-      </a>
-    </div>
+  <!-- Call to Action -->
+  <section class="h-screen bg-black text-center flex flex-col items-center justify-center px-6">
+    <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 animate-bounce">
+      💥 ¡Es momento de dominar WhatsApp!
+    </h2>
+    <a href="https://whatsapp.com/channel/0029VbB46nl2ER6dZac6Nd1o" target="_blank" class="glow-button text-xl">
+      <span>🔔 Únete al Canal Oficial</span>
+    </a>
   </section>
 
-  <footer class="bg-black text-center py-4 text-gray-400 text-sm">
-    © 2025 Kirito-Bot-MD | Creado por Deylin
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 text-sm py-6 text-center">
+    Kirito-Bot MD ⚔️ — Código abierto por <a href="https://github.com/Deylin-Eliac" target="_blank" class="text-cyan-400 hover:underline">Deylin B. O.</a> — 2025
   </footer>
 
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script>AOS.init();</script>
 </body>
 </html>
