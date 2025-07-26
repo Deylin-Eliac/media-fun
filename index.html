@@ -1,185 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🔥 Landing Brutal 🔥</title>
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
-  <link href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kirito Bot MD - Landing Épica</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    html, body {
+    body {
+      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
       font-family: 'Orbitron', sans-serif;
-      height: 100%;
-      overflow-x: hidden;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #fff;
     }
-    header {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: url('https://images.unsplash.com/photo-1605902711622-cfb43c4437d4?fit=crop&w=1500&q=80') no-repeat center center/cover;
+    @keyframes gradientBG {
+      0% { background-position: 0% 50% }
+      50% { background-position: 100% 50% }
+      100% { background-position: 0% 50% }
+    }
+    .glitch {
       position: relative;
-      text-align: center;
-    }
-    header::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.65);
-      z-index: 0;
-    }
-    header h1 {
-      font-size: 4rem;
-      z-index: 1;
-      text-shadow: 0 0 20px #00f7ff;
-      animation: glitch 2s infinite;
-    }
-    header p {
-      font-size: 1.3rem;
-      z-index: 1;
-      margin: 20px 0;
+      color: white;
+      font-size: 3rem;
+      text-transform: uppercase;
+      animation: glitch 1s infinite;
     }
     @keyframes glitch {
-      0% { transform: translate(0); }
-      20% { transform: translate(-2px, 2px); }
-      40% { transform: translate(-2px, -2px); }
-      60% { transform: translate(2px, 2px); }
-      80% { transform: translate(2px, -2px); }
-      100% { transform: translate(0); }
-    }
-    .btn {
-      display: inline-block;
-      padding: 15px 40px;
-      border: none;
-      border-radius: 10px;
-      background: linear-gradient(45deg, #ff00cc, #3333ff);
-      color: white;
-      font-size: 1.2rem;
-      cursor: pointer;
-      position: relative;
-      z-index: 1;
-      box-shadow: 0 0 20px #00f7ff, 0 0 40px #00f7ff inset;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 30px #00f7ff, 0 0 60px #00f7ff inset;
-    }
-    section {
-      padding: 100px 20px;
-      text-align: center;
-    }
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 40px;
-      margin-top: 50px;
-    }
-    .card {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      padding: 30px;
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: transform 0.4s;
-    }
-    .card:hover {
-      transform: scale(1.05);
-    }
-    .card i {
-      font-size: 3rem;
-      margin-bottom: 15px;
-      color: #00f7ff;
-    }
-    .divider {
-      width: 100%;
-      height: 100px;
-      background: url('https://www.svgrepo.com/show/273878/wave.svg') no-repeat center center;
-      background-size: cover;
-    }
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      background: #111;
-      font-size: 0.9rem;
-      color: #aaa;
-    }
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2.5rem;
-      }
-      .btn {
-        font-size: 1rem;
-        padding: 12px 25px;
-      }
+      0% { text-shadow: 2px 0 red, -2px 0 blue; }
+      25% { text-shadow: -2px 0 red, 2px 0 blue; }
+      50% { text-shadow: 2px 0 red, -2px 0 blue; }
+      75% { text-shadow: -2px 0 red, 2px 0 blue; }
+      100% { text-shadow: 2px 0 red, -2px 0 blue; }
     }
   </style>
 </head>
-<body>
+<body class="text-white">
 
-  <header>
-    <h1 data-aos="zoom-in">🚀 ¡Bienvenido a la Experiencia!</h1>
-    <p data-aos="fade-up" data-aos-delay="400">Una landing que hará temblar el Internet</p>
-    <a href="#explora" class="btn" data-aos="fade-up" data-aos-delay="700">Explorar</a>
-  </header>
+  <!-- HERO -->
+  <section class="h-screen flex flex-col justify-center items-center text-center px-6" data-aos="fade-up">
+    <h1 class="glitch mb-4">Kirito Bot MD</h1>
+    <p class="text-lg max-w-md mb-6">Conquista WhatsApp con el bot más poderoso, personalizable y lleno de funciones que te dejarán sin palabras.</p>
+    <a href="https://github.com/Deylin-Eliac/Kirito-Bot-MD" class="bg-purple-600 hover:bg-purple-800 text-white py-3 px-6 rounded-full text-lg transition-all duration-300 shadow-xl">
+      🚀 Descargar Ahora
+    </a>
+  </section>
 
-  <div class="divider"></div>
+  <!-- WAVE DIVIDER -->
+  <svg class="w-full" viewBox="0 0 1440 320"><path fill="#1a1a2e" fill-opacity="1" d="M0,224L60,218.7C120,213,240,203,360,181.3C480,160,600,128,720,117.3C840,107,960,117,1080,133.3C1200,149,1320,171,1380,181.3L1440,192L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>
 
-  <section id="explora">
-    <h2 data-aos="fade-up">🌟 Características Épicas</h2>
-    <div class="features">
-      <div class="card" data-aos="fade-up" data-aos-delay="100">
-        <i class="uil uil-bolt-alt"></i>
-        <h3>Velocidad Impactante</h3>
-        <p>Optimizada para cargas instantáneas con animaciones suaves.</p>
-      </div>
-      <div class="card" data-aos="fade-up" data-aos-delay="300">
-        <i class="uil uil-mobile-android"></i>
-        <h3>100% Responsive</h3>
-        <p>Diseñada para verse brutal desde cualquier dispositivo.</p>
-      </div>
-      <div class="card" data-aos="fade-up" data-aos-delay="500">
-        <i class="uil uil-rocket"></i>
-        <h3>Estilo Sci-Fi</h3>
-        <p>Tipografías y efectos visuales inspirados en el futuro.</p>
-      </div>
-      <div class="card" data-aos="fade-up" data-aos-delay="700">
-        <i class="uil uil-star"></i>
-        <h3>Diseño Glorioso</h3>
-        <p>Estética increíble con gradientes, glassmorphism y más.</p>
+  <!-- FEATURES -->
+  <section class="h-screen bg-[#1a1a2e] flex items-center px-6" data-aos="fade-up">
+    <div class="w-full">
+      <h2 class="text-3xl font-bold text-center mb-8">🔥 Características Brutales</h2>
+      <div class="overflow-x-auto flex space-x-4 snap-x snap-mandatory px-2">
+        <div class="min-w-[250px] bg-[#0f3460] p-6 rounded-xl shadow-xl snap-start" data-aos="zoom-in">
+          <i class="uil uil-whatsapp text-4xl mb-4 text-green-400"></i>
+          <h3 class="text-xl mb-2">Conexión Directa</h3>
+          <p>Emparejamiento instantáneo por QR o código sin depender de APIs pagas.</p>
+        </div>
+        <div class="min-w-[250px] bg-[#0f3460] p-6 rounded-xl shadow-xl snap-start" data-aos="zoom-in" data-aos-delay="100">
+          <i class="uil uil-bolt text-4xl mb-4 text-yellow-300"></i>
+          <h3 class="text-xl mb-2">Ultra Rápido</h3>
+          <p>Procesamiento veloz, incluso en dispositivos con pocos recursos.</p>
+        </div>
+        <div class="min-w-[250px] bg-[#0f3460] p-6 rounded-xl shadow-xl snap-start" data-aos="zoom-in" data-aos-delay="200">
+          <i class="uil uil-smile text-4xl mb-4 text-pink-400"></i>
+          <h3 class="text-xl mb-2">Comandos Divertidos</h3>
+          <p>Más de 150 comandos para stickers, memes, audios, IA y más.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <section>
-    <h2 data-aos="fade-down">🔥 ¿Estás Listo?</h2>
-    <p data-aos="zoom-in">Esta página no solo impresiona, ¡impacta!</p>
-    <a href="#" class="btn" data-aos="flip-left" data-aos-delay="300">ÚNETE AHORA</a>
+  <!-- CTA -->
+  <section class="h-screen flex flex-col justify-center items-center text-center bg-[#16213e] px-6" data-aos="zoom-in">
+    <h2 class="text-3xl font-bold mb-4">¿Estás listo para probar el futuro?</h2>
+    <p class="mb-6 text-lg max-w-md">No esperes más. Únete a nuestra comunidad y potencia tu experiencia en WhatsApp con Kirito-Bot-MD.</p>
+    <div class="flex gap-4">
+      <a href="https://whatsapp.com/channel/0029VbB46nl2ER6dZac6Nd1o" class="bg-green-500 hover:bg-green-600 px-5 py-3 rounded-full font-semibold text-black shadow-md transition-all">
+        📣 Canal Oficial
+      </a>
+      <a href="https://github.com/Deylin-Eliac/Kirito-Bot-MD" class="bg-white hover:bg-gray-200 px-5 py-3 rounded-full font-semibold text-black shadow-md transition-all">
+        💻 GitHub
+      </a>
+    </div>
   </section>
 
-  <footer>
-    &copy; 2025 Kirito Design. Hecho con 💜 y café.
+  <footer class="bg-black text-center py-4 text-gray-400 text-sm">
+    © 2025 Kirito-Bot-MD | Creado por Deylin
   </footer>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({
-      duration: 1200,
-      once: true
-    });
-  </script>
-
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>AOS.init();</script>
 </body>
 </html>
