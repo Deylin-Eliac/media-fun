@@ -2,111 +2,185 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kirito Bot MD - Landing Épica</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <link href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌌 Landing Brutal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
-    body {
-      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      scroll-snap-type: y mandatory;
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
       scroll-behavior: smooth;
-      font-family: 'Orbitron', sans-serif;
     }
-    @keyframes gradientBG {
-      0% { background-position: 0% 50% }
-      50% { background-position: 100% 50% }
-      100% { background-position: 0% 50% }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: radial-gradient(circle at top, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      overflow-x: hidden;
     }
-    .glitch {
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+      background-size: cover;
       position: relative;
-      color: white;
-      font-size: 3rem;
-      text-transform: uppercase;
-      animation: glitch 1s infinite;
     }
+
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.5rem;
+      color: #0ff;
+      text-shadow: 0 0 20px #0ff;
+      animation: glitch 2s infinite;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #ccc;
+      max-width: 600px;
+      margin-top: 1rem;
+    }
+
     @keyframes glitch {
-      0% { text-shadow: 2px 0 red, -2px 0 blue; }
-      25% { text-shadow: -2px 0 red, 2px 0 blue; }
-      50% { text-shadow: 2px 0 red, -2px 0 blue; }
-      75% { text-shadow: -2px 0 red, 2px 0 blue; }
-      100% { text-shadow: 2px 0 red, -2px 0 blue; }
+      0% {text-shadow: 2px 2px red, -2px -2px blue;}
+      25% {text-shadow: -2px 2px lime, 2px -2px cyan;}
+      50% {text-shadow: 2px -2px yellow, -2px 2px magenta;}
+      100% {text-shadow: 2px 2px red, -2px -2px blue;}
+    }
+
+    .cta-button {
+      background: linear-gradient(45deg, #00ffe7, #008cff);
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      margin-top: 2rem;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 20px #00ffe7;
+    }
+
+    .cta-button::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: skewX(-45deg);
+      transition: left 0.5s;
+    }
+
+    .cta-button:hover::after {
+      left: 100%;
+    }
+
+    .down-arrow {
+      position: absolute;
+      bottom: 20px;
+      font-size: 2rem;
+      color: #0ff;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {transform: translateY(0);}
+      50% {transform: translateY(15px);}
+    }
+
+    .section {
+      padding: 80px 20px;
+      background-color: #1a1a2e;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #00ffe7;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      margin-top: 2rem;
+    }
+
+    .feature {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #00ffe7;
+      padding: 20px;
+      border-radius: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .feature:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 20px #00ffe7;
+    }
+
+    .feature i {
+      font-size: 3rem;
+      color: #00ffe7;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      background-color: #0f0c29;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #aaa;
     }
   </style>
 </head>
-<body class="text-white">
+<body>
 
-  <!-- HERO -->
-  <section class="h-screen flex flex-col justify-center items-center text-center px-6 relative" data-aos="fade-up">
-    <h1 class="glitch mb-4">Kirito Bot MD</h1>
-    <p class="text-lg max-w-md mb-4">Conquista WhatsApp con el bot más poderoso, personalizable y lleno de funciones que te dejarán sin palabras.</p>
-    
-    <p class="text-sm bg-black/50 px-4 py-2 rounded-lg text-gray-300 mb-4">
-      🔒 El repositorio del bot es <strong>privado</strong>. Solicita acceso directo desde soporte.
-    </p>
-    
-    <a href="https://wa.me/+50433191934" class="bg-purple-600 hover:bg-purple-800 text-white py-3 px-6 rounded-full text-lg transition-all duration-300 shadow-xl mb-3">
-      ✨️ Contacta soporte
-    </a>
-
-    <a href="https://chat.whatsapp.com/JDaKdzroBmy0LckhShfCWn" class="bg-green-600 hover:bg-green-700 text-white py-2 px-6 rounded-full text-sm transition-all duration-300 shadow-md">
-      ✅ Únete al grupo oficial
-    </a>
-
-    <!-- Flecha animada hacia abajo -->
-    <div class="absolute bottom-6 animate-bounce text-white text-4xl">⬇️</div>
+  <section class="hero" id="inicio">
+    <h1>⚡ Kirito-Bot</h1>
+    <p>El bot de WhatsApp más poderoso, futurista y avanzado que hayas visto. Tecnología de otro nivel, estilo de otro mundo.</p>
+    <a href="#features"><button class="cta-button">Explorar Ahora</button></a>
+    <a href="#features" class="down-arrow"><i class="uil uil-arrow-down"></i></a>
   </section>
 
-  <!-- WAVE DIVIDER -->
-  <svg class="w-full" viewBox="0 0 1440 320"><path fill="#1a1a2e" fill-opacity="1" d="M0,224L60,218.7C120,213,240,203,360,181.3C480,160,600,128,720,117.3C840,107,960,117,1080,133.3C1200,149,1320,171,1380,181.3L1440,192L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>
-
-  <!-- FEATURES -->
-  <section class="h-screen bg-[#1a1a2e] flex items-center px-6" data-aos="fade-up">
-    <div class="w-full">
-      <h2 class="text-3xl font-bold text-center mb-8">🔥 Características Brutales</h2>
-      <div class="overflow-x-auto flex space-x-4 snap-x snap-mandatory px-2">
-        <div class="min-w-[250px] bg-[#0f3460] p-6 rounded-xl shadow-xl snap-start" data-aos="zoom-in">
-          <i class="uil uil-whatsapp text-4xl mb-4 text-green-400"></i>
-          <h3 class="text-xl mb-2">Conexión Directa</h3>
-          <p>Emparejamiento instantáneo por QR o código sin depender de APIs pagas.</p>
-        </div>
-        <div class="min-w-[250px] bg-[#0f3460] p-6 rounded-xl shadow-xl snap-start" data-aos="zoom-in" data-aos-delay="100">
-          <i class="uil uil-bolt text-4xl mb-4 text-yellow-300"></i>
-          <h3 class="text-xl mb-2">Ultra Rápido</h3>
-          <p>Procesamiento veloz, incluso en dispositivos con pocos recursos.</p>
-        </div>
-        <div class="min-w-[250px] bg-[#0f3460] p-6 rounded-xl shadow-xl snap-start" data-aos="zoom-in" data-aos-delay="200">
-          <i class="uil uil-smile text-4xl mb-4 text-pink-400"></i>
-          <h3 class="text-xl mb-2">Comandos Divertidos</h3>
-          <p>Más de 150 comandos para stickers, memes, audios, IA y más.</p>
-        </div>
+  <section class="section" id="features">
+    <h2>🚀 Funcionalidades Brutales</h2>
+    <div class="features">
+      <div class="feature">
+        <i class="uil uil-robot"></i>
+        <h3>Respuestas Inteligentes</h3>
+        <p>Interactúa con usuarios como un asistente real, usando IA avanzada y aprendizaje automático.</p>
+      </div>
+      <div class="feature">
+        <i class="uil uil-cloud-download"></i>
+        <h3>Descargas Multimedia</h3>
+        <p>Descarga música, videos y stickers desde cualquier plataforma como TikTok, YouTube o Instagram.</p>
+      </div>
+      <div class="feature">
+        <i class="uil uil-users-alt"></i>
+        <h3>Gestión de Grupos</h3>
+        <p>Detecta enlaces, envía bienvenidas, administra grupos y bloquea spam de forma automática.</p>
+      </div>
+      <div class="feature">
+        <i class="uil uil-brain"></i>
+        <h3>Conexión con APIs</h3>
+        <p>Integra APIs personalizadas para obtener datos, imágenes, clima, juegos, IA y mucho más.</p>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="h-screen flex flex-col justify-center items-center text-center bg-[#16213e] px-6" data-aos="zoom-in">
-    <h2 class="text-3xl font-bold mb-4">¿Estás listo para probar el futuro?</h2>
-    <p class="mb-6 text-lg max-w-md">No esperes más. Únete a nuestra comunidad y potencia tu experiencia en WhatsApp con Kirito-Bot-MD.</p>
-    <div class="flex gap-4">
-      <a href="https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m" class="bg-green-500 hover:bg-green-600 px-5 py-3 rounded-full font-semibold text-black shadow-md transition-all">
-        📣 Canal Oficial
-      </a>
-      <a href="https://github.com/Deylin-Eliac/" class="bg-white hover:bg-gray-200 px-5 py-3 rounded-full font-semibold text-black shadow-md transition-all">
-        💻 GitHub del desarrollador 
-      </a>
-    </div>
-  </section>
-
-  <footer class="bg-black text-center py-4 text-gray-400 text-sm">
-    © 2025 Kirito-Bot-MD | Creado por Deylin
+  <footer>
+    🌐 Sitio desarrollado por <strong>Mode Dev</strong> · Síguenos para más explosiones visuales 💥
   </footer>
 
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script>AOS.init();</script>
 </body>
 </html>
