@@ -1,147 +1,120 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cargando - KiritoBot</title>
+  <title>⚙️ Pantalla de Carga Kirito</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    }
+    }body {
+  background: linear-gradient(135deg, #0f0f3e, #1a1a4f);
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  overflow: hidden;
+}
 
-    body, html {
-      width: 100%;
-      height: 100%;
-      background: black;
-      overflow: hidden;
-      font-family: 'Orbitron', sans-serif;
-    }
+.loader-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
 
-    #loader {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(ellipse at center, #001a33 0%, #000000 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      z-index: 9999;
-    }
+.progress-bar {
+  width: 300px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 40px;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
 
-    .letter {
-      font-size: 4rem;
-      color: #00ccff;
-      text-shadow: 0 0 10px #00ccff, 0 0 20px #00ccff, 0 0 40px #0077cc;
-      opacity: 0;
-      transform: translateY(100px) scale(0.5) rotateX(90deg);
-      animation: assemble 1s forwards;
-    }
+.progress {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00f0ff, #008cff);
+  border-radius: 10px;
+  animation: loadProgress 6s forwards;
+}
 
-    @keyframes assemble {
-      0% {
-        opacity: 0;
-        transform: translateY(100px) scale(0.5) rotateX(90deg);
-        filter: blur(10px);
-      }
-      60% {
-        opacity: 1;
-        transform: translateY(-20px) scale(1.1) rotateX(10deg);
-        filter: blur(2px);
-      }
-      100% {
-        transform: translateY(0) scale(1) rotateX(0);
-        filter: blur(0);
-      }
-    }
+@keyframes loadProgress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
 
-    .starfield {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      pointer-events: none;
-    }
+.text {
+  font-size: 2rem;
+  letter-spacing: 2px;
+  position: relative;
+  display: inline-block;
+}
 
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
+.letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(50px) scale(0.8);
+  animation: rise 0.8s forwards;
+}
+
+.letter:nth-child(1) { animation-delay: 6s; }
+.letter:nth-child(2) { animation-delay: 6.2s; }
+.letter:nth-child(3) { animation-delay: 6.4s; }
+.letter:nth-child(4) { animation-delay: 6.6s; }
+.letter:nth-child(5) { animation-delay: 6.8s; }
+.letter:nth-child(6) { animation-delay: 7s; }
+
+@keyframes rise {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.8) rotate(-30deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px) scale(1) rotate(0deg);
+    color: #00ffff;
+    text-shadow: 0 0 10px #00f0ff, 0 0 20px #008cff;
+  }
+}
+
+.impact {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0,255,255,0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: explosion 1s ease-out 5.8s forwards;
+  z-index: -1;
+}
+
+@keyframes explosion {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+}
+
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div id="loader">
-    <canvas id="stars"></canvas>
-    <div id="text"></div>
+  <div class="loader-container">
+    <div class="progress-bar">
+      <div class="progress"></div>
+    </div>
+    <div class="impact"></div>
+    <div class="text">
+      <span class="letter">K</span>
+      <span class="letter">I</span>
+      <span class="letter">R</span>
+      <span class="letter">I</span>
+      <span class="letter">T</span>
+      <span class="letter">O</span>
+    </div>
   </div>
-
-  <script>
-    const text = "KIRITO BOT";
-    const container = document.getElementById("text");
-    [...text].forEach((char, i) => {
-      const span = document.createElement("span");
-      span.classList.add("letter");
-      span.style.animationDelay = `${i * 0.2}s`;
-      span.textContent = char;
-      container.appendChild(span);
-    });
-
-    // Partículas estelares
-    const canvas = document.getElementById("stars");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const stars = Array.from({ length: 200 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      z: Math.random() * canvas.width
-    }));
-
-    function drawStars() {
-      ctx.fillStyle = "black";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "white";
-      stars.forEach(star => {
-        let k = 128.0 / star.z;
-        let x = star.x * k + canvas.width / 2;
-        let y = star.y * k + canvas.height / 2;
-        if (x >= 0 && x < canvas.width && y >= 0 && y < canvas.height) {
-          let size = (1 - star.z / canvas.width) * 3;
-          ctx.beginPath();
-          ctx.arc(x, y, size, 0, 2 * Math.PI);
-          ctx.fill();
-        }
-      });
-    }
-
-    function moveStars() {
-      stars.forEach(star => {
-        star.z -= 2;
-        if (star.z <= 0) {
-          star.z = canvas.width;
-        }
-      });
-    }
-
-    function animate() {
-      moveStars();
-      drawStars();
-      requestAnimationFrame(animate);
-    }
-    animate();
-
-    // Transición fuera del loader
-    setTimeout(() => {
-      document.getElementById("loader").style.transition = "opacity 1s ease";
-      document.getElementById("loader").style.opacity = 0;
-      setTimeout(() => document.getElementById("loader").remove(), 1000);
-    }, 6000);
-  </script>
 </body>
 </html>
