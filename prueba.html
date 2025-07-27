@@ -1,129 +1,126 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Animación Brutal</title>
+  <meta charset="UTF-8">
+  <title>Explosión de Letras PRO</title>
   <style>
-    body {
+    html, body {
       margin: 0;
-      background: #0a0a0a;
+      padding: 0;
       overflow: hidden;
-      font-family: 'Orbitron', sans-serif;
+      background-color: #000;
     }
-
     canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-    }
-
-    .letter {
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 12vw;
-      color: #00ffe1;
-      text-shadow: 0 0 30px #00ffe1, 0 0 60px #00ffe1;
-      opacity: 0;
-      animation: appear 2s ease-in-out forwards 2s;
-      z-index: 2;
-    }
-
-    @keyframes appear {
-      to {
-        opacity: 1;
-      }
-    }
-
-    .loader-bar {
-      position: absolute;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
-      height: 15px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 10px;
-      overflow: hidden;
-      z-index: 3;
-      box-shadow: 0 0 20px #00ffe1;
-    }
-
-    .loader-fill {
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, #00ffe1, #0055ff);
-      animation: fillBar 5s ease-in-out forwards 3s;
-    }
-
-    @keyframes fillBar {
-      to {
-        width: 100%;
-      }
+      display: block;
     }
   </style>
 </head>
 <body>
-  <canvas id="canvas"></canvas>
-  <div class="letter">K</div>
-  <div class="loader-bar"><div class="loader-fill"></div></div>
+<canvas id="canvas"></canvas>
 
-  <script>
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-    let particles = [];
+let particles = [];
+const text = "KIRITO"; // <-- Cambia aquí tu texto épico
+const fontSize = 150;
+let pixelData = [];
 
-    class Particle {
-      constructor() {
-        this.x = canvas.width / 2;
-        this.y = canvas.height / 2;
-        this.size = Math.random() * 2;
-        this.speedX = (Math.random() - 0.5) * 10;
-        this.speedY = (Math.random() - 0.5) * 10;
-        this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-        this.opacity = 1;
-      }
+function drawTextToBuffer() {
+  const offscreen = document.createElement('canvas');
+  const offCtx = offscreen.getContext('2d');
+  offscreen.width = canvas.width;
+  offscreen.height = canvas.height;
+  offCtx.clearRect(0, 0, canvas.width, canvas.height);
+  offCtx.font = `bold ${fontSize}px Orbitron, Arial`;
+  offCtx.fillStyle = "#00ffe1";
+  offCtx.textAlign = "center";
+  offCtx.textBaseline = "middle";
+  offCtx.fillText(text, canvas.width / 2, canvas.height / 2);
 
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.opacity -= 0.01;
-      }
-
-      draw() {
-        ctx.fillStyle = this.color;
-        ctx.globalAlpha = this.opacity;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalAlpha = 1;
+  const data = offCtx.getImageData(0, 0, canvas.width, canvas.height);
+  for (let y = 0; y < data.height; y += 6) {
+    for (let x = 0; x < data.width; x += 6) {
+      const i = (y * data.width + x) * 4;
+      if (data.data[i + 3] > 128) {
+        pixelData.push({ x, y });
       }
     }
+  }
+}
 
-    function initParticles() {
-      for (let i = 0; i < 500; i++) {
-        particles.push(new Particle());
-      }
+class Particle {
+  constructor(x, y) {
+    this.originX = x;
+    this.originY = y;
+    this.x = x;
+    this.y = y;
+    this.size = 2 + Math.random() * 2;
+    this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    this.vx = (Math.random() - 0.5) * 30;
+    this.vy = (Math.random() - 0.5) * 30;
+    this.reforming = false;
+  }
+
+  explode() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.vx *= 0.92;
+    this.vy *= 0.92;
+
+    if (Math.abs(this.vx) < 0.1 && Math.abs(this.vy) < 0.1 && !this.reforming) {
+      this.reforming = true;
+      this.vx = (this.originX - this.x) * 0.05;
+      this.vy = (this.originY - this.y) * 0.05;
     }
+  }
 
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p, i) => {
-        p.update();
-        p.draw();
-        if (p.opacity <= 0) particles.splice(i, 1);
-      });
-      if (particles.length > 0) requestAnimationFrame(animateParticles);
+  reform() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.vx *= 0.95;
+    this.vy *= 0.95;
+  }
+
+  draw() {
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  update() {
+    if (!this.reforming) {
+      this.explode();
+    } else {
+      this.reform();
     }
+    this.draw();
+  }
+}
 
-    initParticles();
-    animateParticles();
-  </script>
+function init() {
+  drawTextToBuffer();
+  for (let i = 0; i < pixelData.length; i++) {
+    const { x, y } = pixelData[i];
+    particles.push(new Particle(x, y));
+  }
+  animate();
+}
+
+function animate() {
+  ctx.fillStyle = 'rgba(0,0,0,0.2)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  for (let i = 0; i < particles.length; i++) {
+    particles[i].update();
+  }
+  requestAnimationFrame(animate);
+}
+
+init();
+</script>
 </body>
 </html>
