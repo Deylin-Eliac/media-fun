@@ -2,139 +2,133 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>⚡ Carga Épica Tecnológica ⚡</title>
+  <title>MEGA EXPLOSIÓN LETRA 3D</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: radial-gradient(ellipse at center, #000 0%, #050a1f 100%);
-    }
-    canvas {
-      display: block;
-    }
+    body { margin: 0; overflow: hidden; background: #000; }
+    canvas { display: block; }
   </style>
 </head>
 <body>
-<canvas id="canvas"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r148/three.min.js"></script>
+<script src="https://threejs.org/examples/js/loaders/FontLoader.js"></script>
+<script src="https://threejs.org/examples/js/geometries/TextGeometry.js"></script>
 
 <script>
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+let scene, camera, renderer, particles = [], textMesh;
+let exploded = false;
 
-const centerX = canvas.width / 2;
-const centerY = canvas.height / 2;
-const text = "KIRITO"; // Cambia a tu letra/word
-const fontSize = 160;
-let particles = [];
+init();
 
-class Particle {
-  constructor(x, y, tx, ty) {
-    this.x = x;
-    this.y = y;
-    this.tx = tx;
-    this.ty = ty;
-    this.size = Math.random() * 2 + 1;
-    this.color = `hsl(${Math.random()*360}, 100%, 60%)`;
-    this.vx = (Math.random() - 0.5) * 20;
-    this.vy = (Math.random() - 0.5) * 20;
-    this.alpha = 1;
-    this.arrived = false;
-    this.vibration = 0;
-  }
+function init() {
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+  camera.position.z = 100;
 
-  update() {
-    if (!this.arrived) {
-      this.x += this.vx;
-      this.y += this.vy;
-      this.vx *= 0.9;
-      this.vy *= 0.9;
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
 
-      if (Math.abs(this.vx) < 0.2 && Math.abs(this.vy) < 0.2) {
-        this.arrived = true;
-      }
-    } else {
-      let dx = this.tx - this.x;
-      let dy = this.ty - this.y;
-      this.x += dx * 0.1;
-      this.y += dy * 0.1;
+  const light = new THREE.PointLight(0x00ffff, 2, 500);
+  light.position.set(0, 50, 100);
+  scene.add(light);
 
-      this.vibration = Math.sin(Date.now() * 0.01 + this.tx) * 1;
-    }
+  const ambient = new THREE.AmbientLight(0x222222);
+  scene.add(ambient);
 
-    if (this.arrived && Math.abs(this.x - this.tx) < 1 && Math.abs(this.y - this.ty) < 1) {
-      this.x = this.tx + Math.random() * 0.5;
-      this.y = this.ty + Math.random() * 0.5;
-    }
-  }
+  const loader = new THREE.FontLoader();
+  loader.load('https://threejs.org/examples/fonts/helvetiker_bold.typeface.json', font => {
+    const geometry = new THREE.TextGeometry('K', {
+      font: font,
+      size: 40,
+      height: 5,
+      curveSegments: 8,
+      bevelEnabled: true,
+      bevelThickness: 2,
+      bevelSize: 1,
+      bevelOffset: 0,
+      bevelSegments: 5
+    });
+    const material = new THREE.MeshStandardMaterial({ color: 0x00ffff, metalness: 0.7, roughness: 0.2 });
+    textMesh = new THREE.Mesh(geometry, material);
+    textMesh.position.x = -20;
+    textMesh.position.y = -20;
+    scene.add(textMesh);
 
-  draw() {
-    ctx.globalAlpha = this.alpha;
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(this.x + this.vibration, this.y + this.vibration, this.size, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.globalAlpha = 1;
-  }
-}
-
-function generateParticles() {
-  const offscreen = document.createElement('canvas');
-  const offCtx = offscreen.getContext('2d');
-  offscreen.width = canvas.width;
-  offscreen.height = canvas.height;
-  offCtx.fillStyle = "#fff";
-  offCtx.font = `bold ${fontSize}px Orbitron, Arial`;
-  offCtx.textAlign = "center";
-  offCtx.textBaseline = "middle";
-  offCtx.fillText(text, centerX, centerY);
-
-  const imageData = offCtx.getImageData(0, 0, canvas.width, canvas.height).data;
-
-  for (let y = 0; y < canvas.height; y += 6) {
-    for (let x = 0; x < canvas.width; x += 6) {
-      const index = (y * canvas.width + x) * 4;
-      if (imageData[index + 3] > 128) {
-        const px = x;
-        const py = y;
-        const angle = Math.random() * Math.PI * 2;
-        const radius = Math.random() * 300 + 50;
-        const ex = centerX + Math.cos(angle) * radius;
-        const ey = centerY + Math.sin(angle) * radius;
-        particles.push(new Particle(ex, ey, px, py));
-      }
-    }
-  }
-}
-
-function drawExplosionFrame() {
-  ctx.fillStyle = "rgba(0,0,0,0.25)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  particles.forEach(p => {
-    p.update();
-    p.draw();
+    setTimeout(() => {
+      explodeText();
+    }, 2000);
   });
 
-  // Glow effect when all particles arrive
-  if (particles.every(p => p.arrived)) {
-    const glowSize = 20 + Math.sin(Date.now() * 0.01) * 10;
-    ctx.shadowColor = "#00fff7";
-    ctx.shadowBlur = glowSize;
-    ctx.font = `bold ${fontSize}px Orbitron, Arial`;
-    ctx.textAlign = "center";
-    ctx.fillStyle = "#00ffe1";
-    ctx.fillText(text, centerX, centerY);
-    ctx.shadowBlur = 0;
-  }
-
-  requestAnimationFrame(drawExplosionFrame);
+  animate();
 }
 
-generateParticles();
-drawExplosionFrame();
+function explodeText() {
+  if (!textMesh) return;
+  const geometry = textMesh.geometry;
+  geometry.computeBoundingBox();
+  geometry.computeVertexNormals();
+
+  const positions = geometry.attributes.position.array;
+
+  for (let i = 0; i < positions.length; i += 3) {
+    const px = positions[i];
+    const py = positions[i + 1];
+    const pz = positions[i + 2];
+
+    const particleGeometry = new THREE.SphereGeometry(0.5, 4, 4);
+    const particleMaterial = new THREE.MeshStandardMaterial({
+      color: new THREE.Color().setHSL(Math.random(), 1, 0.6),
+      emissive: 0x00ffff,
+      roughness: 0.3,
+      metalness: 0.9
+    });
+    const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+    particle.position.set(px + textMesh.position.x, py + textMesh.position.y, pz);
+    particle.userData = {
+      velocity: new THREE.Vector3(
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 20
+      ),
+      target: new THREE.Vector3(px + textMesh.position.x, py + textMesh.position.y, pz),
+      arrived: false
+    };
+    particles.push(particle);
+    scene.add(particle);
+  }
+
+  scene.remove(textMesh);
+  exploded = true;
+
+  setTimeout(() => {
+    particles.forEach(p => {
+      p.userData.velocity.multiplyScalar(-0.02);
+    });
+  }, 2500);
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  if (exploded) {
+    particles.forEach(p => {
+      if (!p.userData.arrived) {
+        p.position.add(p.userData.velocity);
+        const dist = p.position.distanceTo(p.userData.target);
+        if (dist < 1) {
+          p.position.copy(p.userData.target);
+          p.userData.arrived = true;
+        } else {
+          const dir = new THREE.Vector3().subVectors(p.userData.target, p.position).normalize();
+          p.userData.velocity.add(dir.multiplyScalar(0.5));
+          p.userData.velocity.multiplyScalar(0.9);
+        }
+      }
+    });
+  }
+
+  renderer.render(scene, camera);
+}
 </script>
 </body>
 </html>
