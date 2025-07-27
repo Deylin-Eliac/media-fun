@@ -1,179 +1,120 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cargando Kirito Bot MD</title>
+  <title>⚙️ Pantalla de Carga Kirito</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    }
-    body {
-      background: radial-gradient(circle, #0f1f2f, #000010);
-      overflow: hidden;
-      font-family: 'Orbitron', sans-serif;
-    }
+    }body {
+  background: linear-gradient(135deg, #0f0f3e, #1a1a4f);
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  overflow: hidden;
+}
 
-    .scene {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-    }
+.loader-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
 
-    .title {
-      position: absolute;
-      top: 40%;
-      width: 100%;
-      text-align: center;
-      font-size: 4em;
-      color: white;
-      letter-spacing: 10px;
-      text-shadow: 0 0 20px #00f0ff, 0 0 40px #00f0ff;
-      transform: scale(0.1);
-      opacity: 0;
-      animation: explodeIn 1.2s ease-out forwards 3s;
-    }
+.progress-bar {
+  width: 300px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 40px;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
 
-    .meteor {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: linear-gradient(45deg, #0ff, #00f);
-      border-radius: 50%;
-      top: -50px;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: meteorImpact 3s ease-in forwards;
-      z-index: 10;
-    }
+.progress {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00f0ff, #008cff);
+  border-radius: 10px;
+  animation: loadProgress 6s forwards;
+}
 
-    .particles {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
+@keyframes loadProgress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
 
-    .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: #0ff;
-      opacity: 0;
-      animation: floatUp 3s ease-out infinite;
-    }
+.text {
+  font-size: 2rem;
+  letter-spacing: 2px;
+  position: relative;
+  display: inline-block;
+}
 
-    @keyframes meteorImpact {
-      0% {
-        top: -50px;
-      }
-      90% {
-        top: 50%;
-      }
-      100% {
-        top: 50%;
-        width: 1200px;
-        height: 1200px;
-        margin-left: -600px;
-        margin-top: -600px;
-        background: radial-gradient(circle, #00f, transparent);
-        opacity: 0;
-      }
-    }
+.letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(50px) scale(0.8);
+  animation: rise 0.8s forwards;
+}
 
-    @keyframes explodeIn {
-      0% {
-        transform: scale(0.1);
-        opacity: 0;
-      }
-      50% {
-        transform: scale(1.3);
-        opacity: 1;
-        color: #0ff;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-        color: white;
-      }
-    }
+.letter:nth-child(1) { animation-delay: 6s; }
+.letter:nth-child(2) { animation-delay: 6.2s; }
+.letter:nth-child(3) { animation-delay: 6.4s; }
+.letter:nth-child(4) { animation-delay: 6.6s; }
+.letter:nth-child(5) { animation-delay: 6.8s; }
+.letter:nth-child(6) { animation-delay: 7s; }
 
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 0;
-      }
-      50% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-100px) scale(0.2);
-        opacity: 0;
-      }
-    }
+@keyframes rise {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.8) rotate(-30deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px) scale(1) rotate(0deg);
+    color: #00ffff;
+    text-shadow: 0 0 10px #00f0ff, 0 0 20px #008cff;
+  }
+}
 
-    .progress-container {
-      position: absolute;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80%;
-      height: 20px;
-      background: rgba(255,255,255,0.1);
-      border: 2px solid #0ff;
-      border-radius: 10px;
-      overflow: hidden;
-      animation: fadeIn 2s ease 4s forwards;
-      opacity: 0;
-    }
+.impact {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0,255,255,0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: explosion 1s ease-out 5.8s forwards;
+  z-index: -1;
+}
 
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(to right, #00f, #0ff, #fff);
-      animation: loadBar 6s ease-out forwards;
-    }
+@keyframes explosion {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+}
 
-    @keyframes loadBar {
-      0% {
-        width: 0%;
-      }
-      100% {
-        width: 100%;
-      }
-    }
-
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
-    }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="scene">
-    <div class="meteor"></div>
-    <div class="particles" id="particles"></div>
-    <div class="title">KIRITO-BOT-MD</div>
-    <div class="progress-container">
-      <div class="progress-bar"></div>
+  <div class="loader-container">
+    <div class="progress-bar">
+      <div class="progress"></div>
+    </div>
+    <div class="impact"></div>
+    <div class="text">
+      <span class="letter">K</span>
+      <span class="letter">I</span>
+      <span class="letter">R</span>
+      <span class="letter">I</span>
+      <span class="letter">T</span>
+      <span class="letter">O</span>
     </div>
   </div>
-
-  <script>
-    const particles = document.getElementById("particles");
-
-    for (let i = 0; i < 150; i++) {
-      let particle = document.createElement("div");
-      particle.className = "particle";
-      particle.style.left = Math.random() * window.innerWidth + "px";
-      particle.style.top = Math.random() * window.innerHeight + "px";
-      particle.style.animationDelay = Math.random() * 3 + "s";
-      particle.style.backgroundColor = ["#00f", "#0ff", "#fff"][Math.floor(Math.random() * 3)];
-      particles.appendChild(particle);
-    }
-  </script>
 </body>
 </html>
