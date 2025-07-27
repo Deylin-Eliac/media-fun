@@ -1,134 +1,120 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>MEGA EXPLOSIÓN LETRA 3D</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KIRITO-BOT Loading</title>
   <style>
-    body { margin: 0; overflow: hidden; background: #000; }
-    canvas { display: block; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: radial-gradient(ellipse at center, #0f0f0f 0%, #000000 100%);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-family: 'Orbitron', sans-serif;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+    h1 {
+      font-size: 4em;
+      color: #00ffff;
+      text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+      animation: glitch 2s infinite;
+    }@keyframes glitch {
+  0% { transform: translate(0, 0); opacity: 1; }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-1px, -2px); }
+  80% { transform: translate(1px, 1px); }
+  100% { transform: translate(0, 0); opacity: 1; }
+}
+
   </style>
 </head>
 <body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r148/three.min.js"></script>
-<script src="https://threejs.org/examples/js/loaders/FontLoader.js"></script>
-<script src="https://threejs.org/examples/js/geometries/TextGeometry.js"></script>
+  <h1 id="title">KIRITO-BOT</h1>
+  <canvas id="bg"></canvas>
+  <script>
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;let particles = [];
 
-<script>
-let scene, camera, renderer, particles = [], textMesh;
-let exploded = false;
+class Particle {
+  constructor(x, y, dx, dy, size, color) {
+    this.x = x;
+    this.y = y;
+    this.dx = dx;
+    this.dy = dy;
+    this.size = size;
+    this.color = color;
+  }
 
-init();
+  update() {
+    this.x += this.dx;
+    this.y += this.dy;
 
-function init() {
-  scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-  camera.position.z = 100;
+    if (this.size > 0.1) this.size -= 0.1;
+  }
 
-  renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
-
-  const light = new THREE.PointLight(0x00ffff, 2, 500);
-  light.position.set(0, 50, 100);
-  scene.add(light);
-
-  const ambient = new THREE.AmbientLight(0x222222);
-  scene.add(ambient);
-
-  const loader = new THREE.FontLoader();
-  loader.load('https://threejs.org/examples/fonts/helvetiker_bold.typeface.json', font => {
-    const geometry = new THREE.TextGeometry('K', {
-      font: font,
-      size: 40,
-      height: 5,
-      curveSegments: 8,
-      bevelEnabled: true,
-      bevelThickness: 2,
-      bevelSize: 1,
-      bevelOffset: 0,
-      bevelSegments: 5
-    });
-    const material = new THREE.MeshStandardMaterial({ color: 0x00ffff, metalness: 0.7, roughness: 0.2 });
-    textMesh = new THREE.Mesh(geometry, material);
-    textMesh.position.x = -20;
-    textMesh.position.y = -20;
-    scene.add(textMesh);
-
-    setTimeout(() => {
-      explodeText();
-    }, 2000);
-  });
-
-  animate();
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+  }
 }
 
 function explodeText() {
-  if (!textMesh) return;
-  const geometry = textMesh.geometry;
-  geometry.computeBoundingBox();
-  geometry.computeVertexNormals();
+  const title = document.getElementById("title");
+  const rect = title.getBoundingClientRect();
 
-  const positions = geometry.attributes.position.array;
-
-  for (let i = 0; i < positions.length; i += 3) {
-    const px = positions[i];
-    const py = positions[i + 1];
-    const pz = positions[i + 2];
-
-    const particleGeometry = new THREE.SphereGeometry(0.5, 4, 4);
-    const particleMaterial = new THREE.MeshStandardMaterial({
-      color: new THREE.Color().setHSL(Math.random(), 1, 0.6),
-      emissive: 0x00ffff,
-      roughness: 0.3,
-      metalness: 0.9
-    });
-    const particle = new THREE.Mesh(particleGeometry, particleMaterial);
-    particle.position.set(px + textMesh.position.x, py + textMesh.position.y, pz);
-    particle.userData = {
-      velocity: new THREE.Vector3(
-        (Math.random() - 0.5) * 20,
-        (Math.random() - 0.5) * 20,
-        (Math.random() - 0.5) * 20
-      ),
-      target: new THREE.Vector3(px + textMesh.position.x, py + textMesh.position.y, pz),
-      arrived: false
-    };
-    particles.push(particle);
-    scene.add(particle);
+  for (let i = 0; i < 400; i++) {
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const dx = (Math.random() - 0.5) * 20;
+    const dy = (Math.random() - 0.5) * 20;
+    const size = Math.random() * 4 + 2;
+    const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    particles.push(new Particle(x, y, dx, dy, size, color));
   }
-
-  scene.remove(textMesh);
-  exploded = true;
-
-  setTimeout(() => {
-    particles.forEach(p => {
-      p.userData.velocity.multiplyScalar(-0.02);
-    });
-  }, 2500);
 }
 
 function animate() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  particles.forEach((p, i) => {
+    p.update();
+    p.draw();
+    if (p.size <= 0.1) particles.splice(i, 1);
+  });
+
   requestAnimationFrame(animate);
-
-  if (exploded) {
-    particles.forEach(p => {
-      if (!p.userData.arrived) {
-        p.position.add(p.userData.velocity);
-        const dist = p.position.distanceTo(p.userData.target);
-        if (dist < 1) {
-          p.position.copy(p.userData.target);
-          p.userData.arrived = true;
-        } else {
-          const dir = new THREE.Vector3().subVectors(p.userData.target, p.position).normalize();
-          p.userData.velocity.add(dir.multiplyScalar(0.5));
-          p.userData.velocity.multiplyScalar(0.9);
-        }
-      }
-    });
-  }
-
-  renderer.render(scene, camera);
 }
-</script>
+
+setTimeout(() => {
+  document.getElementById("title").style.display = "none";
+  explodeText();
+}, 2500);
+
+animate();
+
+// Redirigir después de la animación
+setTimeout(() => {
+  window.location.href = "home.html"; // Cambia por la URL real
+}, 6000);
+
+  </script>
 </body>
 </html>
