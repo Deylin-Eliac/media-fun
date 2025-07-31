@@ -1,387 +1,411 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ᴋɪʀɪᴛᴏ-ʙᴏᴛ ᴍᴅ ฅ՞•ﻌ•՞ฅ</title>
-  <meta name="description" content="(1) ᴅᴇ ʟᴏs ᴍᴇᴊᴏʀᴇs ʙᴏᴛs ˙Ⱉ˙ฅ...">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-  <style>
-    :root {
-      --kirito-blue: #00ffe7;
-      --kirito-dark: #0f0c29;
-      --kirito-purple: #302b63;
-      --kirito-purple-dark: #24243e;
-      --text-light: #fff;
-      --text-muted: #ccc;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ᴋɪʀɪᴛᴏ-ʙᴏᴛ ᴍᴅ ฅ՞•ﻌ•՞ฅ</title>
+    <meta name="description" content="(1) ᴅᴇ ʟᴏs ᴍᴇᴊᴏʀᴇs ʙᴏᴛs ˙Ⱉ˙ฅ...">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    <style>
+        :root {
+            --kirito-blue: #00ffcc;
+            --kirito-dark: #0f0c29;
+            --kirito-purple: #302b63;
+            --kirito-purple-dark: #1a1a2e;
+            --text-light: #fff;
+            --text-muted: #ccc;
+        }
 
-    * {
-      margin: 0; padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
 
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: radial-gradient(circle at top, var(--kirito-dark), var(--kirito-purple), var(--kirito-purple-dark));
-      color: var(--text-light);
-      overflow-x: hidden;
-      opacity: 0;
-      transition: opacity 1s ease-in;
-    }
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-light);
+            overflow-x: hidden;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+            background: linear-gradient(135deg, var(--kirito-dark), var(--kirito-purple-dark), var(--kirito-purple));
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+        }
 
-    body.loaded {
-      opacity: 1;
-    }
+        body.loaded {
+            opacity: 1;
+        }
 
-    /* --- Preloader --- */
-    #preloader {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--kirito-dark);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      transition: opacity 0.5s ease-out;
-    }
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-    .preloader-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      animation: fadeIn 1.5s ease-in-out;
-    }
+        /* --- Preloader (Kirito Log-in Screen) --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--kirito-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+            text-align: center;
+        }
 
-    .preloader-content img {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid var(--kirito-blue);
-      box-shadow: 0 0 30px var(--kirito-blue);
-      animation: kiritoGlow 2s infinite alternate, rotate 15s linear infinite;
-    }
+        .preloader-content {
+            animation: fadeIn 1.5s ease-in-out;
+        }
 
-    .preloader-content h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.5rem;
-      color: var(--kirito-blue);
-      text-shadow: 0 0 15px var(--kirito-blue);
-      margin-top: 1rem;
-    }
+        .preloader-content h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            color: var(--kirito-blue);
+            text-shadow: 0 0 10px var(--kirito-blue);
+            animation: kirito-glitch 4s infinite;
+        }
 
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-    @keyframes kiritoGlow {
-      from {box-shadow: 0 0 15px var(--kirito-blue), 0 0 25px var(--kirito-blue) inset;}
-      to {box-shadow: 0 0 25px var(--kirito-blue), 0 0 40px var(--kirito-blue) inset;}
-    }
-    @keyframes rotate {
-      from {transform: rotate(0deg);}
-      to {transform: rotate(360deg);}
-    }
+        .preloader-content .loading-bar {
+            width: 250px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin-top: 20px;
+            overflow: hidden;
+            position: relative;
+        }
 
-    /* --- Hero Section --- */
-    .hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-      background-size: cover;
-      position: relative;
-    }
+        .preloader-content .loading-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--kirito-blue), transparent);
+            animation: load 2s infinite linear;
+        }
 
-    .hero h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3.5rem;
-      color: var(--kirito-blue);
-      text-shadow: 0 0 20px var(--kirito-blue);
-      animation: glitch 2s infinite;
-      transition: transform 0.3s;
-    }
-    .hero h1:hover {
-      transform: scale(1.05);
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes kirito-glitch {
+            0%, 100% { text-shadow: 0 0 5px var(--kirito-blue); }
+            50% { text-shadow: 0 0 10px var(--kirito-blue), 5px 0 0 red, -5px 0 0 blue; }
+        }
+        @keyframes load {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+            background-size: cover;
+            opacity: 0;
+            animation: fadeIn 2s 1s ease-out forwards;
+        }
 
-    .hero p {
-      font-size: 1.2rem;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin-top: 1rem;
-      animation: fadeInUp 1.5s ease-out;
-    }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            color: var(--kirito-blue);
+            text-shadow: 0 0 20px var(--kirito-blue);
+            animation: glitch 2s infinite;
+            transition: transform 0.3s;
+        }
+        .hero h1:hover {
+            transform: scale(1.05);
+        }
 
-    @keyframes glitch {
-      0% {text-shadow: 2px 2px red, -2px -2px blue;}
-      25% {text-shadow: -2px 2px lime, 2px -2px cyan;}
-      50% {text-shadow: 2px -2px yellow, -2px 2px magenta;}
-      100% {text-shadow: 2px 2px red, -2px -2px blue;}
-    }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-top: 1rem;
+            animation: fadeInUp 1.5s ease-out;
+        }
 
-    .cta-button {
-      background: linear-gradient(45deg, #00ffe7, #008cff);
-      border: none;
-      padding: 1rem 2rem;
-      font-size: 1.2rem;
-      border-radius: 50px;
-      margin-top: 2rem;
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 0 20px var(--kirito-blue);
-      transition: all 0.3s ease;
-    }
+        @keyframes glitch {
+            0% {text-shadow: 2px 2px red, -2px -2px blue;}
+            25% {text-shadow: -2px 2px lime, 2px -2px cyan;}
+            50% {text-shadow: 2px -2px yellow, -2px 2px magenta;}
+            100% {text-shadow: 2px 2px red, -2px -2px blue;}
+        }
 
-    .cta-button::after {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: rgba(255, 255, 255, 0.3);
-      transform: skewX(-45deg);
-      transition: left 0.5s;
-    }
+        .cta-button {
+            background: linear-gradient(45deg, #00ffe7, #008cff);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            margin-top: 2rem;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px var(--kirito-blue);
+            transition: all 0.3s ease;
+        }
 
-    .cta-button:hover::after {
-      left: 100%;
-    }
-    .cta-button:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 30px var(--kirito-blue);
-    }
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: skewX(-45deg);
+            transition: left 0.5s;
+        }
+        .cta-button:hover::after { left: 100%; }
+        .cta-button:hover { transform: translateY(-5px); box-shadow: 0 0 30px var(--kirito-blue); }
 
-    .down-arrow {
-      position: absolute;
-      bottom: 20px;
-      font-size: 2rem;
-      color: var(--kirito-blue);
-      animation: bounce 2s infinite;
-    }
+        .down-arrow {
+            position: absolute;
+            bottom: 20px;
+            font-size: 2rem;
+            color: var(--kirito-blue);
+            animation: bounce 2s infinite;
+        }
 
-    @keyframes bounce {
-      0%, 100% {transform: translateY(0);}
-      50% {transform: translateY(15px);}
-    }
-    @keyframes fadeInUp {
-      from {opacity: 0; transform: translateY(20px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(15px); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* --- General Section Styling --- */
+        .section {
+            padding: 80px 20px;
+            background-color: transparent;
+            text-align: center;
+        }
 
-    /* --- General Section Styling --- */
-    .section {
-      padding: 80px 20px;
-      background-color: var(--kirito-purple-dark);
-      text-align: center;
-    }
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--kirito-blue);
+            text-shadow: 0 0 10px var(--kirito-blue);
+            animation: slideInDown 1s ease-out;
+        }
 
-    .section h2 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      color: var(--kirito-blue);
-      text-shadow: 0 0 10px var(--kirito-blue);
-      animation: fadeInUp 1s ease-out;
-    }
+        .features, .link-grid, .functions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            margin-top: 2rem;
+        }
 
-    .features, .link-grid, .functions-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 30px;
-      margin-top: 2rem;
-    }
+        .feature, .link-item, .function-button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--kirito-blue);
+            backdrop-filter: blur(5px);
+            padding: 20px;
+            border-radius: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: slideInUp 1s ease-out forwards;
+            opacity: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .feature:hover, .link-item:hover, .function-button:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px var(--kirito-blue);
+            background: rgba(0, 255, 204, 0.1);
+        }
 
-    .feature, .link-item, .function-button {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--kirito-blue);
-      padding: 20px;
-      border-radius: 20px;
-      transition: transform 0.3s, box-shadow 0.3s;
-      animation: fadeIn 1s ease-out;
-      animation-fill-mode: both;
-    }
-    .feature:hover, .link-item:hover, .function-button:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 0 20px var(--kirito-blue);
-      background: rgba(0, 255, 231, 0.1);
-    }
+        .feature i, .link-item i, .function-button i {
+            font-size: 3rem;
+            color: var(--kirito-blue);
+            margin-bottom: 10px;
+        }
 
-    .feature i, .link-item i, .function-button i {
-      font-size: 3rem;
-      color: var(--kirito-blue);
-      margin-bottom: 10px;
-    }
+        .feature h3, .function-button h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .link-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: bold;
+        }
 
-    .feature h3, .function-button h3 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-    }
-    
-    .link-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--text-light);
-      font-weight: bold;
-    }
+        .function-button {
+            text-decoration: none;
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+        }
 
-    /* --- Functions Section --- */
-    .functions {
-      background-color: var(--kirito-dark);
-      padding: 60px 20px;
-      text-align: center;
-    }
-    .functions h2 {
-      color: var(--kirito-blue);
-      margin-bottom: 30px;
-    }
-    .function-button {
-      text-decoration: none;
-      color: var(--text-light);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      font-weight: bold;
-    }
+        /* --- Lightsaber Hover Effect for Buttons --- */
+        .function-button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(0, 255, 204, 0.5) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .function-button:hover::before {
+            opacity: 1;
+        }
+        
+        /* --- Footer --- */
+        footer {
+            background-color: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
 
-    footer {
-      background-color: var(--kirito-dark);
-      padding: 20px;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #aaa;
-    }
-
-    /* --- Media Queries --- */
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 2.5rem; }
-      .hero p { font-size: 1rem; }
-      .cta-button { padding: 0.8rem 1.5rem; font-size: 1rem; }
-      .section { padding: 60px 10px; }
-      .section h2 { font-size: 1.8rem; }
-      .features, .link-grid, .functions-grid { grid-template-columns: 1fr; }
-    }
-    @media (min-width: 769px) {
-        .features .feature:nth-child(1) { animation-delay: 0.2s; }
-        .features .feature:nth-child(2) { animation-delay: 0.4s; }
-        .features .feature:nth-child(3) { animation-delay: 0.6s; }
-        .features .feature:nth-child(4) { animation-delay: 0.8s; }
-        .link-grid .link-item:nth-child(1) { animation-delay: 0.2s; }
-        .link-grid .link-item:nth-child(2) { animation-delay: 0.4s; }
-        .link-grid .link-item:nth-child(3) { animation-delay: 0.6s; }
-        .link-grid .link-item:nth-child(4) { animation-delay: 0.8s; }
-        .functions-grid .function-button:nth-child(1) { animation-delay: 0.2s; }
-        .functions-grid .function-button:nth-child(2) { animation-delay: 0.4s; }
-        .functions-grid .function-button:nth-child(3) { animation-delay: 0.6s; }
-    }
-  </style>
+        /* --- Animations with delays --- */
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .features .feature:nth-child(1) { animation-delay: 0.5s; }
+        .features .feature:nth-child(2) { animation-delay: 0.7s; }
+        .features .feature:nth-child(3) { animation-delay: 0.9s; }
+        .features .feature:nth-child(4) { animation-delay: 1.1s; }
+        
+        .functions-grid .function-button:nth-child(1) { animation-delay: 0.5s; }
+        .functions-grid .function-button:nth-child(2) { animation-delay: 0.7s; }
+        .functions-grid .function-button:nth-child(3) { animation-delay: 0.9s; }
+        
+        .link-grid .link-item:nth-child(1) { animation-delay: 0.5s; }
+        .link-grid .link-item:nth-child(2) { animation-delay: 0.7s; }
+        .link-grid .link-item:nth-child(3) { animation-delay: 0.9s; }
+        .link-grid .link-item:nth-child(4) { animation-delay: 1.1s; }
+    </style>
 </head>
 <body>
 
-  <div id="preloader">
-    <div class="preloader-content">
-      <img src="https://i.imgur.com/3YQ5SgJ.png" alt="Kirito Bot Logo">
-      <h1>Cargando...</h1>
+    <div id="preloader">
+        <div class="preloader-content">
+            <h1>KIRITO-BOT MD</h1>
+            <div class="loading-bar"></div>
+        </div>
     </div>
-  </div>
 
-  <section class="hero" id="inicio">
-    <h1>⚡ Kirito-Bot</h1>
-    <p>El bot de WhatsApp más poderoso, futurista y avanzado que hayas visto. Tecnología de otro nivel, estilo de otro mundo.</p>
-    <a href="#features"><button class="cta-button">Explorar Ahora</button></a>
-    <a href="#features" class="down-arrow"><i class="uil uil-arrow-down"></i></a>
-  </section>
+    <section class="hero" id="inicio">
+        <h1>⚡ Kirito-Bot</h1>
+        <p>El bot de WhatsApp más poderoso, futurista y avanzado que hayas visto. Tecnología de otro nivel, estilo de otro mundo.</p>
+        <a href="#features"><button class="cta-button">Explorar Ahora</button></a>
+        <a href="#features" class="down-arrow"><i class="uil uil-arrow-down"></i></a>
+    </section>
 
-  <section class="section" id="features">
-    <h2>🚀 Funcionalidades Brutales</h2>
-    <div class="features">
-      <div class="feature">
-        <i class="uil uil-robot"></i>
-        <h3>Respuestas Inteligentes</h3>
-        <p>Interactúa con usuarios como un asistente real, usando IA avanzada y aprendizaje automático.</p>
-      </div>
-      <div class="feature">
-        <i class="uil uil-cloud-download"></i>
-        <h3>Descargas Multimedia</h3>
-        <p>Descarga música, videos y stickers desde cualquier plataforma como TikTok, YouTube o Instagram.</p>
-      </div>
-      <div class="feature">
-        <i class="uil uil-users-alt"></i>
-        <h3>Gestión de Grupos</h3>
-        <p>Detecta enlaces, envía bienvenidas, administra grupos y bloquea spam de forma automática.</p>
-      </div>
-      <div class="feature">
-        <i class="uil uil-brain"></i>
-        <h3>Conexión con APIs</h3>
-        <p>Integra APIs personalizadas para obtener datos, imágenes, clima, juegos, IA y mucho más.</p>
-      </div>
-    </div>
-  </section>
-  
-  <section class="functions" id="functions">
-    <h2><i class="uil uil-setting"></i> Herramientas Únicas</h2>
-    <div class="functions-grid">
-      <a href="https://kirito-bot-md.vercel.app/canvas.html" class="function-button">
-        <i class="uil uil-image-resize-square"></i>
-        <h3>Generador Canvas</h3>
-        <p>Crea imágenes y diseños asombrosos en segundos.</p>
-      </a>
-      <a href="https://kirito-bot-md.vercel.app/pinterest.html" class="function-button">
-        <i class="uil uil-pinterest"></i>
-        <h3>Búsqueda Pinterest</h3>
-        <p>Encuentra y descarga las mejores imágenes de Pinterest.</p>
-      </a>
-      <a href="https://kirito-bot-md.vercel.app/ia_gemini.html" class="function-button">
-        <i class="uil uil-robot"></i>
-        <h3>IA Gemini</h3>
-        <p>Habla con la inteligencia artificial más avanzada de Google.</p>
-      </a>
-    </div>
-  </section>
+    <section class="section" id="features">
+        <h2>🚀 Funcionalidades Brutales</h2>
+        <div class="features">
+            <div class="feature">
+                <i class="uil uil-robot"></i>
+                <h3>Respuestas Inteligentes</h3>
+                <p>Interactúa con usuarios como un asistente real, usando IA avanzada y aprendizaje automático.</p>
+            </div>
+            <div class="feature">
+                <i class="uil uil-cloud-download"></i>
+                <h3>Descargas Multimedia</h3>
+                <p>Descarga música, videos y stickers desde cualquier plataforma como TikTok, YouTube o Instagram.</p>
+            </div>
+            <div class="feature">
+                <i class="uil uil-users-alt"></i>
+                <h3>Gestión de Grupos</h3>
+                <p>Detecta enlaces, envía bienvenidas, administra grupos y bloquea spam de forma automática.</p>
+            </div>
+            <div class="feature">
+                <i class="uil uil-brain"></i>
+                <h3>Conexión con APIs</h3>
+                <p>Integra APIs personalizadas para obtener datos, imágenes, clima, juegos, IA y mucho más.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section" id="functions">
+        <h2><i class="uil uil-setting"></i> Herramientas Únicas</h2>
+        <div class="functions-grid">
+            <a href="https://kirito-bot-md.vercel.app/canvas.html" class="function-button">
+                <i class="uil uil-image-resize-square"></i>
+                <h3>Generador Canvas</h3>
+                <p>Crea imágenes y diseños asombrosos en segundos.</p>
+            </a>
+            <a href="https://kirito-bot-md.vercel.app/pinterest.html" class="function-button">
+                <i class="uil uil-pinterest"></i>
+                <h3>Búsqueda Pinterest</h3>
+                <p>Encuentra y descarga las mejores imágenes de Pinterest.</p>
+            </a>
+            <a href="https://kirito-bot-md.vercel.app/ia_gemini.html" class="function-button">
+                <i class="uil uil-robot"></i>
+                <h3>IA Gemini</h3>
+                <p>Habla con la inteligencia artificial más avanzada de Google.</p>
+            </a>
+        </div>
+    </section>
 
-  <section class="links" id="enlaces">
-    <h2><i class="uil uil-link"></i> Enlaces Oficiales</h2>
-    <div class="link-grid">
-      <a href="https://wa.me/+50433191934" class="link-item"><i class="uil uil-whatsapp"></i>Soporte</a>
-      <a href="https://chat.whatsapp.com/DRy8jQV104X6TLlDB4Qlvx?mode=ac_t" class="link-item"><i class="uil uil-users-alt"></i>Grupo Oficial</a>
-      <a href="https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m" class="link-item"><i class="uil uil-megaphone"></i>Canal Oficial</a>
-      <a href="https://github.com/Deylin-Eliac" class="link-item"><i class="uil uil-github"></i>GitHub</a>
-    </div>
-  </section>
+    <section class="section" id="enlaces">
+        <h2><i class="uil uil-link"></i> Enlaces Oficiales</h2>
+        <div class="link-grid">
+            <a href="https://wa.me/+50433191934" class="link-item"><i class="uil uil-whatsapp"></i>Soporte</a>
+            <a href="https://chat.whatsapp.com/DRy8jQV104X6TLlDB4Qlvx?mode=ac_t" class="link-item"><i class="uil uil-users-alt"></i>Grupo Oficial</a>
+            <a href="https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m" class="link-item"><i class="uil uil-megaphone"></i>Canal Oficial</a>
+            <a href="https://github.com/Deylin-Eliac" class="link-item"><i class="uil uil-github"></i>GitHub</a>
+        </div>
+    </section>
 
-  <footer>
-    🌐 Sitio desarrollado por <strong>Deylin Dev</strong> · Síguenos para más explosiones visuales 💥
-  </footer>
+    <footer>
+        🌐 Sitio desarrollado por <strong>Deylin Dev</strong> · Síguenos para más explosiones visuales 💥
+    </footer>
 
-  <script>
-    window.addEventListener('load', () => {
-      const preloader = document.getElementById('preloader');
-      const body = document.body;
-      
-      // Simula un tiempo de carga mínimo para que la animación sea visible
-      setTimeout(() => {
-        preloader.style.opacity = '0';
-        preloader.style.visibility = 'hidden';
-        body.classList.add('loaded');
-      }, 2000); // Mantiene el preloader por 2 segundos
-    });
-  </script>
+    <script>
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const body = document.body;
+            
+            // Simula un tiempo de carga mínimo para que la animación sea visible
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+                body.classList.add('loaded');
+            }, 2500); // Mantiene el preloader por 2.5 segundos
+        });
+    </script>
 
 </body>
 </html>
