@@ -1,369 +1,493 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IA Chat (Gemini + DALL·E)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA Chat (Gemini + DALL-E)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ====================
+           Paleta de Colores y Variables
+           ==================== */
+        :root {
+            --bg-color: #050a1a;
+            --primary-color: #39ff14; /* Verde neón (Usuario) */
+            --secondary-color: #e0f7fa;
+            --accent-color: #00bfff; /* Azul neón (IA) */
+            --input-bg-color: #1a233a;
+            --error-color: #ff4081; /* Rosa neón (Error) */
+            --font-primary: 'Orbitron', sans-serif;
+            --font-secondary: 'Share Tech Mono', monospace;
+        }
 
-  <style>
-    :root {
-      --bg-color: #050a1a;
-      --primary-color: #39ff14;
-      --secondary-color: #e0f7fa;
-      --accent-color: #00bfff;
-      --input-bg-color: #1a233a;
-      --font-primary: 'Orbitron', sans-serif;
-      --font-secondary: 'Share Tech Mono', monospace;
-    }
+        /* ====================
+           Estilos Globales y de Base
+           ==================== */
+        *, ::before, ::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--bg-color);
+            color: var(--secondary-color);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        /* Efecto de fondo de grid animado */
+        .bg-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(57, 255, 20, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(57, 255, 20, 0.05) 1px, transparent 1px);
+            background-size: 25px 25px;
+            pointer-events: none;
+            animation: grid-flicker 15s infinite alternate;
+            opacity: 0.1;
+            z-index: -2;
+        }
 
-    html, body {
-      height: 100%;
-      width: 100%;
-      font-family: var(--font-primary);
-      background-color: var(--bg-color);
-      color: var(--primary-color);
-    }
+        @keyframes grid-flicker {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.05; }
+        }
 
-    .chat-container {
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      max-width: 100vw;
-    }
+        /* ====================
+           Contenedor Principal del Chat
+           ==================== */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg-color);
+            position: relative;
+        }
 
-    .chat-header {
-      text-align: center;
-      padding: 15px;
-      font-family: var(--font-secondary);
-      background-color: var(--input-bg-color);
-      border-bottom: 2px solid var(--primary-color);
-      box-shadow: 0 0 10px var(--primary-color);
-      font-size: 1.2em;
-    }
+        .chat-header {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 2px solid var(--primary-color);
+            box-shadow: 0 0 15px var(--primary-color);
+            background-color: var(--input-bg-color);
+            font-family: var(--font-secondary);
+            font-size: 1.2em;
+            color: var(--secondary-color);
+            text-shadow: 0 0 5px var(--primary-color);
+            z-index: 10;
+        }
 
-    .chat-log {
-      flex-grow: 1;
-      overflow-y: auto;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      scroll-behavior: smooth;
-    }
+        .chat-log {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            scroll-behavior: smooth;
+        }
 
-    .chat-log::-webkit-scrollbar {
-      width: 4px;
-    }
-    .chat-log::-webkit-scrollbar-thumb {
-      background: var(--accent-color);
-      border-radius: 5px;
-    }
+        .chat-log::-webkit-scrollbar { width: 8px; }
+        .chat-log::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 5px; }
+        .chat-log::-webkit-scrollbar-track { background: var(--input-bg-color); }
 
-    .message {
-      display: flex;
-      max-width: 90%;
-      padding: 10px;
-      border-radius: 15px;
-      word-wrap: break-word;
-      font-family: var(--font-secondary);
-      animation: message-fade-in 0.3s ease;
-    }
+        .message {
+            display: flex;
+            max-width: 85%;
+            padding: 15px;
+            border-radius: 20px;
+            word-wrap: break-word;
+            font-family: var(--font-secondary);
+            line-height: 1.4;
+            animation: message-fade-in 0.5s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        
+        .user-message {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
 
-    .user-message {
-      background-color: var(--primary-color);
-      color: var(--bg-color);
-      align-self: flex-end;
-    }
+        .ai-message {
+            background: var(--input-bg-color);
+            color: var(--secondary-color);
+            border: 1px solid var(--accent-color);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
 
-    .ai-message {
-      background-color: var(--input-bg-color);
-      color: var(--secondary-color);
-      border: 1px solid var(--accent-color);
-      align-self: flex-start;
-    }
+        .ai-message .img-container {
+            width: 100%;
+            max-width: 300px;
+            margin-top: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 15px var(--accent-color);
+        }
+        
+        .ai-message img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
 
-    .ai-message img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin-top: 10px;
-      box-shadow: 0 0 10px var(--accent-color);
-    }
+        @keyframes message-fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    @keyframes message-fade-in {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+        /* ====================
+           Área de Entrada
+           ==================== */
+        .chat-input-area {
+            display: flex;
+            align-items: flex-end;
+            padding: 10px;
+            background-color: var(--input-bg-color);
+            border-top: 2px solid var(--primary-color);
+            box-shadow: 0 0 15px var(--primary-color);
+            z-index: 10;
+        }
+        
+        #prompt-input-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            position: relative;
+        }
 
-    .chat-input-area {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      padding: 8px;
-      background-color: var(--input-bg-color);
-      border-top: 2px solid var(--primary-color);
-      box-shadow: 0 0 10px var(--primary-color);
-    }
+        #prompt-input {
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            color: var(--secondary-color);
+            padding: 10px;
+            font-family: var(--font-secondary);
+            font-size: 1em;
+            resize: none;
+            max-height: 150px;
+            overflow-y: auto;
+        }
 
-    #prompt-input {
-      flex: 1 1 100%;
-      background-color: transparent;
-      border: none;
-      outline: none;
-      color: var(--secondary-color);
-      padding: 10px;
-      font-family: var(--font-secondary);
-      font-size: 1em;
-      resize: none;
-      min-height: 40px;
-    }
+        #prompt-input::placeholder {
+            color: #777;
+        }
 
-    #attach-file-btn,
-    #generate-btn,
-    #send-btn {
-      background-color: transparent;
-      border: none;
-      color: var(--accent-color);
-      font-size: 1.5em;
-      padding: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+        .attached-image-preview {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px;
+            background-color: rgba(0,0,0,0.3);
+            border-radius: 8px;
+        }
 
-    #attach-file-btn:hover,
-    #send-btn:hover {
-      color: var(--primary-color);
-      text-shadow: 0 0 10px var(--primary-color);
-    }
+        .attached-image-preview img {
+            height: 40px;
+            width: 40px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 1px solid var(--primary-color);
+        }
 
-    #generate-btn {
-      background-color: var(--accent-color);
-      color: var(--bg-color);
-      font-size: 1em;
-      font-family: var(--font-primary);
-      font-weight: bold;
-      border-radius: 20px;
-      padding: 8px 12px;
-      margin-left: auto;
-      box-shadow: 0 0 10px var(--accent-color);
-    }
+        .attached-image-preview button {
+            background: none;
+            border: none;
+            color: var(--error-color);
+            font-size: 1.2em;
+            cursor: pointer;
+        }
 
-    #generate-btn:hover {
-      background-color: var(--primary-color);
-      box-shadow: 0 0 15px var(--primary-color);
-      color: var(--bg-color);
-    }
+        /* Botones de acción */
+        #attach-file-btn, #generate-btn, #send-btn {
+            background-color: transparent;
+            border: none;
+            color: var(--accent-color);
+            font-size: 1.5em;
+            padding: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
 
-    #generate-btn:disabled {
-      background-color: #555;
-      color: #ccc;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
+        #attach-file-btn:hover, #send-btn:hover {
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
 
-    #file-input {
-      display: none;
-    }
+        #generate-btn {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            font-size: 1em;
+            font-family: var(--font-primary);
+            font-weight: bold;
+            border-radius: 20px;
+            padding: 10px 15px;
+            margin-left: 5px;
+            text-shadow: none;
+            box-shadow: 0 0 10px var(--accent-color);
+            transition: all 0.3s ease;
+        }
 
-    .loader {
-      border: 4px solid rgba(255, 255, 255, 0.3);
-      border-top: 4px solid var(--accent-color);
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      animation: spin 1s linear infinite;
-    }
+        #generate-btn:hover {
+            background-color: var(--primary-color);
+            box-shadow: 0 0 15px var(--primary-color);
+            color: var(--bg-color);
+        }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+        #generate-btn:disabled, #send-btn:disabled {
+            color: #555 !important;
+            background-color: #333 !important;
+            cursor: not-allowed;
+            box-shadow: none !important;
+        }
+        
+        #file-input { display: none; }
 
-    @media (max-width: 600px) {
-      .chat-header {
-        font-size: 1em;
-      }
+        /* Loader */
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            animation: spin 1s linear infinite;
+        }
 
-      #generate-btn {
-        font-size: 0.9em;
-        padding: 6px 10px;
-      }
-
-      .chat-input-area {
-        flex-direction: column;
-        gap: 5px;
-      }
-
-      #prompt-input {
-        width: 100%;
-      }
-    }
-  </style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-  <div class="chat-container">
-    <header class="chat-header">IA Chat <i class="fas fa-robot"></i></header>
+    <div class="bg-grid"></div>
 
-    <div class="chat-log" id="chat-log">
-      <div class="message ai-message">¡Hola! Soy una IA. Puedes preguntarme sobre una imagen o pedirme que genere una.</div>
+    <div class="chat-container">
+        <header class="chat-header">
+            IA Chat <i class="fas fa-robot"></i>
+        </header>
+
+        <div class="chat-log" id="chat-log">
+            <div class="message ai-message">¡Hola! Soy una IA. Puedes adjuntar una imagen para que la analice o describir una imagen para que la genere.</div>
+        </div>
+
+        <div class="chat-input-area">
+            <button id="attach-file-btn"><i class="fas fa-plus"></i></button>
+            <input type="file" id="file-input" accept="image/*">
+            <div id="prompt-input-container">
+                <div id="image-preview" style="display: none;"></div>
+                <textarea id="prompt-input" rows="1" placeholder="Escribe un prompt o pregunta..."></textarea>
+            </div>
+            <button id="generate-btn">Generar</button>
+            <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+        </div>
     </div>
 
-    <div class="chat-input-area">
-      <button id="attach-file-btn"><i class="fas fa-plus"></i></button>
-      <input type="file" id="file-input" accept="image/*" />
-      <textarea id="prompt-input" rows="1" placeholder="Escribe un prompt o pregunta..."></textarea>
-      <button id="generate-btn">Generar</button>
-      <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
-    </div>
-  </div>
+    <script>
+        const chatLog = document.getElementById('chat-log');
+        const promptInput = document.getElementById('prompt-input');
+        const sendBtn = document.getElementById('send-btn');
+        const attachFileBtn = document.getElementById('attach-file-btn');
+        const fileInput = document.getElementById('file-input');
+        const generateBtn = document.getElementById('generate-btn');
+        const imagePreviewContainer = document.getElementById('image-preview');
+        
+        const API_ENDPOINT = "https://g-mini-ia.vercel.app/api/gemini";
 
-  <script>
-    const chatLog = document.getElementById('chat-log');
-    const promptInput = document.getElementById('prompt-input');
-    const sendBtn = document.getElementById('send-btn');
-    const attachFileBtn = document.getElementById('attach-file-btn');
-    const fileInput = document.getElementById('file-input');
-    const generateBtn = document.getElementById('generate-btn');
+        // Función para agregar mensajes al chat
+        function addMessage(text, sender, imageUrl = null) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'ai-message');
+            
+            if (imageUrl) {
+                const imgContainer = document.createElement('div');
+                imgContainer.classList.add('img-container');
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.alt = 'Imagen generada o adjunta';
+                imgContainer.appendChild(img);
+                messageDiv.appendChild(imgContainer);
+            }
+            
+            const textNode = document.createTextNode(text);
+            messageDiv.appendChild(textNode);
+            
+            chatLog.appendChild(messageDiv);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+        
+        // Simular un mensaje de carga de la IA
+        function showLoadingMessage() {
+            const loadingMsg = document.createElement('div');
+            loadingMsg.classList.add('message', 'ai-message');
+            loadingMsg.innerHTML = '<div class="loader"></div>';
+            loadingMsg.id = 'loading-message';
+            chatLog.appendChild(loadingMsg);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
 
-    const API_GEMINI = "https://g-mini-ia.vercel.app/api/gemini";
+        // Eliminar el mensaje de carga
+        function removeLoadingMessage() {
+            const loadingMsg = document.getElementById('loading-message');
+            if (loadingMsg) {
+                loadingMsg.remove();
+            }
+        }
+        
+        // Desactivar botones durante la carga
+        function setButtonsState(isDisabled) {
+            sendBtn.disabled = isDisabled;
+            generateBtn.disabled = isDisabled;
+            attachFileBtn.disabled = isDisabled;
+            promptInput.disabled = isDisabled;
+        }
 
-    function addMessage(text, sender, imageUrl = null) {
-      const messageDiv = document.createElement('div');
-      messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'ai-message');
+        // Función para convertir una imagen a Base64
+        function toBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+        
+        // Función unificada para manejar todas las peticiones
+        async function handleRequest(prompt, isImageGeneration = false) {
+            setButtonsState(true);
+            const imageFile = fileInput.files[0];
+            const payload = {
+                prompts: [prompt],
+                imageBase64List: [],
+                imageUrls: [],
+                mimeTypes: [],
+            };
+            
+            if (isImageGeneration) {
+                payload.prompts = [`Genera una imagen de: ${prompt}`];
+            } else if (imageFile) {
+                const base64 = await toBase64(imageFile);
+                payload.imageBase64List.push(base64);
+                payload.mimeTypes.push(imageFile.type);
+            }
 
-      if (imageUrl) {
-        const img = document.createElement('img');
-        img.src = imageUrl;
-        img.alt = text;
-        messageDiv.appendChild(img);
-      }
+            if (imageFile && !isImageGeneration) {
+                const userImageURL = URL.createObjectURL(imageFile);
+                addMessage(prompt, 'user', userImageURL);
+            } else {
+                addMessage(prompt, 'user');
+            }
+            showLoadingMessage();
 
-      const textNode = document.createTextNode(text);
-      messageDiv.appendChild(textNode);
-      chatLog.appendChild(messageDiv);
-      chatLog.scrollTop = chatLog.scrollHeight;
-    }
+            try {
+                const response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
 
-    function showLoadingMessage() {
-      const loadingMsg = document.createElement('div');
-      loadingMsg.classList.add('message', 'ai-message');
-      loadingMsg.innerHTML = '<div class="loader"></div>';
-      loadingMsg.id = 'loading-message';
-      chatLog.appendChild(loadingMsg);
-      chatLog.scrollTop = chatLog.scrollHeight;
-    }
+                if (!response.ok) {
+                    throw new Error(`Error de red: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                removeLoadingMessage();
 
-    function removeLoadingMessage() {
-      const loadingMsg = document.getElementById('loading-message');
-      if (loadingMsg) loadingMsg.remove();
-    }
+                if (data.from === 'image-generator') {
+                    addMessage('Aquí está tu imagen generada:', 'ai', data.image);
+                } else if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    addMessage(data.candidates[0].content.parts[0].text, 'ai');
+                } else {
+                    addMessage("No pude obtener una respuesta válida.", 'ai');
+                }
+            } catch (error) {
+                console.error("Error en la solicitud:", error);
+                removeLoadingMessage();
+                addMessage("Lo siento, hubo un error al procesar tu solicitud. " + error.message, 'ai');
+            } finally {
+                setButtonsState(false);
+                promptInput.value = '';
+                fileInput.value = null;
+                imagePreviewContainer.style.display = 'none';
+                promptInput.style.height = 'auto'; // Resetear la altura
+            }
+        }
 
-    function toBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-      });
-    }
-
-    async function handleRequest(prompt, isImageGeneration = false) {
-      const imageFile = fileInput.files[0];
-      const payload = {
-        prompts: [prompt],
-        imageBase64List: [],
-        imageUrls: [],
-        mimeTypes: [],
-      };
-
-      if (isImageGeneration) {
-        payload.prompts = [`Genera una imagen de: ${prompt}`];
-      } else if (imageFile) {
-        const base64 = await toBase64(imageFile);
-        payload.imageBase64List.push(base64);
-        payload.mimeTypes.push(imageFile.type);
-      }
-
-      if (imageFile && !isImageGeneration) {
-        const userImageURL = URL.createObjectURL(imageFile);
-        addMessage(prompt, 'user', userImageURL);
-      } else {
-        addMessage(prompt, 'user');
-      }
-
-      showLoadingMessage();
-
-      try {
-        const response = await fetch(API_GEMINI, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
+        // Lógica de los botones y eventos
+        sendBtn.addEventListener('click', () => {
+            const prompt = promptInput.value.trim();
+            if (prompt || fileInput.files[0]) {
+                handleRequest(prompt);
+            } else {
+                addMessage("Por favor, escribe un prompt o adjunta una imagen.", 'ai');
+            }
         });
 
-        if (!response.ok) throw new Error(`Error de red: ${response.status}`);
-        const data = await response.json();
-        removeLoadingMessage();
+        generateBtn.addEventListener('click', () => {
+            const prompt = promptInput.value.trim();
+            if (prompt) {
+                handleRequest(prompt, true);
+            } else {
+                addMessage("Por favor, escribe una descripción para generar la imagen.", 'ai');
+            }
+        });
 
-        if (data.from === 'image-generator') {
-          addMessage('Aquí está tu imagen generada:', 'ai', data.image);
-        } else if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
-          addMessage(data.candidates[0].content.parts[0].text, 'ai');
-        } else {
-          addMessage("No pude obtener una respuesta válida.", 'ai');
-        }
-      } catch (error) {
-        console.error("Error en la solicitud:", error);
-        removeLoadingMessage();
-        addMessage("Lo siento, hubo un error al procesar tu solicitud.", 'ai');
-      }
+        attachFileBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                reader.onload = e => {
+                    imagePreviewContainer.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview">
+                        <button onclick="clearImagePreview()"><i class="fas fa-times"></i></button>
+                    `;
+                    imagePreviewContainer.style.display = 'flex';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imagePreviewContainer.style.display = 'none';
+            }
+        });
 
-      promptInput.value = '';
-      fileInput.value = null;
-    }
+        window.clearImagePreview = () => {
+            fileInput.value = null;
+            imagePreviewContainer.style.display = 'none';
+        };
 
-    sendBtn.addEventListener('click', () => {
-      const prompt = promptInput.value.trim();
-      if (prompt || fileInput.files[0]) {
-        handleRequest(prompt);
-      } else {
-        addMessage("Por favor, escribe un prompt o adjunta una imagen.", 'ai');
-      }
-    });
+        promptInput.addEventListener('input', () => {
+            promptInput.style.height = 'auto';
+            promptInput.style.height = promptInput.scrollHeight + 'px';
+        });
 
-    generateBtn.addEventListener('click', () => {
-      const prompt = promptInput.value.trim();
-      if (prompt) {
-        handleRequest(prompt, true);
-      } else {
-        addMessage("Por favor, escribe una descripción para generar la imagen.", 'ai');
-      }
-    });
-
-    attachFileBtn.addEventListener('click', () => {
-      fileInput.click();
-    });
-
-    promptInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        sendBtn.click();
-      }
-    });
-  </script>
+        promptInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendBtn.click();
+            }
+        });
+    </script>
 </body>
 </html>
