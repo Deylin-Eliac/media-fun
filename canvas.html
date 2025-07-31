@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2300bfff' d='M10 21V10l3-5l-3 5V3H7l-3 5v8h3v-3l3 5m7-14h-3l3-5l3 5h-3v14h3v-8l-3-5m-7 4h10'/%3E%3C/svg%3E">
     
     <style>
         /* ====================
@@ -91,6 +92,27 @@
             color: var(--secondary-color);
             text-shadow: 0 0 5px var(--primary-color);
             z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .chat-header i {
+            margin-left: 10px;
+            font-size: 1.5em;
+            color: var(--accent-color);
+            text-shadow: 0 0 5px var(--accent-color);
+        }
+        
+        /* Icono de Gemini en la cabecera */
+        .gemini-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            margin-left: 10px;
+        }
+        .gemini-icon svg path {
+            fill: var(--accent-color);
         }
 
         .chat-log {
@@ -120,22 +142,75 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Estilo para el contenido de texto (Markdown) */
         .message-content {
             white-space: pre-wrap;
-            /* Estilos para el markdown */
-            /* Corrección: El texto de la IA es secundario, el del usuario es primario */
             color: var(--secondary-color);
         }
         .user-message .message-content {
             color: var(--bg-color);
         }
-        
+
+        /* Contenedor del avatar del usuario */
+        .user-message-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-family: var(--font-primary);
+            font-size: 0.9em;
+            color: var(--bg-color);
+        }
+        .user-message-header .avatar {
+            width: 30px;
+            height: 30px;
+            background-color: var(--bg-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
         .user-message {
             background: var(--primary-color);
             color: var(--bg-color);
             align-self: flex-end;
             border-bottom-right-radius: 5px;
+            padding: 15px;
+        }
+
+        /* Contenedor del avatar de la IA */
+        .ai-message-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-family: var(--font-primary);
+            font-size: 0.9em;
+            color: var(--secondary-color);
+        }
+        .ai-message-header .avatar {
+            width: 30px;
+            height: 30px;
+            background-color: var(--input-bg-color);
+            border: 2px solid var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+
+        /* Icono de Gemini dentro del mensaje de la IA */
+        .ai-message-header .avatar .gemini-icon {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+        }
+        .ai-message-header .avatar .gemini-icon svg path {
+            fill: var(--accent-color);
         }
 
         .ai-message {
@@ -144,9 +219,10 @@
             border: 1px solid var(--accent-color);
             align-self: flex-start;
             border-bottom-left-radius: 5px;
+            padding: 15px;
         }
-        
-        /* Estilos específicos para Markdown */
+
+        /* Estilos para Markdown */
         .message-content strong, .message-content b {
             color: var(--primary-color);
             text-shadow: 0 0 5px var(--primary-color);
@@ -188,7 +264,6 @@
             overflow: hidden;
         }
         
-        /* La imagen se ajusta a su contenedor */
         .message img {
             width: 100%;
             height: auto;
@@ -340,12 +415,27 @@
 
     <div class="chat-container">
         <header class="chat-header">
-            IA Chat <i class="fas fa-robot"></i>
+            IA Chat
+            <div class="gemini-icon">
+                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+                    <path d='M10 21V10l3-5l-3 5V3H7l-3 5v8h3v-3l3 5m7-14h-3l3-5l3 5h-3v14h3v-8l-3-5m-7 4h10'/>
+                </svg>
+            </div>
         </header>
 
         <div class="chat-log" id="chat-log">
             <div class="message ai-message">
-                <div class="message-content">¡Hola! Soy una IA. Puedes adjuntar una imagen para que la analice o describir una imagen para que la genere.</div>
+                <div class="ai-message-header">
+                    <div class="avatar">
+                        <div class="gemini-icon">
+                            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+                                <path d='M10 21V10l3-5l-3 5V3H7l-3 5v8h3v-3l3 5m7-14h-3l3-5l3 5h-3v14h3v-8l-3-5m-7 4h10'/>
+                            </svg>
+                        </div>
+                    </div>
+                    <span>Gemini</span>
+                </div>
+                <div class="message-content">¡Hola! Soy Gemini. Puedes adjuntar una imagen para que la analice o describir una imagen para que la genere.</div>
             </div>
         </div>
 
@@ -362,7 +452,7 @@
     </div>
 
     <script>
- 
+        // === Ajuste de altura para móviles ===
         const setAppHeight = () => {
             const doc = document.documentElement;
             doc.style.setProperty('--app-height', `${window.innerHeight}px`);
@@ -381,17 +471,43 @@
         const imagePreviewContainer = document.getElementById('image-preview');
         
         const API_ENDPOINT = "https://g-mini-ia.vercel.app/api/gemini";
-        const MAX_IMAGE_SIZE_KB = 500; // Define el tamaño máximo deseado en KB
+        const MAX_IMAGE_SIZE_KB = 500;
 
-        // Función para convertir Markdown a HTML y aplicar estilos
+        // Configuración para el markdown
+        marked.setOptions({
+            breaks: true, // Esto hace que los saltos de línea se conviertan en <br>
+            gfm: true,
+        });
+
+        // Función para convertir Markdown a HTML
         function markdownToHtml(markdownText) {
-            // El marked.js procesa el texto Markdown a HTML
             return marked.parse(markdownText);
         }
 
+        // Función para añadir mensajes al chat con avatares y formato correcto
         function addMessage(text, sender, imageUrl = null) {
             const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'ai-message');
+            messageDiv.classList.add('message', `${sender}-message`);
+
+            // Si es un mensaje de la IA, añade la cabecera con el avatar y nombre
+            if (sender === 'ai') {
+                const messageHeader = document.createElement('div');
+                messageHeader.classList.add('ai-message-header');
+                
+                const avatar = document.createElement('div');
+                avatar.classList.add('avatar');
+                avatar.innerHTML = `
+                    <div class="gemini-icon">
+                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+                            <path d='M10 21V10l3-5l-3 5V3H7l-3 5v8h3v-3l3 5m7-14h-3l3-5l3 5h-3v14h3v-8l-3-5m-7 4h10'/>
+                        </svg>
+                    </div>
+                `;
+                messageHeader.appendChild(avatar);
+                messageHeader.innerHTML += `<span>Gemini</span>`;
+
+                messageDiv.appendChild(messageHeader);
+            }
             
             if (imageUrl) {
                 const imgContainer = document.createElement('div');
@@ -406,7 +522,6 @@
             if (text) {
                 const textDiv = document.createElement('div');
                 textDiv.classList.add('message-content');
-                // Aquí usamos la nueva función para convertir Markdown a HTML
                 textDiv.innerHTML = markdownToHtml(text);
                 messageDiv.appendChild(textDiv);
             }
@@ -418,8 +533,8 @@
         function showLoadingMessage() {
             const loadingMsg = document.createElement('div');
             loadingMsg.classList.add('message', 'ai-message');
-            loadingMsg.innerHTML = '<div class="loader"></div>';
             loadingMsg.id = 'loading-message';
+            loadingMsg.innerHTML = `<div class="ai-message-header"><div class="avatar"><div class="gemini-icon"><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M10 21V10l3-5l-3 5V3H7l-3 5v8h3v-3l3 5m7-14h-3l3-5l3 5h-3v14h3v-8l-3-5m-7 4h10'/></svg></div></div><span>Gemini</span></div><div class="message-content"><div class="loader"></div></div>`;
             chatLog.appendChild(loadingMsg);
             chatLog.scrollTop = chatLog.scrollHeight;
         }
@@ -437,8 +552,7 @@
             attachFileBtn.disabled = isDisabled;
             promptInput.disabled = isDisabled;
         }
-
-        // Nueva función para comprimir una imagen antes de convertirla a Base64
+        
         function compressImage(file, quality = 0.8) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -446,111 +560,11 @@
                     const img = new Image();
                     img.onload = () => {
                         const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 1024; // Puedes ajustar el tamaño máximo
+                        const MAX_WIDTH = 1024;
                         const MAX_HEIGHT = 1024;
                         let width = img.width;
                         let height = img.height;
 
                         if (width > height) {
                             if (width > MAX_WIDTH) {
-                                height *= MAX_WIDTH / width;
-                                width = MAX_WIDTH;
-                            }
-                        } else {
-                            if (height > MAX_HEIGHT) {
-                                width *= MAX_HEIGHT / height;
-                                height = MAX_HEIGHT;
-                            }
-                        }
-
-                        canvas.width = width;
-                        canvas.height = height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
-                        
-                        // Convertir el canvas a un Blob (archivo binario)
-                        canvas.toBlob((blob) => {
-                            if (blob) {
-                                // Devolver el blob comprimido
-                                resolve(blob);
-                            } else {
-                                reject(new Error('Canvas to Blob conversion failed'));
-                            }
-                        }, file.type, quality);
-                    };
-                    img.src = event.target.result;
-                };
-                reader.onerror = (error) => reject(error);
-                reader.readAsDataURL(file);
-            });
-        }
-
-        // Función auxiliar para convertir un Blob (archivo comprimido) a Base64
-        function blobToBase64(blob) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-                reader.readAsDataURL(blob);
-            });
-        }
-        
-        async function handleRequest(prompt, isImageGeneration = false) {
-            setButtonsState(true);
-            const imageFile = fileInput.files[0];
-            const payload = {
-                prompts: [prompt],
-                imageBase64List: [],
-                imageUrls: [],
-                mimeTypes: [],
-            };
-            
-            if (isImageGeneration) {
-                payload.prompts = [`Genera una imagen de: ${prompt}`];
-            } else if (imageFile) {
-                try {
-                    // Nuevo: Comprimir la imagen antes de enviarla
-                    const compressedBlob = await compressImage(imageFile);
-                    const base64 = await blobToBase64(compressedBlob);
-                    
-                    payload.imageBase64List.push(base64);
-                    payload.mimeTypes.push(imageFile.type);
-                    
-                    // Mostrar la imagen original del usuario en el chat mientras se carga la respuesta
-                    const userImageURL = URL.createObjectURL(imageFile);
-                    addMessage(prompt, 'user', userImageURL);
-
-                } catch (error) {
-                    console.error("Error al comprimir o procesar la imagen:", error);
-                    removeLoadingMessage();
-                    addMessage("Lo siento, hubo un error con la imagen que subiste.", 'ai');
-                    setButtonsState(false);
-                    return;
-                }
-            } else {
-                addMessage(prompt, 'user');
-            }
-            
-            showLoadingMessage();
-
-            try {
-                const response = await fetch(API_ENDPOINT, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Error de red: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                removeLoadingMessage();
-
-                if (data.from === 'image-generator') {
-                    addMessage('Aquí está tu imagen generada:', 'ai', data.image);
-                } else if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-                    // El texto se procesa automáticamente en addMessage
-                    addMessage(data.candidates[0].content.parts[0].text, 'ai');
-                } else {
-             
+                                height *= MAX_WI
