@@ -8,6 +8,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <style>
+    :root {
+      --kirito-blue: #00ffe7;
+      --kirito-dark: #0f0c29;
+      --kirito-purple: #302b63;
+      --kirito-purple-dark: #24243e;
+      --text-light: #fff;
+      --text-muted: #ccc;
+    }
+
     * {
       margin: 0; padding: 0;
       box-sizing: border-box;
@@ -16,11 +25,72 @@
 
     body {
       font-family: 'Roboto', sans-serif;
-      background: radial-gradient(circle at top, #0f0c29, #302b63, #24243e);
-      color: #fff;
+      background: radial-gradient(circle at top, var(--kirito-dark), var(--kirito-purple), var(--kirito-purple-dark));
+      color: var(--text-light);
       overflow-x: hidden;
+      opacity: 0;
+      transition: opacity 1s ease-in;
     }
 
+    body.loaded {
+      opacity: 1;
+    }
+
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--kirito-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out;
+    }
+
+    .preloader-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .preloader-content img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--kirito-blue);
+      box-shadow: 0 0 30px var(--kirito-blue);
+      animation: kiritoGlow 2s infinite alternate, rotate 15s linear infinite;
+    }
+
+    .preloader-content h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      color: var(--kirito-blue);
+      text-shadow: 0 0 15px var(--kirito-blue);
+      margin-top: 1rem;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    @keyframes kiritoGlow {
+      from {box-shadow: 0 0 15px var(--kirito-blue), 0 0 25px var(--kirito-blue) inset;}
+      to {box-shadow: 0 0 25px var(--kirito-blue), 0 0 40px var(--kirito-blue) inset;}
+    }
+    @keyframes rotate {
+      from {transform: rotate(0deg);}
+      to {transform: rotate(360deg);}
+    }
+
+    /* Hero Section */
     .hero {
       height: 100vh;
       display: flex;
@@ -36,16 +106,21 @@
     .hero h1 {
       font-family: 'Orbitron', sans-serif;
       font-size: 3.5rem;
-      color: #0ff;
-      text-shadow: 0 0 20px #0ff;
+      color: var(--kirito-blue);
+      text-shadow: 0 0 20px var(--kirito-blue);
       animation: glitch 2s infinite;
+      transition: transform 0.3s;
+    }
+    .hero h1:hover {
+      transform: scale(1.05);
     }
 
     .hero p {
       font-size: 1.2rem;
-      color: #ccc;
+      color: var(--text-muted);
       max-width: 600px;
       margin-top: 1rem;
+      animation: fadeInUp 1.5s ease-out;
     }
 
     @keyframes glitch {
@@ -67,7 +142,8 @@
       cursor: pointer;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 0 20px #00ffe7;
+      box-shadow: 0 0 20px var(--kirito-blue);
+      transition: all 0.3s ease;
     }
 
     .cta-button::after {
@@ -83,12 +159,16 @@
     .cta-button:hover::after {
       left: 100%;
     }
+    .cta-button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px var(--kirito-blue);
+    }
 
     .down-arrow {
       position: absolute;
       bottom: 20px;
       font-size: 2rem;
-      color: #0ff;
+      color: var(--kirito-blue);
       animation: bounce 2s infinite;
     }
 
@@ -96,99 +176,130 @@
       0%, 100% {transform: translateY(0);}
       50% {transform: translateY(15px);}
     }
+    @keyframes fadeInUp {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
 
+    /* General Section Styling */
     .section {
       padding: 80px 20px;
-      background-color: #1a1a2e;
+      background-color: var(--kirito-purple-dark);
       text-align: center;
     }
 
     .section h2 {
       font-size: 2rem;
       margin-bottom: 20px;
-      color: #00ffe7;
+      color: var(--kirito-blue);
+      text-shadow: 0 0 10px var(--kirito-blue);
+      animation: fadeInUp 1s ease-out;
     }
 
-    .features {
+    .features, .link-grid, .functions-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 30px;
       margin-top: 2rem;
     }
 
-    .feature {
+    .feature, .link-item, .function-button {
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid #00ffe7;
+      border: 1px solid var(--kirito-blue);
       padding: 20px;
       border-radius: 20px;
       transition: transform 0.3s, box-shadow 0.3s;
+      animation: fadeIn 1s ease-out;
+      animation-fill-mode: both;
     }
-
-    .feature:hover {
+    .feature:hover, .link-item:hover, .function-button:hover {
       transform: translateY(-10px);
-      box-shadow: 0 0 20px #00ffe7;
-    }
-
-    .feature i {
-      font-size: 3rem;
-      color: #00ffe7;
-      margin-bottom: 10px;
-    }
-
-    .links {
-      background-color: #0f0c29;
-      padding: 60px 20px;
-      text-align: center;
-    }
-
-    .links h2 {
-      font-size: 2rem;
-      color: #00ffe7;
-      margin-bottom: 30px;
-    }
-
-    .link-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    .link-item {
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid #00ffe7;
-      border-radius: 15px;
-      padding: 15px 30px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: bold;
-      text-decoration: none;
-      color: white;
-      transition: all 0.3s ease;
-    }
-
-    .link-item i {
-      font-size: 1.5rem;
-      color: #00ffe7;
-    }
-
-    .link-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 15px #00ffe7;
+      box-shadow: 0 0 20px var(--kirito-blue);
       background: rgba(0, 255, 231, 0.1);
     }
 
+    .feature i, .link-item i, .function-button i {
+      font-size: 3rem;
+      color: var(--kirito-blue);
+      margin-bottom: 10px;
+    }
+
+    .feature h3, .function-button h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    
+    .link-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-light);
+      font-weight: bold;
+    }
+
+    /* New Functions Section */
+    .functions {
+      background-color: var(--kirito-dark);
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .functions h2 {
+      color: var(--kirito-blue);
+      margin-bottom: 30px;
+    }
+    .function-button {
+      text-decoration: none;
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+    }
+
     footer {
-      background-color: #0f0c29;
+      background-color: var(--kirito-dark);
       padding: 20px;
       text-align: center;
       font-size: 0.9rem;
       color: #aaa;
     }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      .hero p { font-size: 1rem; }
+      .cta-button { padding: 0.8rem 1.5rem; font-size: 1rem; }
+      .section { padding: 60px 10px; }
+      .section h2 { font-size: 1.8rem; }
+      .features, .link-grid, .functions-grid { grid-template-columns: 1fr; }
+    }
+    @media (min-width: 769px) {
+        .features .feature:nth-child(1) { animation-delay: 0.2s; }
+        .features .feature:nth-child(2) { animation-delay: 0.4s; }
+        .features .feature:nth-child(3) { animation-delay: 0.6s; }
+        .features .feature:nth-child(4) { animation-delay: 0.8s; }
+        .link-grid .link-item:nth-child(1) { animation-delay: 0.2s; }
+        .link-grid .link-item:nth-child(2) { animation-delay: 0.4s; }
+        .link-grid .link-item:nth-child(3) { animation-delay: 0.6s; }
+        .link-grid .link-item:nth-child(4) { animation-delay: 0.8s; }
+        .functions-grid .function-button:nth-child(1) { animation-delay: 0.2s; }
+        .functions-grid .function-button:nth-child(2) { animation-delay: 0.4s; }
+        .functions-grid .function-button:nth-child(3) { animation-delay: 0.6s; }
+    }
   </style>
 </head>
 <body>
+
+  <div id="preloader">
+    <div class="preloader-content">
+      <img src="https://i.imgur.com/3YQ5SgJ.png" alt="Kirito Bot Logo">
+      <h1>Cargando...</h1>
+    </div>
+  </div>
 
   <section class="hero" id="inicio">
     <h1>⚡ Kirito-Bot</h1>
@@ -222,8 +333,28 @@
       </div>
     </div>
   </section>
+  
+  <section class="functions" id="functions">
+    <h2><i class="uil uil-setting"></i> Herramientas Únicas</h2>
+    <div class="functions-grid">
+      <a href="https://kirito-bot-md.vercel.app/canvas.html" class="function-button">
+        <i class="uil uil-image-resize-square"></i>
+        <h3>Generador Canvas</h3>
+        <p>Crea imágenes y diseños asombrosos en segundos.</p>
+      </a>
+      <a href="https://kirito-bot-md.vercel.app/pinterest.html" class="function-button">
+        <i class="uil uil-pinterest"></i>
+        <h3>Búsqueda Pinterest</h3>
+        <p>Encuentra y descarga las mejores imágenes de Pinterest.</p>
+      </a>
+      <a href="https://kirito-bot-md.vercel.app/ia_gemini.html" class="function-button">
+        <i class="uil uil-robot"></i>
+        <h3>IA Gemini</h3>
+        <p>Habla con la inteligencia artificial más avanzada de Google.</p>
+      </a>
+    </div>
+  </section>
 
-  <!-- NUEVA SECCIÓN DE ENLACES OFICIALES -->
   <section class="links" id="enlaces">
     <h2><i class="uil uil-link"></i> Enlaces Oficiales</h2>
     <div class="link-grid">
@@ -237,6 +368,20 @@
   <footer>
     🌐 Sitio desarrollado por <strong>Deylin Dev</strong> · Síguenos para más explosiones visuales 💥
   </footer>
+
+  <script>
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      const body = document.body;
+      
+      // Simula un tiempo de carga mínimo para que la animación sea visible
+      setTimeout(() => {
+        preloader.style.opacity = '0';
+        preloader.style.visibility = 'hidden';
+        body.classList.add('loaded');
+      }, 2000); // Mantiene el preloader por 2 segundos
+    });
+  </script>
 
 </body>
 </html>
