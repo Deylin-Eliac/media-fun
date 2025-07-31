@@ -1,120 +1,379 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>⚙️ Pantalla de Carga Kirito</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }body {
-  background: linear-gradient(135deg, #0f0f3e, #1a1a4f);
-  color: #fff;
-  font-family: 'Orbitron', sans-serif;
-  overflow: hidden;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Imágenes de IA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* ====================
+           Estilos Globales y Variables
+           ==================== */
+        :root {
+            --bg-color: #050a1a;
+            --primary-color: #39ff14; /* Verde neón */
+            --secondary-color: #e0f7fa;
+            --accent-color: #00bfff; /* Azul neón */
+            --font-primary: 'Orbitron', sans-serif;
+            --font-secondary: 'Share Tech Mono', monospace;
+        }
 
-.loader-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
+        *, ::before, ::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-.progress-bar {
-  width: 300px;
-  height: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 40px;
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-}
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
 
-.progress {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #00f0ff, #008cff);
-  border-radius: 10px;
-  animation: loadProgress 6s forwards;
-}
+        /* ====================
+           Fondo de Matriz de Datos
+           ==================== */
+        .matrix-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -2;
+        }
 
-@keyframes loadProgress {
-  0% { width: 0%; }
-  100% { width: 100%; }
-}
+        .matrix-background span {
+            position: absolute;
+            font-family: monospace;
+            color: rgba(57, 255, 20, 0.1);
+            animation: matrix-flow 10s linear infinite;
+        }
+        
+        @keyframes matrix-flow {
+            0% { transform: translateY(-100%); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
 
-.text {
-  font-size: 2rem;
-  letter-spacing: 2px;
-  position: relative;
-  display: inline-block;
-}
+        /* ====================
+           Pantalla de Carga de IA
+           ==================== */
+        #loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 10, 26, 0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 1.5s ease-in-out;
+        }
 
-.letter {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(50px) scale(0.8);
-  animation: rise 0.8s forwards;
-}
+        #loader-container.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
 
-.letter:nth-child(1) { animation-delay: 6s; }
-.letter:nth-child(2) { animation-delay: 6.2s; }
-.letter:nth-child(3) { animation-delay: 6.4s; }
-.letter:nth-child(4) { animation-delay: 6.6s; }
-.letter:nth-child(5) { animation-delay: 6.8s; }
-.letter:nth-child(6) { animation-delay: 7s; }
+        .ai-core-loader {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 5px solid transparent;
+            border-top-color: var(--accent-color);
+            border-right-color: var(--primary-color);
+            border-bottom-color: var(--accent-color);
+            animation: spin 1.5s linear infinite, glow-pulse 2s infinite alternate;
+            position: relative;
+        }
 
-@keyframes rise {
-  0% {
-    opacity: 0;
-    transform: translateY(50px) scale(0.8) rotate(-30deg);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0px) scale(1) rotate(0deg);
-    color: #00ffff;
-    text-shadow: 0 0 10px #00f0ff, 0 0 20px #008cff;
-  }
-}
+        .ai-core-loader::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-left-color: var(--primary-color);
+            border-right-color: var(--accent-color);
+            animation: spin 2s linear infinite reverse;
+        }
 
-.impact {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(0,255,255,0.3) 0%, transparent 70%);
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  animation: explosion 1s ease-out 5.8s forwards;
-  z-index: -1;
-}
+        .ai-core-loader::after {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            right: 30px;
+            bottom: 30px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            animation: ai-core-pulse 1.5s infinite;
+        }
 
-@keyframes explosion {
-  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
-}
+        .loading-text {
+            font-family: var(--font-primary);
+            font-size: 1.5em;
+            text-shadow: 0 0 5px var(--primary-color);
+            margin-top: 30px;
+            animation: text-flicker 2s infinite;
+        }
 
-  </style>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+        /* Animaciones del loader */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        @keyframes glow-pulse {
+            from { box-shadow: 0 0 10px var(--primary-color); }
+            to { box-shadow: 0 0 25px var(--accent-color); }
+        }
+        @keyframes ai-core-pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes text-flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; text-shadow: 0 0 10px var(--primary-color); }
+            20%, 24%, 55% { opacity: 0.5; text-shadow: none; }
+        }
+
+        /* ====================
+           Página del Generador de IA
+           ==================== */
+        #generator-page {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            height: 100vh;
+            width: 100vw;
+            background: rgba(5, 10, 26, 0.95);
+            border: 3px solid var(--primary-color);
+            box-shadow: 0 0 30px var(--primary-color);
+            animation: fade-in 1.5s ease-in-out;
+            overflow-y: auto;
+        }
+        
+        @keyframes fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .generator-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .generator-title {
+            font-family: var(--font-primary);
+            font-size: 2em;
+            color: var(--accent-color);
+            text-shadow: 2px 2px 0 var(--primary-color);
+        }
+
+        .input-form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        #prompt-input {
+            width: 100%;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            font-family: var(--font-secondary);
+            font-size: 1em;
+            color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 10px var(--primary-color);
+            transition: box-shadow 0.3s ease;
+        }
+
+        #prompt-input:focus {
+            box-shadow: 0 0 20px var(--accent-color);
+        }
+
+        #generate-button {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        #generate-button:hover {
+            background-color: var(--accent-color);
+            transform: scale(1.02);
+            box-shadow: 0 0 15px var(--accent-color);
+        }
+
+        #generate-button:active {
+            transform: scale(1);
+        }
+
+        #image-container {
+            width: 90%;
+            max-width: 500px;
+            min-height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 2px dashed var(--primary-color);
+            border-radius: 8px;
+            padding: 10px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 5px;
+            animation: image-fade-in 1s ease-out;
+        }
+
+        .placeholder-text {
+            color: var(--secondary-color);
+            font-family: var(--font-secondary);
+            animation: text-pulse 2s infinite alternate;
+        }
+
+        @keyframes image-fade-in {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes text-pulse {
+            from { opacity: 0.5; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
-  <div class="loader-container">
-    <div class="progress-bar">
-      <div class="progress"></div>
+
+    <div class="matrix-background" id="matrix-container"></div>
+
+    <div id="loader-container">
+        <div class="ai-core-loader"></div>
+        <p class="loading-text">GENERATING IMAGERY...</p>
     </div>
-    <div class="impact"></div>
-    <div class="text">
-      <span class="letter">K</span>
-      <span class="letter">I</span>
-      <span class="letter">R</span>
-      <span class="letter">I</span>
-      <span class="letter">T</span>
-      <span class="letter">O</span>
+
+    <div id="generator-page">
+        <header class="generator-header">
+            <h2 class="generator-title">AI Image Generator</h2>
+        </header>
+        <div class="input-form">
+            <input type="text" id="prompt-input" placeholder="Escribe tu prompt (ej. 'cyberpunk city at night')...">
+            <button id="generate-button">Generar</button>
+        </div>
+        <div id="image-container">
+            <p class="placeholder-text">La imagen generada aparecerá aquí.</p>
+        </div>
     </div>
-  </div>
+
+    <script>
+        const loaderContainer = document.getElementById('loader-container');
+        const generatorPage = document.getElementById('generator-page');
+        const promptInput = document.getElementById('prompt-input');
+        const generateButton = document.getElementById('generate-button');
+        const imageContainer = document.getElementById('image-container');
+        const matrixContainer = document.getElementById('matrix-container');
+
+        const API_URL = "https://anime-xi-wheat.vercel.app/api/ia-img?prompt=";
+
+        // Función para generar el fondo de matriz de datos
+        function generateMatrix(numCharacters = 100) {
+            const characters = "01_F-A<>|";
+            for (let i = 0; i < numCharacters; i++) {
+                const span = document.createElement('span');
+                const char = characters.charAt(Math.floor(Math.random() * characters.length));
+                const size = Math.random() * 1.5 + 1;
+                const x = Math.random() * 100;
+                const delay = Math.random() * 10;
+                span.textContent = char;
+                span.style.fontSize = `${size}em`;
+                span.style.left = `${x}vw`;
+                span.style.animationDelay = `${delay}s`;
+                matrixContainer.appendChild(span);
+            }
+        }
+
+        // Función para generar la imagen de IA
+        async function generateImage(prompt) {
+            imageContainer.innerHTML = `<p class="placeholder-text">Generando "${prompt}"...</p>`;
+            try {
+                const response = await fetch(API_URL + encodeURIComponent(prompt));
+                if (!response.ok) {
+                    throw new Error(`Error de red: ${response.status}`);
+                }
+                const imageBlob = await response.blob();
+                const imageURL = URL.createObjectURL(imageBlob);
+                
+                const img = document.createElement('img');
+                img.src = imageURL;
+                img.alt = prompt;
+                
+                imageContainer.innerHTML = '';
+                imageContainer.appendChild(img);
+            } catch (error) {
+                console.error("Error al generar la imagen:", error);
+                imageContainer.innerHTML = `<p class="placeholder-text" style="color: var(--accent-color);">Error al generar la imagen. Intenta con otro prompt.</p>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            generateMatrix();
+
+            setTimeout(() => {
+                loaderContainer.classList.add('hidden');
+                generatorPage.style.display = 'flex';
+            }, 4000); // 4 segundos para la animación de carga
+
+            generateButton.addEventListener('click', () => {
+                const prompt = promptInput.value.trim();
+                if (prompt) {
+                    generateImage(prompt);
+                } else {
+                    imageContainer.innerHTML = `<p class="placeholder-text" style="color: var(--accent-color);">Por favor, ingresa un prompt.</p>`;
+                }
+            });
+
+            promptInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const prompt = promptInput.value.trim();
+                    if (prompt) {
+                        generateImage(prompt);
+                    } else {
+                        imageContainer.innerHTML = `<p class="placeholder-text" style="color: var(--accent-color);">Por favor, ingresa un prompt.</p>`;
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
