@@ -22,6 +22,8 @@
             --error-color: #ff4081; /* Rosa neón (Error) */
             --font-primary: 'Orbitron', sans-serif;
             --font-secondary: 'Share Tech Mono', monospace;
+            /* Variable CSS para el ajuste de altura en móviles */
+            --app-height: 100vh;
         }
 
         /* ====================
@@ -37,7 +39,7 @@
             font-family: var(--font-primary);
             background-color: var(--bg-color);
             color: var(--secondary-color);
-            height: 100vh;
+            height: var(--app-height); /* Usar la variable ajustada */
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -45,7 +47,6 @@
             position: relative;
         }
         
-        /* Efecto de fondo de grid animado */
         .bg-grid {
             position: absolute;
             top: 0;
@@ -74,7 +75,7 @@
             display: flex;
             flex-direction: column;
             width: 100vw;
-            height: 100vh;
+            height: var(--app-height); /* Usar la variable ajustada */
             background-color: var(--bg-color);
             position: relative;
         }
@@ -116,6 +117,7 @@
             line-height: 1.4;
             animation: message-fade-in 0.5s ease-in-out;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            white-space: pre-wrap; /* Mantiene saltos de línea del texto de la IA */
         }
         
         .user-message {
@@ -133,7 +135,7 @@
             border-bottom-left-radius: 5px;
         }
 
-        .ai-message .img-container {
+        .img-container {
             width: 100%;
             max-width: 300px;
             margin-top: 10px;
@@ -142,10 +144,16 @@
             box-shadow: 0 0 15px var(--accent-color);
         }
         
-        .ai-message img {
+        .message .img-container img {
             width: 100%;
             height: auto;
             display: block;
+        }
+
+        /* Estilo específico para la imagen en el mensaje del usuario */
+        .user-message .img-container {
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 15px var(--primary-color);
         }
 
         @keyframes message-fade-in {
@@ -199,6 +207,7 @@
             padding: 5px;
             background-color: rgba(0,0,0,0.3);
             border-radius: 8px;
+            border: 1px solid var(--primary-color);
         }
 
         .attached-image-preview img {
@@ -206,7 +215,6 @@
             width: 40px;
             object-fit: cover;
             border-radius: 5px;
-            border: 1px solid var(--primary-color);
         }
 
         .attached-image-preview button {
@@ -303,6 +311,17 @@
     </div>
 
     <script>
+        // === Ajuste de altura para móviles ===
+        // Esto soluciona el problema de la barra de entrada "muy abajo"
+        const setAppHeight = () => {
+            const doc = document.documentElement;
+            doc.style.setProperty('--app-height', `${window.innerHeight}px`);
+        };
+        window.addEventListener('resize', setAppHeight);
+        setAppHeight();
+
+
+        // === Lógica del Chat ===
         const chatLog = document.getElementById('chat-log');
         const promptInput = document.getElementById('prompt-input');
         const sendBtn = document.getElementById('send-btn');
@@ -313,7 +332,6 @@
         
         const API_ENDPOINT = "https://g-mini-ia.vercel.app/api/gemini";
 
-        // Función para agregar mensajes al chat
         function addMessage(text, sender, imageUrl = null) {
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'ai-message');
@@ -335,7 +353,6 @@
             chatLog.scrollTop = chatLog.scrollHeight;
         }
         
-        // Simular un mensaje de carga de la IA
         function showLoadingMessage() {
             const loadingMsg = document.createElement('div');
             loadingMsg.classList.add('message', 'ai-message');
@@ -345,7 +362,6 @@
             chatLog.scrollTop = chatLog.scrollHeight;
         }
 
-        // Eliminar el mensaje de carga
         function removeLoadingMessage() {
             const loadingMsg = document.getElementById('loading-message');
             if (loadingMsg) {
@@ -353,7 +369,6 @@
             }
         }
         
-        // Desactivar botones durante la carga
         function setButtonsState(isDisabled) {
             sendBtn.disabled = isDisabled;
             generateBtn.disabled = isDisabled;
@@ -361,7 +376,6 @@
             promptInput.disabled = isDisabled;
         }
 
-        // Función para convertir una imagen a Base64
         function toBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -371,7 +385,6 @@
             });
         }
         
-        // Función unificada para manejar todas las peticiones
         async function handleRequest(prompt, isImageGeneration = false) {
             setButtonsState(true);
             const imageFile = fileInput.files[0];
@@ -428,11 +441,10 @@
                 promptInput.value = '';
                 fileInput.value = null;
                 imagePreviewContainer.style.display = 'none';
-                promptInput.style.height = 'auto'; // Resetear la altura
+                promptInput.style.height = 'auto';
             }
         }
 
-        // Lógica de los botones y eventos
         sendBtn.addEventListener('click', () => {
             const prompt = promptInput.value.trim();
             if (prompt || fileInput.files[0]) {
