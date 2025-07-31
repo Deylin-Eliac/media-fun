@@ -1,52 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ᴋɪʀɪᴛᴏ-ʙᴏᴛ ᴍᴅ ฅ՞•ﻌ•՞ฅ</title>
     <meta name="description" content="(1) ᴅᴇ ʟᴏs ᴍᴇᴊᴏʀᴇs ʙᴏᴛs ˙Ⱉ˙ฅ...">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
     <style>
         :root {
-            --kirito-blue: #00ffcc;
-            --kirito-dark: #0f0c29;
-            --kirito-purple: #302b63;
-            --kirito-purple-dark: #1a1a2e;
+            --kirito-blue: #00e5ff;
+            --kirito-dark: #0a0a1a;
+            --kirito-purple: #1f1d36;
+            --kirito-border: rgba(0, 229, 255, 0.5);
             --text-light: #fff;
-            --text-muted: #ccc;
+            --text-muted: #99a;
+            --module-bg: rgba(255, 255, 255, 0.05);
+            --module-hover-bg: rgba(0, 229, 255, 0.1);
         }
 
-        /* Base Styles */
+        /* --- Base & Body Styles --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            scroll-behavior: smooth;
+            font-family: 'Roboto', sans-serif;
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
+            background-color: var(--kirito-dark);
             color: var(--text-light);
-            overflow-x: hidden;
-            opacity: 0;
-            transition: opacity 1s ease-in;
-            background: linear-gradient(135deg, var(--kirito-dark), var(--kirito-purple-dark), var(--kirito-purple));
-            background-size: 400% 400%;
-            animation: gradient-animation 15s ease infinite;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
 
-        body.loaded {
-            opacity: 1;
-        }
-
-        @keyframes gradient-animation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* --- Preloader (Kirito Log-in Screen) --- */
+        /* --- Preloader --- */
         #preloader {
             position: fixed;
             top: 0;
@@ -55,355 +46,371 @@
             height: 100%;
             background: var(--kirito-dark);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.5s ease-out;
+            transition: opacity 1s ease-out, visibility 1s ease-out;
             text-align: center;
         }
 
-        .preloader-content {
-            animation: fadeIn 1.5s ease-in-out;
-        }
-
-        .preloader-content h1 {
+        #preloader h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: var(--kirito-blue);
             text-shadow: 0 0 10px var(--kirito-blue);
-            animation: kirito-glitch 4s infinite;
+            margin-bottom: 20px;
+            animation: glitch-anim 2.5s infinite;
         }
 
-        .preloader-content .loading-bar {
-            width: 250px;
+        #preloader .loading-bar {
+            width: 400px;
             height: 5px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            margin-top: 20px;
-            overflow: hidden;
+            background: rgba(0, 229, 255, 0.2);
             position: relative;
+            overflow: hidden;
         }
 
-        .preloader-content .loading-bar::before {
+        #preloader .loading-bar::after {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
+            width: 0;
             height: 100%;
-            background: linear-gradient(90deg, transparent, var(--kirito-blue), transparent);
-            animation: load 2s infinite linear;
+            background: var(--kirito-blue);
+            box-shadow: 0 0 10px var(--kirito-blue), 0 0 5px var(--kirito-blue) inset;
+            animation: load-fill 3s ease-in-out forwards;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes glitch-anim {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
         }
-        @keyframes kirito-glitch {
-            0%, 100% { text-shadow: 0 0 5px var(--kirito-blue); }
-            50% { text-shadow: 0 0 10px var(--kirito-blue), 5px 0 0 red, -5px 0 0 blue; }
+
+        @keyframes load-fill {
+            0% { width: 0; }
+            100% { width: 100%; }
         }
-        @keyframes load {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+
+        /* --- Main Layout --- */
+        .dashboard-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .dashboard-container.loaded {
+            opacity: 1;
         }
         
-        /* --- Hero Section --- */
-        .hero {
-            height: 100vh;
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--kirito-border);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .header .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--kirito-blue);
+            text-shadow: 0 0 5px var(--kirito-blue);
+        }
+
+        .header .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 0.9rem;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        .header .nav-links a:hover {
+            color: var(--kirito-blue);
+            text-shadow: 0 0 5px var(--kirito-blue);
+        }
+
+        .content-wrapper {
+            flex-grow: 1;
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+        }
+        .content-wrapper::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome, Safari */
+        }
+
+        .section {
+            min-width: 100vw;
+            padding: 60px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            position: relative;
-            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-            background-size: cover;
-            opacity: 0;
-            animation: fadeIn 2s 1s ease-out forwards;
+            scroll-snap-align: start;
         }
 
-        .hero h1 {
+        /* --- Hero Section --- */
+        #hero-section {
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        #hero-section h2 {
             font-family: 'Orbitron', sans-serif;
             font-size: 3.5rem;
             color: var(--kirito-blue);
             text-shadow: 0 0 20px var(--kirito-blue);
-            animation: glitch 2s infinite;
-            transition: transform 0.3s;
-        }
-        .hero h1:hover {
-            transform: scale(1.05);
+            margin-bottom: 20px;
+            position: relative;
         }
 
-        .hero p {
+        #hero-section h2 span {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #ff00ff;
+            opacity: 0.8;
+            animation: glitch-text 0.5s infinite;
+        }
+
+        #hero-section p {
             font-size: 1.2rem;
+            max-width: 700px;
             color: var(--text-muted);
-            max-width: 600px;
-            margin-top: 1rem;
-            animation: fadeInUp 1.5s ease-out;
         }
 
-        @keyframes glitch {
-            0% {text-shadow: 2px 2px red, -2px -2px blue;}
-            25% {text-shadow: -2px 2px lime, 2px -2px cyan;}
-            50% {text-shadow: 2px -2px yellow, -2px 2px magenta;}
-            100% {text-shadow: 2px 2px red, -2px -2px blue;}
-        }
-
-        .cta-button {
-            background: linear-gradient(45deg, #00ffe7, #008cff);
+        #hero-section .cta-button {
+            background: linear-gradient(45deg, #00ffff, #008cff);
             border: none;
-            padding: 1rem 2rem;
-            font-size: 1.2rem;
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
             border-radius: 50px;
-            margin-top: 2rem;
-            color: black;
+            margin-top: 30px;
+            color: var(--kirito-dark);
             font-weight: bold;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 20px var(--kirito-blue);
-            transition: all 0.3s ease;
-        }
-
-        .cta-button::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: skewX(-45deg);
-            transition: left 0.5s;
-        }
-        .cta-button:hover::after { left: 100%; }
-        .cta-button:hover { transform: translateY(-5px); box-shadow: 0 0 30px var(--kirito-blue); }
-
-        .down-arrow {
-            position: absolute;
-            bottom: 20px;
-            font-size: 2rem;
-            color: var(--kirito-blue);
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(15px); }
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* --- General Section Styling --- */
-        .section {
-            padding: 80px 20px;
-            background-color: transparent;
-            text-align: center;
-        }
-
-        .section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--kirito-blue);
-            text-shadow: 0 0 10px var(--kirito-blue);
-            animation: slideInDown 1s ease-out;
-        }
-
-        .features, .link-grid, .functions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 30px;
-            margin-top: 2rem;
-        }
-
-        .feature, .link-item, .function-button {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--kirito-blue);
-            backdrop-filter: blur(5px);
-            padding: 20px;
-            border-radius: 20px;
             transition: transform 0.3s, box-shadow 0.3s;
-            animation: slideInUp 1s ease-out forwards;
-            opacity: 0;
-            position: relative;
-            overflow: hidden;
         }
-        .feature:hover, .link-item:hover, .function-button:hover {
+        #hero-section .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--kirito-blue);
+        }
+
+        /* --- Modules & Cards --- */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .module-card {
+            background: var(--module-bg);
+            border: 1px solid var(--kirito-border);
+            padding: 25px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: left;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeIn 1s ease-in-out;
+            animation-fill-mode: both;
+        }
+        .module-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 0 20px var(--kirito-blue);
-            background: rgba(0, 255, 204, 0.1);
+            background: var(--module-hover-bg);
         }
 
-        .feature i, .link-item i, .function-button i {
-            font-size: 3rem;
+        .module-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
             color: var(--kirito-blue);
             margin-bottom: 10px;
         }
 
-        .feature h3, .function-button h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .link-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: var(--text-light);
-            font-weight: bold;
+        .module-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            flex-grow: 1;
         }
 
-        .function-button {
-            text-decoration: none;
-            color: var(--text-light);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
+        .module-card .action-button {
+            background: var(--kirito-blue);
+            color: var(--kirito-dark);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 0.8rem;
             font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
         }
-
-        /* --- Lightsaber Hover Effect for Buttons --- */
-        .function-button::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(0, 255, 204, 0.5) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .function-button:hover::before {
-            opacity: 1;
+        .module-card .action-button:hover {
+            background: var(--text-light);
+            box-shadow: 0 0 10px var(--kirito-blue);
         }
         
         /* --- Footer --- */
         footer {
-            background-color: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
-            padding: 20px;
+            padding: 20px 40px;
+            border-top: 1px solid var(--kirito-border);
+            color: var(--text-muted);
             text-align: center;
             font-size: 0.9rem;
-            color: #aaa;
+            animation: fadeIn 1s ease-in-out;
         }
 
-        /* --- Animations with delays --- */
-        @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* --- Animations --- */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        @keyframes glitch-text {
+            0% { clip: rect(42px, 9999px, 44px, 0); }
+            10% { clip: rect(10px, 9999px, 12px, 0); }
+            20% { clip: rect(84px, 9999px, 98px, 0); }
+            30% { clip: rect(110px, 9999px, 120px, 0); }
+            40% { clip: rect(50px, 9999px, 52px, 0); }
+            50% { clip: rect(32px, 9999px, 34px, 0); }
+            60% { clip: rect(40px, 9999px, 42px, 0); }
+            70% { clip: rect(12px, 9999px, 14px, 0); }
+            80% { clip: rect(80px, 9999px, 82px, 0); }
+            90% { clip: rect(100px, 9999px, 102px, 0); }
+            100% { clip: rect(20px, 9999px, 22px, 0); }
         }
-        @keyframes slideInDown {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .header { padding: 15px 20px; }
+            .header .logo { font-size: 1.5rem; }
+            .header .nav-links { display: none; }
+            #hero-section h2 { font-size: 2.5rem; }
+            .section { padding: 40px 20px; }
+            .modules-grid { grid-template-columns: 1fr; }
         }
-        
-        .features .feature:nth-child(1) { animation-delay: 0.5s; }
-        .features .feature:nth-child(2) { animation-delay: 0.7s; }
-        .features .feature:nth-child(3) { animation-delay: 0.9s; }
-        .features .feature:nth-child(4) { animation-delay: 1.1s; }
-        
-        .functions-grid .function-button:nth-child(1) { animation-delay: 0.5s; }
-        .functions-grid .function-button:nth-child(2) { animation-delay: 0.7s; }
-        .functions-grid .function-button:nth-child(3) { animation-delay: 0.9s; }
-        
-        .link-grid .link-item:nth-child(1) { animation-delay: 0.5s; }
-        .link-grid .link-item:nth-child(2) { animation-delay: 0.7s; }
-        .link-grid .link-item:nth-child(3) { animation-delay: 0.9s; }
-        .link-grid .link-item:nth-child(4) { animation-delay: 1.1s; }
     </style>
 </head>
 <body>
 
     <div id="preloader">
-        <div class="preloader-content">
-            <h1>KIRITO-BOT MD</h1>
-            <div class="loading-bar"></div>
-        </div>
+        <h1>KIRITO-BOT MD</h1>
+        <div class="loading-bar"></div>
     </div>
 
-    <section class="hero" id="inicio">
-        <h1>⚡ Kirito-Bot</h1>
-        <p>El bot de WhatsApp más poderoso, futurista y avanzado que hayas visto. Tecnología de otro nivel, estilo de otro mundo.</p>
-        <a href="#features"><button class="cta-button">Explorar Ahora</button></a>
-        <a href="#features" class="down-arrow"><i class="uil uil-arrow-down"></i></a>
-    </section>
+    <div class="dashboard-container">
+        
+        <header class="header">
+            <div class="logo">ᴋɪʀɪᴛᴏ-ʙᴏᴛ</div>
+            <nav class="nav-links">
+                <a href="#hero-section">Inicio</a>
+                <a href="#features-section">Funcionalidades</a>
+                <a href="#tools-section">Herramientas</a>
+                <a href="#links-section">Enlaces</a>
+            </nav>
+        </header>
 
-    <section class="section" id="features">
-        <h2>🚀 Funcionalidades Brutales</h2>
-        <div class="features">
-            <div class="feature">
-                <i class="uil uil-robot"></i>
-                <h3>Respuestas Inteligentes</h3>
-                <p>Interactúa con usuarios como un asistente real, usando IA avanzada y aprendizaje automático.</p>
-            </div>
-            <div class="feature">
-                <i class="uil uil-cloud-download"></i>
-                <h3>Descargas Multimedia</h3>
-                <p>Descarga música, videos y stickers desde cualquier plataforma como TikTok, YouTube o Instagram.</p>
-            </div>
-            <div class="feature">
-                <i class="uil uil-users-alt"></i>
-                <h3>Gestión de Grupos</h3>
-                <p>Detecta enlaces, envía bienvenidas, administra grupos y bloquea spam de forma automática.</p>
-            </div>
-            <div class="feature">
-                <i class="uil uil-brain"></i>
-                <h3>Conexión con APIs</h3>
-                <p>Integra APIs personalizadas para obtener datos, imágenes, clima, juegos, IA y mucho más.</p>
-            </div>
-        </div>
-    </section>
-    
-    <section class="section" id="functions">
-        <h2><i class="uil uil-setting"></i> Herramientas Únicas</h2>
-        <div class="functions-grid">
-            <a href="https://kirito-bot-md.vercel.app/canvas.html" class="function-button">
-                <i class="uil uil-image-resize-square"></i>
-                <h3>Generador Canvas</h3>
-                <p>Crea imágenes y diseños asombrosos en segundos.</p>
-            </a>
-            <a href="https://kirito-bot-md.vercel.app/pinterest.html" class="function-button">
-                <i class="uil uil-pinterest"></i>
-                <h3>Búsqueda Pinterest</h3>
-                <p>Encuentra y descarga las mejores imágenes de Pinterest.</p>
-            </a>
-            <a href="https://kirito-bot-md.vercel.app/ia_gemini.html" class="function-button">
-                <i class="uil uil-robot"></i>
-                <h3>IA Gemini</h3>
-                <p>Habla con la inteligencia artificial más avanzada de Google.</p>
-            </a>
-        </div>
-    </section>
+        <div class="content-wrapper">
+            <section class="section" id="hero-section">
+                <h2>Kirito-Bot<span></span></h2>
+                <p>El bot de WhatsApp más poderoso, futurista y avanzado que hayas visto. Tecnología de otro nivel, estilo de otro mundo.</p>
+                <a href="#features-section" class="cta-button">Explorar Módulos</a>
+            </section>
 
-    <section class="section" id="enlaces">
-        <h2><i class="uil uil-link"></i> Enlaces Oficiales</h2>
-        <div class="link-grid">
-            <a href="https://wa.me/+50433191934" class="link-item"><i class="uil uil-whatsapp"></i>Soporte</a>
-            <a href="https://chat.whatsapp.com/DRy8jQV104X6TLlDB4Qlvx?mode=ac_t" class="link-item"><i class="uil uil-users-alt"></i>Grupo Oficial</a>
-            <a href="https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m" class="link-item"><i class="uil uil-megaphone"></i>Canal Oficial</a>
-            <a href="https://github.com/Deylin-Eliac" class="link-item"><i class="uil uil-github"></i>GitHub</a>
-        </div>
-    </section>
+            <section class="section" id="features-section">
+                <h2>Funcionalidades Brutales</h2>
+                <div class="modules-grid">
+                    <div class="module-card">
+                        <h3>Respuestas Inteligentes</h3>
+                        <p>Interactúa como un asistente real con IA avanzada.</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>Descargas Multimedia</h3>
+                        <p>Descarga música, videos y stickers de cualquier plataforma.</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>Gestión de Grupos</h3>
+                        <p>Administra, modera y automatiza tareas en tus grupos.</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>Conexión con APIs</h3>
+                        <p>Obtén datos, imágenes, clima, juegos y mucho más.</p>
+                    </div>
+                </div>
+            </section>
 
-    <footer>
-        🌐 Sitio desarrollado por <strong>Deylin Dev</strong> · Síguenos para más explosiones visuales 💥
-    </footer>
+            <section class="section" id="tools-section">
+                <h2>Herramientas Únicas</h2>
+                <div class="modules-grid">
+                    <a href="https://kirito-bot-md.vercel.app/canvas.html" class="module-card">
+                        <h3>Generador Canvas</h3>
+                        <p>Crea imágenes y diseños asombrosos en segundos.</p>
+                        <button class="action-button">Ir a Canvas</button>
+                    </a>
+                    <a href="https://kirito-bot-md.vercel.app/pinterest.html" class="module-card">
+                        <h3>Búsqueda Pinterest</h3>
+                        <p>Encuentra y descarga las mejores imágenes de Pinterest.</p>
+                        <button class="action-button">Ir a Pinterest</button>
+                    </a>
+                    <a href="https://kirito-bot-md.vercel.app/ia_gemini.html" class="module-card">
+                        <h3>IA Gemini</h3>
+                        <p>Habla con la inteligencia artificial más avanzada de Google.</p>
+                        <button class="action-button">Ir a IA Gemini</button>
+                    </a>
+                </div>
+            </section>
+
+            <section class="section" id="links-section">
+                <h2>Enlaces Oficiales</h2>
+                <div class="modules-grid">
+                    <a href="https://wa.me/+50433191934" class="module-card">
+                        <h3>Soporte</h3>
+                        <p>Contáctanos para cualquier duda o problema.</p>
+                    </a>
+                    <a href="https://chat.whatsapp.com/DRy8jQV104X6TLlDB4Qlvx?mode=ac_t" class="module-card">
+                        <h3>Grupo Oficial</h3>
+                        <p>Únete a la comunidad de Kirito-Bot.</p>
+                    </a>
+                    <a href="https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m" class="module-card">
+                        <h3>Canal Oficial</h3>
+                        <p>Sigue las últimas actualizaciones del bot.</p>
+                    </a>
+                    <a href="https://github.com/Deylin-Eliac" class="module-card">
+                        <h3>GitHub</h3>
+                        <p>Explora el código fuente del proyecto.</p>
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            🌐 Sitio desarrollado por <strong>Deylin Dev</strong> · Todos los derechos reservados.
+        </footer>
+    </div>
 
     <script>
-        window.addEventListener('load', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             const preloader = document.getElementById('preloader');
-            const body = document.body;
+            const dashboard = document.querySelector('.dashboard-container');
             
-            // Simula un tiempo de carga mínimo para que la animación sea visible
             setTimeout(() => {
                 preloader.style.opacity = '0';
                 preloader.style.visibility = 'hidden';
-                body.classList.add('loaded');
-            }, 2500); // Mantiene el preloader por 2.5 segundos
+                dashboard.classList.add('loaded');
+            }, 3500); // Duración total de la animación de carga
         });
     </script>
 
