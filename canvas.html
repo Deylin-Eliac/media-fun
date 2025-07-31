@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IA Chat (Gemini + DALL-E)</title>
+    <title>IA Chat Gemini</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2300bfff' d='M10 21V10l3-5l-3 5V3H7l-3 5v8h3v-3l3 5m7-14h-3l3-5l3 5h-3v14h3v-8l-3-5m-7 4h10'/%3E%3C/svg%3E">
     
     <style>
         /* ====================
@@ -111,6 +110,10 @@
             height: 24px;
             margin-left: 10px;
         }
+        .gemini-icon svg {
+            width: 100%;
+            height: 100%;
+        }
         .gemini-icon svg path {
             fill: var(--accent-color);
         }
@@ -141,24 +144,36 @@
             animation: message-fade-in 0.5s ease-in-out;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
+        
+        .user-message {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
 
+        .ai-message {
+            background: var(--input-bg-color);
+            color: var(--secondary-color);
+            border: 1px solid var(--accent-color);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        
         .message-content {
             white-space: pre-wrap;
-            color: var(--secondary-color);
-        }
-        .user-message .message-content {
-            color: var(--bg-color);
+            color: inherit;
         }
 
         /* Contenedor del avatar del usuario */
-        .user-message-header {
+        .user-message-header, .ai-message-header {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
             font-family: var(--font-primary);
             font-size: 0.9em;
-            color: var(--bg-color);
         }
+        
         .user-message-header .avatar {
             width: 30px;
             height: 30px;
@@ -171,24 +186,6 @@
             font-size: 1.2em;
             margin-right: 10px;
             color: var(--primary-color);
-        }
-
-        .user-message {
-            background: var(--primary-color);
-            color: var(--bg-color);
-            align-self: flex-end;
-            border-bottom-right-radius: 5px;
-            padding: 15px;
-        }
-
-        /* Contenedor del avatar de la IA */
-        .ai-message-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            font-family: var(--font-primary);
-            font-size: 0.9em;
-            color: var(--secondary-color);
         }
         .ai-message-header .avatar {
             width: 30px;
@@ -203,25 +200,13 @@
             margin-right: 10px;
         }
 
-        /* Icono de Gemini dentro del mensaje de la IA */
+        /* Ícono de Gemini en el avatar de la IA */
         .ai-message-header .avatar .gemini-icon {
-            display: inline-block;
             width: 18px;
             height: 18px;
+            margin: 0;
         }
-        .ai-message-header .avatar .gemini-icon svg path {
-            fill: var(--accent-color);
-        }
-
-        .ai-message {
-            background: var(--input-bg-color);
-            color: var(--secondary-color);
-            border: 1px solid var(--accent-color);
-            align-self: flex-start;
-            border-bottom-left-radius: 5px;
-            padding: 15px;
-        }
-
+        
         /* Estilos para Markdown */
         .message-content strong, .message-content b {
             color: var(--primary-color);
@@ -417,8 +402,8 @@
         <header class="chat-header">
             IA Chat
             <div class="gemini-icon">
-                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
-                    <path d='M10 21V10l3-5l-3 5V3H7l-3 5v8h3v-3l3 5m7-14h-3l3-5l3 5h-3v14h3v-8l-3-5m-7 4h10'/>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M10.15 21v-8.15L7.22 8.52 4.6 13.06l-2.6-4.54L0 12.06v5.88h3.33v-3.32l3.32 5.54L10.15 21m6.25-14.88h-3.32L16.4 1.76l3.32 5.54h-3.32V21h3.32V13.38l-3.32-5.54M10.15 12.85h6.25"/>
                 </svg>
             </div>
         </header>
@@ -428,8 +413,8 @@
                 <div class="ai-message-header">
                     <div class="avatar">
                         <div class="gemini-icon">
-                            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
-                                <path d='M10 21V10l3-5l-3 5V3H7l-3 5v8h3v-3l3 5m7-14h-3l3-5l3 5h-3v14h3v-8l-3-5m-7 4h10'/>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M10.15 21v-8.15L7.22 8.52 4.6 13.06l-2.6-4.54L0 12.06v5.88h3.33v-3.32l3.32 5.54L10.15 21m6.25-14.88h-3.32L16.4 1.76l3.32 5.54h-3.32V21h3.32V13.38l-3.32-5.54M10.15 12.85h6.25"/>
                             </svg>
                         </div>
                     </div>
@@ -473,42 +458,39 @@
         const API_ENDPOINT = "https://g-mini-ia.vercel.app/api/gemini";
         const MAX_IMAGE_SIZE_KB = 500;
 
-        // Configuración para el markdown
         marked.setOptions({
-            breaks: true, // Esto hace que los saltos de línea se conviertan en <br>
+            breaks: true,
             gfm: true,
         });
 
-        // Función para convertir Markdown a HTML
         function markdownToHtml(markdownText) {
             return marked.parse(markdownText);
         }
 
-        // Función para añadir mensajes al chat con avatares y formato correcto
-        function addMessage(text, sender, imageUrl = null) {
+        function createMessageElement(text, sender, imageUrl = null) {
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message', `${sender}-message`);
 
-            // Si es un mensaje de la IA, añade la cabecera con el avatar y nombre
-            if (sender === 'ai') {
-                const messageHeader = document.createElement('div');
-                messageHeader.classList.add('ai-message-header');
-                
-                const avatar = document.createElement('div');
-                avatar.classList.add('avatar');
-                avatar.innerHTML = `
-                    <div class="gemini-icon">
-                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
-                            <path d='M10 21V10l3-5l-3 5V3H7l-3 5v8h3v-3l3 5m7-14h-3l3-5l3 5h-3v14h3v-8l-3-5m-7 4h10'/>
-                        </svg>
-                    </div>
-                `;
-                messageHeader.appendChild(avatar);
-                messageHeader.innerHTML += `<span>Gemini</span>`;
+            const messageHeader = document.createElement('div');
+            messageHeader.classList.add(`${sender}-message-header`);
 
-                messageDiv.appendChild(messageHeader);
+            if (sender === 'user') {
+                messageHeader.innerHTML = `<div class="avatar"><i class="fas fa-user-astronaut"></i></div><span>Usuario</span>`;
+            } else {
+                messageHeader.innerHTML = `
+                    <div class="avatar">
+                        <div class="gemini-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M10.15 21v-8.15L7.22 8.52 4.6 13.06l-2.6-4.54L0 12.06v5.88h3.33v-3.32l3.32 5.54L10.15 21m6.25-14.88h-3.32L16.4 1.76l3.32 5.54h-3.32V21h3.32V13.38l-3.32-5.54M10.15 12.85h6.25"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <span>Gemini</span>
+                `;
             }
-            
+
+            messageDiv.appendChild(messageHeader);
+
             if (imageUrl) {
                 const imgContainer = document.createElement('div');
                 imgContainer.classList.add('img-container');
@@ -525,8 +507,13 @@
                 textDiv.innerHTML = markdownToHtml(text);
                 messageDiv.appendChild(textDiv);
             }
-            
-            chatLog.appendChild(messageDiv);
+
+            return messageDiv;
+        }
+
+        function addMessage(text, sender, imageUrl = null) {
+            const messageElement = createMessageElement(text, sender, imageUrl);
+            chatLog.appendChild(messageElement);
             chatLog.scrollTop = chatLog.scrollHeight;
         }
         
@@ -534,7 +521,7 @@
             const loadingMsg = document.createElement('div');
             loadingMsg.classList.add('message', 'ai-message');
             loadingMsg.id = 'loading-message';
-            loadingMsg.innerHTML = `<div class="ai-message-header"><div class="avatar"><div class="gemini-icon"><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M10 21V10l3-5l-3 5V3H7l-3 5v8h3v-3l3 5m7-14h-3l3-5l3 5h-3v14h3v-8l-3-5m-7 4h10'/></svg></div></div><span>Gemini</span></div><div class="message-content"><div class="loader"></div></div>`;
+            loadingMsg.innerHTML = `<div class="ai-message-header"><div class="avatar"><div class="gemini-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.15 21v-8.15L7.22 8.52 4.6 13.06l-2.6-4.54L0 12.06v5.88h3.33v-3.32l3.32 5.54L10.15 21m6.25-14.88h-3.32L16.4 1.76l3.32 5.54h-3.32V21h3.32V13.38l-3.32-5.54M10.15 12.85h6.25"/></svg></div></div><span>Gemini</span></div><div class="message-content"><div class="loader"></div></div>`;
             chatLog.appendChild(loadingMsg);
             chatLog.scrollTop = chatLog.scrollHeight;
         }
@@ -615,34 +602,28 @@
                 imageUrls: [],
                 mimeTypes: [],
             };
+
+            // Mostrar el mensaje del usuario de inmediato
+            let userImageUrl = null;
+            if (imageFile) {
+                userImageUrl = URL.createObjectURL(imageFile);
+            }
+            addMessage(prompt, 'user', userImageUrl);
             
-            if (isImageGeneration) {
-                payload.prompts = [`Genera una imagen de: ${prompt}`];
-            } else if (imageFile) {
-                try {
+            showLoadingMessage();
+            
+            try {
+                if (isImageGeneration) {
+                    payload.prompts = [`Genera una imagen de: ${prompt}`];
+                } else if (imageFile) {
+                    // Procesar la imagen solo si existe
                     const compressedBlob = await compressImage(imageFile);
                     const base64 = await blobToBase64(compressedBlob);
                     
                     payload.imageBase64List.push(base64);
                     payload.mimeTypes.push(imageFile.type);
-                    
-                    const userImageURL = URL.createObjectURL(imageFile);
-                    addMessage(prompt, 'user', userImageURL);
-
-                } catch (error) {
-                    console.error("Error al comprimir o procesar la imagen:", error);
-                    removeLoadingMessage();
-                    addMessage("Lo siento, hubo un error con la imagen que subiste.", 'ai');
-                    setButtonsState(false);
-                    return;
                 }
-            } else {
-                addMessage(prompt, 'user');
-            }
-            
-            showLoadingMessage();
 
-            try {
                 const response = await fetch(API_ENDPOINT, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -673,6 +654,9 @@
                 fileInput.value = null;
                 imagePreviewContainer.style.display = 'none';
                 promptInput.style.height = 'auto';
+                if (userImageUrl) {
+                    URL.revokeObjectURL(userImageUrl); // Liberar la URL temporal
+                }
             }
         }
 
