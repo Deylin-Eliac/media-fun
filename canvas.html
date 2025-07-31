@@ -567,4 +567,170 @@
 
                         if (width > height) {
                             if (width > MAX_WIDTH) {
-                                height *= MAX_WI
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        canvas.toBlob((blob) => {
+                            if (blob) {
+                                resolve(blob);
+                            } else {
+                                reject(new Error('Canvas to Blob conversion failed'));
+                            }
+                        }, file.type, quality);
+                    };
+                    img.src = event.target.result;
+                };
+                reader.onerror = (error) => reject(error);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function blobToBase64(blob) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(blob);
+            });
+        }
+        
+        async function handleRequest(prompt, isImageGeneration = false) {
+            setButtonsState(true);
+            const imageFile = fileInput.files[0];
+            const payload = {
+                prompts: [prompt],
+                imageBase64List: [],
+                imageUrls: [],
+                mimeTypes: [],
+            };
+            
+            if (isImageGeneration) {
+                payload.prompts = [`Genera una imagen de: ${prompt}`];
+            } else if (imageFile) {
+                try {
+                    const compressedBlob = await compressImage(imageFile);
+                    const base64 = await blobToBase64(compressedBlob);
+                    
+                    payload.imageBase64List.push(base64);
+                    payload.mimeTypes.push(imageFile.type);
+                    
+                    const userImageURL = URL.createObjectURL(imageFile);
+                    addMessage(prompt, 'user', userImageURL);
+
+                } catch (error) {
+                    console.error("Error al comprimir o procesar la imagen:", error);
+                    removeLoadingMessage();
+                    addMessage("Lo siento, hubo un error con la imagen que subiste.", 'ai');
+                    setButtonsState(false);
+                    return;
+                }
+            } else {
+                addMessage(prompt, 'user');
+            }
+            
+            showLoadingMessage();
+
+            try {
+                const response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error de red: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                removeLoadingMessage();
+
+                if (data.from === 'image-generator') {
+                    addMessage('Aquí está tu imagen generada:', 'ai', data.image);
+                } else if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    addMessage(data.candidates[0].content.parts[0].text, 'ai');
+                } else {
+                    addMessage("No pude obtener una respuesta válida.", 'ai');
+                }
+            } catch (error) {
+                console.error("Error en la solicitud:", error);
+                removeLoadingMessage();
+                addMessage("Lo siento, hubo un error al procesar tu solicitud. " + error.message, 'ai');
+            } finally {
+                setButtonsState(false);
+                promptInput.value = '';
+                fileInput.value = null;
+                imagePreviewContainer.style.display = 'none';
+                promptInput.style.height = 'auto';
+            }
+        }
+
+        sendBtn.addEventListener('click', () => {
+            const prompt = promptInput.value.trim();
+            if (prompt || fileInput.files[0]) {
+                handleRequest(prompt);
+            } else {
+                addMessage("Por favor, escribe un prompt o adjunta una imagen.", 'ai');
+            }
+        });
+
+        generateBtn.addEventListener('click', () => {
+            const prompt = promptInput.value.trim();
+            if (prompt) {
+                handleRequest(prompt, true);
+            } else {
+                addMessage("Por favor, escribe una descripción para generar la imagen.", 'ai');
+            }
+        });
+
+        attachFileBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                reader.onload = e => {
+                    imagePreviewContainer.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview">
+                        <button onclick="clearImagePreview()"><i class="fas fa-times"></i></button>
+                    `;
+                    imagePreviewContainer.style.display = 'flex';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imagePreviewContainer.style.display = 'none';
+            }
+        });
+
+        window.clearImagePreview = () => {
+            fileInput.value = null;
+            imagePreviewContainer.style.display = 'none';
+        };
+
+        promptInput.addEventListener('input', () => {
+            promptInput.style.height = 'auto';
+            promptInput.style.height = promptInput.scrollHeight + 'px';
+        });
+
+        promptInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>
