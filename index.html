@@ -15,8 +15,7 @@
             --kirito-border: rgba(0, 229, 255, 0.5);
             --text-light: #fff;
             --text-muted: #99a;
-            --module-bg: rgba(255, 255, 255, 0.05);
-            --module-hover-bg: rgba(0, 229, 255, 0.1);
+            --panel-bg: rgba(255, 255, 255, 0.05);
         }
 
         /* --- Base & Body Styles --- */
@@ -25,19 +24,17 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Roboto', sans-serif;
+            transition: all 0.3s ease;
         }
 
         body {
             background-color: var(--kirito-dark);
             color: var(--text-light);
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             height: 100vh;
         }
 
-        /* --- Preloader --- */
+        /* --- Preloader (Glitch Boot) --- */
         #preloader {
             position: fixed;
             top: 0;
@@ -56,19 +53,43 @@
 
         #preloader h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             color: var(--kirito-blue);
             text-shadow: 0 0 10px var(--kirito-blue);
+            position: relative;
             margin-bottom: 20px;
-            animation: glitch-anim 2.5s infinite;
+        }
+
+        #preloader h1::before,
+        #preloader h1::after {
+            content: "KIRITO-BOT MD";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        #preloader h1::before {
+            text-shadow: 2px 2px #ff00ff;
+            animation: glitch-anim-1 2s infinite;
+        }
+
+        #preloader h1::after {
+            text-shadow: -2px -2px #00ffff;
+            animation: glitch-anim-2 2s infinite;
         }
 
         #preloader .loading-bar {
-            width: 400px;
-            height: 5px;
+            width: 450px;
+            height: 6px;
             background: rgba(0, 229, 255, 0.2);
+            border-radius: 3px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
         }
 
         #preloader .loading-bar::after {
@@ -79,17 +100,24 @@
             width: 0;
             height: 100%;
             background: var(--kirito-blue);
-            box-shadow: 0 0 10px var(--kirito-blue), 0 0 5px var(--kirito-blue) inset;
-            animation: load-fill 3s ease-in-out forwards;
+            box-shadow: 0 0 10px var(--kirito-blue);
+            animation: load-fill 3.5s ease-in-out forwards;
         }
 
-        @keyframes glitch-anim {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
+        @keyframes glitch-anim-1 {
+            0%, 100% { clip: rect(0, 9999px, 0, 0); }
+            10% { clip: rect(40px, 9999px, 42px, 0); }
+            20% { clip: rect(80px, 9999px, 82px, 0); }
+            30% { clip: rect(10px, 9999px, 12px, 0); }
+            40% { clip: rect(50px, 9999px, 52px, 0); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0%, 100% { clip: rect(0, 9999px, 0, 0); }
+            15% { clip: rect(20px, 9999px, 22px, 0); }
+            25% { clip: rect(70px, 9999px, 72px, 0); }
+            35% { clip: rect(90px, 9999px, 92px, 0); }
+            45% { clip: rect(30px, 9999px, 32px, 0); }
         }
 
         @keyframes load-fill {
@@ -101,8 +129,13 @@
         .dashboard-container {
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-areas:
+                "features hero links"
+                "features hero links";
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 20px;
+            padding: 20px;
             opacity: 0;
             transition: opacity 1s ease-in;
         }
@@ -110,197 +143,165 @@
         .dashboard-container.loaded {
             opacity: 1;
         }
-        
-        .header {
+
+        /* --- Sections & Panels --- */
+        .panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--kirito-border);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(5px);
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-            border-bottom: 1px solid var(--kirito-border);
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
             animation: fadeIn 1s ease-in-out;
+            animation-fill-mode: both;
         }
-
-        .header .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            color: var(--kirito-blue);
-            text-shadow: 0 0 5px var(--kirito-blue);
-        }
-
-        .header .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            margin-left: 30px;
-            font-size: 0.9rem;
-            transition: color 0.3s, text-shadow 0.3s;
-        }
-        .header .nav-links a:hover {
-            color: var(--kirito-blue);
-            text-shadow: 0 0 5px var(--kirito-blue);
-        }
-
-        .content-wrapper {
-            flex-grow: 1;
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none; /* Hide scrollbar for Firefox */
-        }
-        .content-wrapper::-webkit-scrollbar {
-            display: none; /* Hide scrollbar for Chrome, Safari */
-        }
-
-        .section {
-            min-width: 100vw;
-            padding: 60px;
+        
+        .hero-panel {
+            grid-area: hero;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            scroll-snap-align: start;
-        }
-
-        /* --- Hero Section --- */
-        #hero-section {
             text-align: center;
-            animation: fadeIn 1.5s ease-in-out;
+            animation: fadeIn 1s 0.5s ease-in-out forwards;
         }
-
-        #hero-section h2 {
+        
+        .hero-panel h1 {
             font-family: 'Orbitron', sans-serif;
             font-size: 3.5rem;
             color: var(--kirito-blue);
             text-shadow: 0 0 20px var(--kirito-blue);
-            margin-bottom: 20px;
-            position: relative;
+            animation: text-float 4s infinite ease-in-out;
+            margin-bottom: 10px;
         }
 
-        #hero-section h2 span {
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            color: #ff00ff;
-            opacity: 0.8;
-            animation: glitch-text 0.5s infinite;
-        }
-
-        #hero-section p {
-            font-size: 1.2rem;
-            max-width: 700px;
+        .hero-panel p {
+            font-size: 1.1rem;
             color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 30px;
         }
 
-        #hero-section .cta-button {
+        .hero-panel .cta-button {
             background: linear-gradient(45deg, #00ffff, #008cff);
             border: none;
             padding: 1rem 2.5rem;
             font-size: 1rem;
             border-radius: 50px;
-            margin-top: 30px;
             color: var(--kirito-dark);
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        #hero-section .cta-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px var(--kirito-blue);
-        }
-
-        /* --- Modules & Cards --- */
-        .modules-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            width: 100%;
-        }
-
-        .module-card {
-            background: var(--module-bg);
-            border: 1px solid var(--kirito-border);
-            padding: 25px;
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            text-align: left;
-            transition: transform 0.3s, box-shadow 0.3s;
-            animation: fadeIn 1s ease-in-out;
-            animation-fill-mode: both;
-        }
-        .module-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 0 20px var(--kirito-blue);
-            background: var(--module-hover-bg);
-        }
-
-        .module-card h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem;
-            color: var(--kirito-blue);
-            margin-bottom: 10px;
-        }
-
-        .module-card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            flex-grow: 1;
-        }
-
-        .module-card .action-button {
-            background: var(--kirito-blue);
-            color: var(--kirito-dark);
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.3s;
-        }
-        .module-card .action-button:hover {
-            background: var(--text-light);
             box-shadow: 0 0 10px var(--kirito-blue);
         }
+        .hero-panel .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px var(--kirito-blue);
+        }
         
-        /* --- Footer --- */
-        footer {
-            padding: 20px 40px;
-            border-top: 1px solid var(--kirito-border);
-            color: var(--text-muted);
-            text-align: center;
-            font-size: 0.9rem;
-            animation: fadeIn 1s ease-in-out;
+        .features-panel {
+            grid-area: features;
+            animation-delay: 1s;
         }
 
+        .links-panel {
+            grid-area: links;
+            animation-delay: 1s;
+        }
+
+        .panel h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--kirito-blue);
+            text-shadow: 0 0 5px var(--kirito-blue);
+            border-bottom: 1px solid var(--kirito-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .panel-item {
+            background: var(--module-bg);
+            border-left: 3px solid var(--kirito-blue);
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .panel-item:hover {
+            background: var(--module-hover-bg);
+            box-shadow: 0 0 15px var(--kirito-blue);
+            transform: translateX(5px);
+        }
+
+        .panel-item i {
+            font-size: 2rem;
+            color: var(--kirito-blue);
+        }
+
+        .panel-item span {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .panel-item h3 {
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        .panel-item.link-button {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .panel-item.link-button i {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
         /* --- Animations --- */
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        @keyframes glitch-text {
-            0% { clip: rect(42px, 9999px, 44px, 0); }
-            10% { clip: rect(10px, 9999px, 12px, 0); }
-            20% { clip: rect(84px, 9999px, 98px, 0); }
-            30% { clip: rect(110px, 9999px, 120px, 0); }
-            40% { clip: rect(50px, 9999px, 52px, 0); }
-            50% { clip: rect(32px, 9999px, 34px, 0); }
-            60% { clip: rect(40px, 9999px, 42px, 0); }
-            70% { clip: rect(12px, 9999px, 14px, 0); }
-            80% { clip: rect(80px, 9999px, 82px, 0); }
-            90% { clip: rect(100px, 9999px, 102px, 0); }
-            100% { clip: rect(20px, 9999px, 22px, 0); }
+        @keyframes text-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 1024px) {
+            .dashboard-container {
+                grid-template-areas:
+                    "hero hero"
+                    "features links";
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+                padding: 10px;
+            }
+            .panel { padding: 20px; }
+            .hero-panel h1 { font-size: 2.5rem; }
+            .hero-panel p { font-size: 1rem; }
+            .panel h2 { font-size: 1.2rem; }
+            .panel-item { padding: 10px; }
+            .panel-item h3 { font-size: 1rem; }
+            .panel-item i { font-size: 1.5rem; }
         }
 
-        /* --- Responsive Design --- */
         @media (max-width: 768px) {
-            .header { padding: 15px 20px; }
-            .header .logo { font-size: 1.5rem; }
-            .header .nav-links { display: none; }
-            #hero-section h2 { font-size: 2.5rem; }
-            .section { padding: 40px 20px; }
-            .modules-grid { grid-template-columns: 1fr; }
+            .dashboard-container {
+                grid-template-areas:
+                    "hero"
+                    "features"
+                    "links";
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .panel { overflow-y: auto; }
         }
     </style>
 </head>
@@ -313,92 +314,68 @@
 
     <div class="dashboard-container">
         
-        <header class="header">
-            <div class="logo">ᴋɪʀɪᴛᴏ-ʙᴏᴛ</div>
-            <nav class="nav-links">
-                <a href="#hero-section">Inicio</a>
-                <a href="#features-section">Funcionalidades</a>
-                <a href="#tools-section">Herramientas</a>
-                <a href="#links-section">Enlaces</a>
-            </nav>
-        </header>
-
-        <div class="content-wrapper">
-            <section class="section" id="hero-section">
-                <h2>Kirito-Bot<span></span></h2>
-                <p>El bot de WhatsApp más poderoso, futurista y avanzado que hayas visto. Tecnología de otro nivel, estilo de otro mundo.</p>
-                <a href="#features-section" class="cta-button">Explorar Módulos</a>
-            </section>
-
-            <section class="section" id="features-section">
-                <h2>Funcionalidades Brutales</h2>
-                <div class="modules-grid">
-                    <div class="module-card">
-                        <h3>Respuestas Inteligentes</h3>
-                        <p>Interactúa como un asistente real con IA avanzada.</p>
-                    </div>
-                    <div class="module-card">
-                        <h3>Descargas Multimedia</h3>
-                        <p>Descarga música, videos y stickers de cualquier plataforma.</p>
-                    </div>
-                    <div class="module-card">
-                        <h3>Gestión de Grupos</h3>
-                        <p>Administra, modera y automatiza tareas en tus grupos.</p>
-                    </div>
-                    <div class="module-card">
-                        <h3>Conexión con APIs</h3>
-                        <p>Obtén datos, imágenes, clima, juegos y mucho más.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section" id="tools-section">
-                <h2>Herramientas Únicas</h2>
-                <div class="modules-grid">
-                    <a href="https://kirito-bot-md.vercel.app/canvas.html" class="module-card">
-                        <h3>Generador Canvas</h3>
-                        <p>Crea imágenes y diseños asombrosos en segundos.</p>
-                        <button class="action-button">Ir a Canvas</button>
-                    </a>
-                    <a href="https://kirito-bot-md.vercel.app/pinterest.html" class="module-card">
-                        <h3>Búsqueda Pinterest</h3>
-                        <p>Encuentra y descarga las mejores imágenes de Pinterest.</p>
-                        <button class="action-button">Ir a Pinterest</button>
-                    </a>
-                    <a href="https://kirito-bot-md.vercel.app/ia_gemini.html" class="module-card">
-                        <h3>IA Gemini</h3>
-                        <p>Habla con la inteligencia artificial más avanzada de Google.</p>
-                        <button class="action-button">Ir a IA Gemini</button>
-                    </a>
-                </div>
-            </section>
-
-            <section class="section" id="links-section">
-                <h2>Enlaces Oficiales</h2>
-                <div class="modules-grid">
-                    <a href="https://wa.me/+50433191934" class="module-card">
-                        <h3>Soporte</h3>
-                        <p>Contáctanos para cualquier duda o problema.</p>
-                    </a>
-                    <a href="https://chat.whatsapp.com/DRy8jQV104X6TLlDB4Qlvx?mode=ac_t" class="module-card">
-                        <h3>Grupo Oficial</h3>
-                        <p>Únete a la comunidad de Kirito-Bot.</p>
-                    </a>
-                    <a href="https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m" class="module-card">
-                        <h3>Canal Oficial</h3>
-                        <p>Sigue las últimas actualizaciones del bot.</p>
-                    </a>
-                    <a href="https://github.com/Deylin-Eliac" class="module-card">
-                        <h3>GitHub</h3>
-                        <p>Explora el código fuente del proyecto.</p>
-                    </a>
-                </div>
-            </section>
+        <div class="panel hero-panel">
+            <h1>Kirito-Bot</h1>
+            <p>El bot de WhatsApp más poderoso, futurista y avanzado que hayas visto. Tecnología de otro nivel, estilo de otro mundo.</p>
+            <button class="cta-button">Ver Documentación</button>
         </div>
 
-        <footer>
-            🌐 Sitio desarrollado por <strong>Deylin Dev</strong> · Todos los derechos reservados.
-        </footer>
+        <div class="panel features-panel">
+            <h2>Funcionalidades</h2>
+            <div class="panel-item">
+                <i class="uil uil-robot"></i>
+                <div>
+                    <h3>Respuestas Inteligentes</h3>
+                    <span>Asistente con IA avanzada.</span>
+                </div>
+            </div>
+            <div class="panel-item">
+                <i class="uil uil-cloud-download"></i>
+                <div>
+                    <h3>Descargas Multimedia</h3>
+                    <span>Descarga de videos, música y más.</span>
+                </div>
+            </div>
+            <div class="panel-item">
+                <i class="uil uil-users-alt"></i>
+                <div>
+                    <h3>Gestión de Grupos</h3>
+                    <span>Administra tus grupos sin esfuerzo.</span>
+                </div>
+            </div>
+            <div class="panel-item">
+                <i class="uil uil-brain"></i>
+                <div>
+                    <h3>Conexión con APIs</h3>
+                    <span>Obtén datos, imágenes y más.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel links-panel">
+            <h2>Herramientas y Enlaces</h2>
+            <a href="https://kirito-bot-md.vercel.app/canvas.html" class="panel-item link-button">
+                <i class="uil uil-image-resize-square"></i>
+                <h3>Generador Canvas</h3>
+            </a>
+            <a href="https://kirito-bot-md.vercel.app/pinterest.html" class="panel-item link-button">
+                <i class="uil uil-pinterest"></i>
+                <h3>Búsqueda Pinterest</h3>
+            </a>
+            <a href="https://kirito-bot-md.vercel.app/ia_gemini.html" class="panel-item link-button">
+                <i class="uil uil-robot"></i>
+                <h3>IA Gemini</h3>
+            </a>
+            <a href="https://github.com/Deylin-Eliac" class="panel-item link-button">
+                <i class="uil uil-github"></i>
+                <h3>GitHub</h3>
+            </a>
+            <a href="https://chat.whatsapp.com/DRy8jQV104X6TLlDB4Qlvx?mode=ac_t" class="panel-item link-button">
+                <i class="uil uil-users-alt"></i>
+                <h3>Grupo Oficial</h3>
+            </a>
+        </div>
+        
     </div>
 
     <script>
@@ -410,7 +387,7 @@
                 preloader.style.opacity = '0';
                 preloader.style.visibility = 'hidden';
                 dashboard.classList.add('loaded');
-            }, 3500); // Duración total de la animación de carga
+            }, 3500); // 3.5 segundos para la animación
         });
     </script>
 
