@@ -16,6 +16,7 @@
             --text-light: #fff;
             --text-muted: #99a;
             --panel-bg: rgba(255, 255, 255, 0.05);
+            --module-hover-bg: rgba(0, 229, 255, 0.1);
         }
 
         /* --- Base & Body Styles --- */
@@ -24,7 +25,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Roboto', sans-serif;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease-in-out;
         }
 
         body {
@@ -32,9 +33,12 @@
             color: var(--text-light);
             overflow: hidden;
             height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-
-        /* --- Preloader (Glitch Boot) --- */
+        
+        /* --- Preloader (Advanced Glitch Boot) --- */
         #preloader {
             position: fixed;
             top: 0;
@@ -47,6 +51,8 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
+            opacity: 1;
+            visibility: visible;
             transition: opacity 1s ease-out, visibility 1s ease-out;
             text-align: center;
         }
@@ -58,105 +64,86 @@
             text-shadow: 0 0 10px var(--kirito-blue);
             position: relative;
             margin-bottom: 20px;
+            animation: text-glitch 2s infinite;
         }
 
-        #preloader h1::before,
-        #preloader h1::after {
-            content: "KIRITO-BOT MD";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
+        #preloader .loading-bar-container {
+            width: 500px;
+            height: 8px;
+            background: rgba(0, 229, 255, 0.1);
+            border-radius: 4px;
+            position: relative;
             overflow: hidden;
-        }
-
-        #preloader h1::before {
-            text-shadow: 2px 2px #ff00ff;
-            animation: glitch-anim-1 2s infinite;
-        }
-
-        #preloader h1::after {
-            text-shadow: -2px -2px #00ffff;
-            animation: glitch-anim-2 2s infinite;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+            animation: fadeIn 1.5s ease-in-out;
+            animation-delay: 1s;
         }
 
         #preloader .loading-bar {
-            width: 450px;
-            height: 6px;
-            background: rgba(0, 229, 255, 0.2);
-            border-radius: 3px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
-        }
-
-        #preloader .loading-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
             height: 100%;
             background: var(--kirito-blue);
             box-shadow: 0 0 10px var(--kirito-blue);
-            animation: load-fill 3.5s ease-in-out forwards;
+            width: 0;
+            animation: load-fill 4s ease-in-out forwards;
         }
 
-        @keyframes glitch-anim-1 {
-            0%, 100% { clip: rect(0, 9999px, 0, 0); }
-            10% { clip: rect(40px, 9999px, 42px, 0); }
-            20% { clip: rect(80px, 9999px, 82px, 0); }
-            30% { clip: rect(10px, 9999px, 12px, 0); }
-            40% { clip: rect(50px, 9999px, 52px, 0); }
-        }
-
-        @keyframes glitch-anim-2 {
-            0%, 100% { clip: rect(0, 9999px, 0, 0); }
-            15% { clip: rect(20px, 9999px, 22px, 0); }
-            25% { clip: rect(70px, 9999px, 72px, 0); }
-            35% { clip: rect(90px, 9999px, 92px, 0); }
-            45% { clip: rect(30px, 9999px, 32px, 0); }
+        @keyframes text-glitch {
+            0% { transform: translate(0); text-shadow: 0 0 10px var(--kirito-blue); }
+            20% { transform: translate(-2px, 2px); text-shadow: 2px 2px #ff00ff; }
+            40% { transform: translate(-2px, -2px); text-shadow: -2px -2px #00ffff; }
+            60% { transform: translate(2px, 2px); text-shadow: 2px 2px #ff00ff; }
+            80% { transform: translate(2px, -2px); text-shadow: -2px -2px #00ffff; }
+            100% { transform: translate(0); text-shadow: 0 0 10px var(--kirito-blue); }
         }
 
         @keyframes load-fill {
             0% { width: 0; }
+            50% { width: 75%; }
             100% { width: 100%; }
         }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* --- Main Layout --- */
+        /* --- Main Dashboard Container (Static) --- */
         .dashboard-container {
             width: 100%;
             height: 100%;
             display: grid;
             grid-template-areas:
-                "features hero links"
                 "features hero links";
             grid-template-columns: 1fr 2fr 1fr;
             gap: 20px;
-            padding: 20px;
+            padding: 40px;
             opacity: 0;
-            transition: opacity 1s ease-in;
+            visibility: hidden;
+            transition: opacity 1s ease-in, visibility 1s ease-in;
         }
 
         .dashboard-container.loaded {
             opacity: 1;
+            visibility: visible;
         }
 
-        /* --- Sections & Panels --- */
+        /* --- Panels & Modules --- */
         .panel {
-            background: var(--panel-bg);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--kirito-border);
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 30px;
             backdrop-filter: blur(5px);
             display: flex;
             flex-direction: column;
             gap: 20px;
             overflow-y: auto;
-            animation: fadeIn 1s ease-in-out;
-            animation-fill-mode: both;
+            position: relative;
+            animation: panel-glow 3s infinite alternate;
+        }
+        
+        .panel::-webkit-scrollbar { display: none; }
+
+        @keyframes panel-glow {
+            from { box-shadow: 0 0 10px var(--kirito-blue) inset, 0 0 10px var(--kirito-blue); }
+            to { box-shadow: 0 0 20px var(--kirito-blue) inset, 0 0 20px var(--kirito-blue); }
         }
         
         .hero-panel {
@@ -166,130 +153,135 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            animation: fadeIn 1s 0.5s ease-in-out forwards;
+            border-radius: 30px;
         }
         
         .hero-panel h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
+            font-size: 4.5rem;
             color: var(--kirito-blue);
-            text-shadow: 0 0 20px var(--kirito-blue);
-            animation: text-float 4s infinite ease-in-out;
-            margin-bottom: 10px;
+            text-shadow: 0 0 25px var(--kirito-blue);
+            animation: text-float 4s infinite ease-in-out, glitch 1s infinite alternate;
+            margin-bottom: 20px;
         }
 
         .hero-panel p {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             color: var(--text-muted);
             max-width: 600px;
+            border-bottom: 1px solid var(--kirito-border);
+            padding-bottom: 1rem;
             margin-bottom: 30px;
+            animation: fadeInUp 1.5s ease-out;
         }
 
-        .hero-panel .cta-button {
+        @keyframes text-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes glitch {
+            0% { transform: skew(0deg); }
+            20% { transform: skew(5deg); }
+            40% { transform: skew(-5deg); }
+            60% { transform: skew(5deg); }
+            80% { transform: skew(-5deg); }
+            100% { transform: skew(0deg); }
+        }
+
+        .cta-button {
             background: linear-gradient(45deg, #00ffff, #008cff);
             border: none;
-            padding: 1rem 2.5rem;
-            font-size: 1rem;
+            padding: 1.2rem 3rem;
+            font-size: 1.2rem;
             border-radius: 50px;
             color: var(--kirito-dark);
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 0 10px var(--kirito-blue);
+            box-shadow: 0 0 15px var(--kirito-blue);
+            text-transform: uppercase;
         }
-        .hero-panel .cta-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px var(--kirito-blue);
+        .cta-button:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 0 30px var(--kirito-blue);
         }
         
-        .features-panel {
-            grid-area: features;
-            animation-delay: 1s;
-        }
-
-        .links-panel {
-            grid-area: links;
-            animation-delay: 1s;
-        }
+        .features-panel { grid-area: features; }
+        .links-panel { grid-area: links; }
 
         .panel h2 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: var(--kirito-blue);
             text-shadow: 0 0 5px var(--kirito-blue);
-            border-bottom: 1px solid var(--kirito-border);
+            border-bottom: 2px solid var(--kirito-border);
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
 
         .panel-item {
-            background: var(--module-bg);
-            border-left: 3px solid var(--kirito-blue);
+            background: var(--panel-bg);
+            border: 1px solid transparent;
             padding: 15px;
-            border-radius: 5px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             gap: 15px;
             text-decoration: none;
             color: var(--text-light);
-            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .panel-item:hover {
+            border: 1px solid var(--kirito-blue);
+            box-shadow: 0 0 20px var(--kirito-blue);
+            transform: translateX(5px) scale(1.02);
             background: var(--module-hover-bg);
-            box-shadow: 0 0 15px var(--kirito-blue);
-            transform: translateX(5px);
         }
 
         .panel-item i {
             font-size: 2rem;
             color: var(--kirito-blue);
+            text-shadow: 0 0 5px var(--kirito-blue);
         }
 
-        .panel-item span {
+        .panel-item div h3 {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .panel-item div span {
             font-size: 0.9rem;
             color: var(--text-muted);
         }
         
-        .panel-item h3 {
-            font-size: 1.1rem;
-            color: var(--text-light);
-        }
-        
-        .panel-item.link-button {
+        .link-panel-item-content {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
         }
 
-        .panel-item.link-button i {
+        .link-panel-item-content i {
             font-size: 1.8rem;
             margin-bottom: 5px;
         }
         
-        /* --- Animations --- */
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes text-float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-        
         /* --- Responsive Design --- */
-        @media (max-width: 1024px) {
+        @media (max-width: 1200px) {
             .dashboard-container {
                 grid-template-areas:
                     "hero hero"
                     "features links";
                 grid-template-columns: 1fr 1fr;
-                gap: 10px;
-                padding: 10px;
+                gap: 15px;
+                padding: 20px;
             }
-            .panel { padding: 20px; }
-            .hero-panel h1 { font-size: 2.5rem; }
+            .hero-panel h1 { font-size: 3rem; }
             .hero-panel p { font-size: 1rem; }
-            .panel h2 { font-size: 1.2rem; }
-            .panel-item { padding: 10px; }
-            .panel-item h3 { font-size: 1rem; }
-            .panel-item i { font-size: 1.5rem; }
+            .panel h2 { font-size: 1.5rem; }
         }
 
         @media (max-width: 768px) {
@@ -299,8 +291,11 @@
                     "features"
                     "links";
                 grid-template-columns: 1fr;
-                gap: 10px;
+                gap: 15px;
+                padding: 15px;
             }
+            .hero-panel h1 { font-size: 2.5rem; }
+            .hero-panel p { font-size: 0.9rem; }
             .panel { overflow-y: auto; }
         }
     </style>
@@ -308,16 +303,18 @@
 <body>
 
     <div id="preloader">
-        <h1>KIRITO-BOT MD</h1>
-        <div class="loading-bar"></div>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+        </div>
+        <h1>BOOTING SYSTEM...</h1>
     </div>
 
     <div class="dashboard-container">
         
         <div class="panel hero-panel">
             <h1>Kirito-Bot</h1>
-            <p>El bot de WhatsApp más poderoso, futurista y avanzado que hayas visto. Tecnología de otro nivel, estilo de otro mundo.</p>
-            <button class="cta-button">Ver Documentación</button>
+            <p>El bot de WhatsApp más poderoso, futurista y avanzado. Tecnología de otro nivel, estilo de otro mundo.</p>
+            <button class="cta-button">Acceder</button>
         </div>
 
         <div class="panel features-panel">
@@ -326,14 +323,14 @@
                 <i class="uil uil-robot"></i>
                 <div>
                     <h3>Respuestas Inteligentes</h3>
-                    <span>Asistente con IA avanzada.</span>
+                    <span>Interactúa como un asistente real.</span>
                 </div>
             </div>
             <div class="panel-item">
                 <i class="uil uil-cloud-download"></i>
                 <div>
                     <h3>Descargas Multimedia</h3>
-                    <span>Descarga de videos, música y más.</span>
+                    <span>Descarga videos y música.</span>
                 </div>
             </div>
             <div class="panel-item">
@@ -353,26 +350,34 @@
         </div>
 
         <div class="panel links-panel">
-            <h2>Herramientas y Enlaces</h2>
-            <a href="https://kirito-bot-md.vercel.app/canvas.html" class="panel-item link-button">
+            <h2>Herramientas & Enlaces</h2>
+            <a href="https://kirito-bot-md.vercel.app/canvas.html" class="panel-item">
                 <i class="uil uil-image-resize-square"></i>
-                <h3>Generador Canvas</h3>
+                <div>
+                    <h3>Generador Canvas</h3>
+                    <span>Crea imágenes asombrosas.</span>
+                </div>
             </a>
-            <a href="https://kirito-bot-md.vercel.app/pinterest.html" class="panel-item link-button">
+            <a href="https://kirito-bot-md.vercel.app/pinterest.html" class="panel-item">
                 <i class="uil uil-pinterest"></i>
-                <h3>Búsqueda Pinterest</h3>
+                <div>
+                    <h3>Búsqueda Pinterest</h3>
+                    <span>Imágenes de Pinterest.</span>
+                </div>
             </a>
-            <a href="https://kirito-bot-md.vercel.app/ia_gemini.html" class="panel-item link-button">
+            <a href="https://kirito-bot-md.vercel.app/ia_gemini.html" class="panel-item">
                 <i class="uil uil-robot"></i>
-                <h3>IA Gemini</h3>
+                <div>
+                    <h3>IA Gemini</h3>
+                    <span>Conversa con IA avanzada.</span>
+                </div>
             </a>
-            <a href="https://github.com/Deylin-Eliac" class="panel-item link-button">
+            <a href="https://github.com/Deylin-Eliac" class="panel-item">
                 <i class="uil uil-github"></i>
-                <h3>GitHub</h3>
-            </a>
-            <a href="https://chat.whatsapp.com/DRy8jQV104X6TLlDB4Qlvx?mode=ac_t" class="panel-item link-button">
-                <i class="uil uil-users-alt"></i>
-                <h3>Grupo Oficial</h3>
+                <div>
+                    <h3>GitHub</h3>
+                    <span>Explora el código fuente.</span>
+                </div>
             </a>
         </div>
         
@@ -387,7 +392,7 @@
                 preloader.style.opacity = '0';
                 preloader.style.visibility = 'hidden';
                 dashboard.classList.add('loaded');
-            }, 3500); // 3.5 segundos para la animación
+            }, 3500);
         });
     </script>
 
