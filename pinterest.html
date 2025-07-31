@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAO: Pinterest Search</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* ====================
+           Estilos Globales y Variables (Mobile-First)
+           ==================== */
+        :root {
+            --bg-color: #050a1a;
+            --primary-color: #00eaff;
+            --secondary-color: #e0f7fa;
+            --accent-color: #ff4081;
+            --warning-color: #ffc107;
+            --font-primary: 'Orbitron', sans-serif;
+            --font-secondary: 'Share Tech Mono', monospace;
+        }
+
+        *, ::before, ::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* ====================
+           Efectos de Fondo
+           ==================== */
+        .bg-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 234, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 234, 255, 0.05) 1px, transparent 1px);
+            background-size: 25px 25px;
+            pointer-events: none;
+            animation: grid-flicker 15s infinite alternate;
+            opacity: 0.1;
+            z-index: -2;
+        }
+
+        @keyframes grid-flicker {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.05; }
+        }
+
+        /* ====================
+           Pantalla de Carga
+           ==================== */
+        #loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 10, 26, 0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 2s ease-in-out;
+        }
+
+        #loader-container.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-area {
+            text-align: center;
+            animation: screen-shake 0.5s linear infinite;
+        }
+        
+        .kirito-sword-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+            animation: pulse-glow 2s infinite alternate;
+        }
+        
+        .kirito-sword-container svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: var(--primary-color);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 10px var(--primary-color));
+            transform-origin: center center;
+            animation: spin-sword 2s infinite linear;
+        }
+
+        .loading-title {
+            font-family: var(--font-primary);
+            font-size: 2.2em;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 0 var(--primary-color);
+            animation: flicker-title 1s infinite steps(2);
+        }
+
+        .loading-progress-bar {
+            position: relative;
+            width: 80vw;
+            height: 20px;
+            background-color: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+        
+        .progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+            border-radius: 10px;
+            animation: load-progress 5s forwards, progress-glow 1s infinite alternate;
+        }
+
+        .loading-status {
+            font-family: var(--font-secondary);
+            font-size: 1em;
+            margin-top: 15px;
+            color: var(--secondary-color);
+            text-shadow: 1px 1px 0 var(--primary-color);
+            animation: glitch-text 0.2s infinite;
+        }
+
+        /* Animaciones para la carga */
+        @keyframes spin-sword { to { transform: rotate(360deg); } }
+        @keyframes pulse-glow { from { filter: drop-shadow(0 0 10px var(--primary-color)); } to { filter: drop-shadow(0 0 20px var(--accent-color)); } }
+        @keyframes flicker-title { 50% { text-shadow: 2px 2px 5px var(--accent-color); opacity: 0.8; } }
+        @keyframes load-progress { to { width: 100%; } }
+        @keyframes progress-glow { from { box-shadow: 0 0 5px var(--accent-color); } to { box-shadow: 0 0 15px var(--primary-color); } }
+        @keyframes screen-shake { 0%, 100% { transform: scale(1) translateY(0); } 50% { transform: scale(1) translateY(-3px); } }
+        @keyframes glitch-text { 0%, 25%, 50%, 75%, 100% { transform: translate(1px, -1px); opacity: 0.8; } 12.5%, 37.5%, 62.5%, 87.5% { transform: translate(-1px, 1px); opacity: 0.7; } }
+
+        /* ====================
+           Página de Búsqueda (Mobile-First)
+           ==================== */
+        #search-page {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            height: 100vh;
+            width: 100vw;
+            background: rgba(5, 10, 26, 0.9);
+            border: 3px solid var(--primary-color);
+            box-shadow: 0 0 30px var(--primary-color);
+            animation: fade-in 1.5s ease-in-out;
+            overflow-y: auto;
+        }
+        
+        @keyframes fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .search-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .search-title {
+            font-family: var(--font-primary);
+            font-size: 2.2em;
+            color: var(--accent-color);
+            text-shadow: 2px 2px 0 var(--primary-color);
+        }
+        
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            font-family: var(--font-secondary);
+            font-size: 1em;
+            color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 10px var(--primary-color);
+            transition: box-shadow 0.3s ease;
+        }
+
+        #search-input:focus {
+            box-shadow: 0 0 20px var(--accent-color);
+        }
+
+        #search-button {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        #search-button:hover {
+            background-color: var(--warning-color);
+            transform: scale(1.02);
+        }
+
+        #search-button:active {
+            transform: scale(1);
+        }
+
+        #results-container {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            padding-bottom: 20px;
+        }
+
+        .result-image {
+            width: 100%;
+            height: auto;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 0 5px var(--primary-color);
+        }
+
+        .result-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--accent-color);
+        }
+
+        .loading-results {
+            text-align: center;
+            width: 100%;
+            padding: 20px;
+            font-family: var(--font-secondary);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+
+    <div id="loader-container">
+        <div class="loading-area">
+            <div class="kirito-sword-container">
+                <svg viewBox="0 0 100 100">
+                    <path d="M15 10 L85 90 M85 10 L15 90 M50 5 L50 95" />
+                    <path d="M30 25 L70 75 M70 25 L30 75" stroke-width="5" />
+                </svg>
+            </div>
+            <h1 class="loading-title">LINK START</h1>
+            <div class="loading-progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <p class="loading-status">Inicializando sistema...</p>
+        </div>
+    </div>
+
+    <div id="search-page">
+        <header class="search-header">
+            <h2 class="search-title">Pinterest Search Terminal</h2>
+        </header>
+        <div class="search-form">
+            <input type="text" id="search-input" placeholder="Ingresa tu búsqueda (ej. 'kirito')...">
+            <button id="search-button">Buscar</button>
+        </div>
+        <div id="results-container">
+            <p class="loading-results">Ingresa un término para empezar la búsqueda de imágenes.</p>
+        </div>
+    </div>
+
+    <script>
+        const loaderContainer = document.getElementById('loader-container');
+        const searchPage = document.getElementById('search-page');
+        const progressFill = document.querySelector('.progress-fill');
+        const loadingStatus = document.querySelector('.loading-status');
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+        const resultsContainer = document.getElementById('results-container');
+        
+        const API_URL = "https://anime-xi-wheat.vercel.app/api/pinterest?q=";
+
+        // Función para simular la carga y mostrar la página de búsqueda
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingMessages = ["Inicializando sistema...", "Conectando al servidor principal...", "Cargando interfaces de usuario...", "Autenticación de usuario completada..."];
+            let messageIndex = 0;
+            const statusInterval = setInterval(() => {
+                loadingStatus.textContent = loadingMessages[messageIndex];
+                messageIndex++;
+                if (messageIndex >= loadingMessages.length) {
+                    clearInterval(statusInterval);
+                    loadingStatus.textContent = "¡Link Start Completo!";
+                }
+            }, 1000);
+
+            setTimeout(() => {
+                progressFill.style.width = '100%';
+                setTimeout(() => {
+                    loaderContainer.classList.add('hidden');
+                    searchPage.style.display = 'flex';
+                }, 2000);
+            }, 5000);
+        });
+
+        // Función para buscar y mostrar las imágenes
+        async function fetchImages(query) {
+            resultsContainer.innerHTML = `<p class="loading-results">Buscando imágenes de "${query}"...</p>`;
+            try {
+                const response = await fetch(API_URL + encodeURIComponent(query));
+                if (!response.ok) {
+                    throw new Error(`Error de red: ${response.status}`);
+                }
+                const data = await response.json();
+                
+                resultsContainer.innerHTML = ''; // Limpiar resultados anteriores
+                if (data.images && data.images.length > 0) {
+                    data.images.forEach(imageUrl => {
+                        const img = document.createElement('img');
+                        img.src = imageUrl;
+                        img.classList.add('result-image');
+                        img.alt = query;
+                        img.addEventListener('click', () => window.open(imageUrl, '_blank'));
+                        resultsContainer.appendChild(img);
+                    });
+                } else {
+                    resultsContainer.innerHTML = `<p class="loading-results">No se encontraron resultados para "${query}".</p>`;
+                }
+            } catch (error) {
+                console.error("Error al buscar imágenes:", error);
+                resultsContainer.innerHTML = `<p class="loading-results" style="color: var(--accent-color);">Error al buscar. Inténtalo de nuevo.</p>`;
+            }
+        }
+
+        searchButton.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                fetchImages(query);
+            }
+        });
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = searchInput.value.trim();
+                if (query) {
+                    fetchImages(query);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
