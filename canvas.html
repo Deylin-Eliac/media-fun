@@ -109,6 +109,7 @@
 
         .message {
             display: flex;
+            flex-direction: column; /* Agregado para que los elementos se apilen */
             max-width: 85%;
             padding: 15px;
             border-radius: 20px;
@@ -134,26 +135,33 @@
             align-self: flex-start;
             border-bottom-left-radius: 5px;
         }
-
+        
+        /* Contenedor de la imagen dentro del mensaje */
         .img-container {
             width: 100%;
             max-width: 300px;
-            margin-top: 10px;
+            margin-bottom: 10px; /* Separación de la imagen al texto */
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 0 15px var(--accent-color);
         }
         
-        .message .img-container img {
+        /* Corrección: la imagen debe ajustarse a su contenedor */
+        .message img {
             width: 100%;
             height: auto;
             display: block;
         }
-
-        /* Estilo específico para la imagen en el mensaje del usuario */
+        
+        /* Estilos específicos para la imagen en el mensaje del usuario */
         .user-message .img-container {
             border: 2px solid var(--primary-color);
             box-shadow: 0 0 15px var(--primary-color);
+        }
+        
+        /* Estilos específicos para la imagen en el mensaje de la IA */
+        .ai-message .img-container {
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 0 15px var(--accent-color);
         }
 
         @keyframes message-fade-in {
@@ -226,7 +234,7 @@
         }
 
         /* Botones de acción */
-        #attach-file-btn, #generate-btn, #send-btn {
+        #attach-file-btn, #send-btn {
             background-color: transparent;
             border: none;
             color: var(--accent-color);
@@ -295,14 +303,16 @@
         </header>
 
         <div class="chat-log" id="chat-log">
-            <div class="message ai-message">¡Hola! Soy una IA. Puedes adjuntar una imagen para que la analice o describir una imagen para que la genere.</div>
+            <div class="message ai-message">
+                <div>¡Hola! Soy una IA. Puedes adjuntar una imagen para que la analice o describir una imagen para que la genere.</div>
+            </div>
         </div>
 
         <div class="chat-input-area">
             <button id="attach-file-btn"><i class="fas fa-plus"></i></button>
             <input type="file" id="file-input" accept="image/*">
             <div id="prompt-input-container">
-                <div id="image-preview" style="display: none;"></div>
+                <div id="image-preview" class="attached-image-preview" style="display: none;"></div>
                 <textarea id="prompt-input" rows="1" placeholder="Escribe un prompt o pregunta..."></textarea>
             </div>
             <button id="generate-btn">Generar</button>
@@ -336,6 +346,7 @@
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'ai-message');
             
+            // Si hay una imagen, la añade primero
             if (imageUrl) {
                 const imgContainer = document.createElement('div');
                 imgContainer.classList.add('img-container');
@@ -346,8 +357,12 @@
                 messageDiv.appendChild(imgContainer);
             }
             
-            const textNode = document.createTextNode(text);
-            messageDiv.appendChild(textNode);
+            // Si hay texto, lo añade después de la imagen
+            if (text) {
+                const textDiv = document.createElement('div');
+                textDiv.textContent = text;
+                messageDiv.appendChild(textDiv);
+            }
             
             chatLog.appendChild(messageDiv);
             chatLog.scrollTop = chatLog.scrollHeight;
@@ -426,6 +441,7 @@
                 removeLoadingMessage();
 
                 if (data.from === 'image-generator') {
+                    // Texto y imagen se añaden correctamente en addMessage
                     addMessage('Aquí está tu imagen generada:', 'ai', data.image);
                 } else if (data.candidates && data.candidates[0] && data.candidates[0].content) {
                     addMessage(data.candidates[0].content.parts[0].text, 'ai');
