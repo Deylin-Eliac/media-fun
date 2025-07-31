@@ -1,373 +1,369 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IA Chat (Gemini + DALL-E)</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        /* ====================
-           Estilos Globales y Variables
-           ==================== */
-        :root {
-            --bg-color: #050a1a;
-            --primary-color: #39ff14; /* Verde neón */
-            --secondary-color: #e0f7fa;
-            --accent-color: #00bfff; /* Azul neón */
-            --input-bg-color: #1a233a;
-            --font-primary: 'Orbitron', sans-serif;
-            --font-secondary: 'Share+Tech+Mono', monospace;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IA Chat (Gemini + DALL·E)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-        *, ::before, ::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  <style>
+    :root {
+      --bg-color: #050a1a;
+      --primary-color: #39ff14;
+      --secondary-color: #e0f7fa;
+      --accent-color: #00bfff;
+      --input-bg-color: #1a233a;
+      --font-primary: 'Orbitron', sans-serif;
+      --font-secondary: 'Share Tech Mono', monospace;
+    }
 
-        body {
-            font-family: var(--font-primary);
-            background-color: var(--bg-color);
-            color: var(--primary-color);
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        /* ====================
-           Contenedor Principal del Chat
-           ==================== */
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            width: 100vw;
-            height: 100vh;
-            background-color: var(--bg-color);
-            position: relative;
-        }
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: var(--font-primary);
+      background-color: var(--bg-color);
+      color: var(--primary-color);
+    }
 
-        .chat-header {
-            padding: 15px;
-            text-align: center;
-            border-bottom: 2px solid var(--primary-color);
-            box-shadow: 0 0 10px var(--primary-color);
-            background-color: var(--input-bg-color);
-            font-family: var(--font-secondary);
-            font-size: 1.2em;
-        }
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      max-width: 100vw;
+    }
 
-        .chat-log {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            scroll-behavior: smooth;
-        }
+    .chat-header {
+      text-align: center;
+      padding: 15px;
+      font-family: var(--font-secondary);
+      background-color: var(--input-bg-color);
+      border-bottom: 2px solid var(--primary-color);
+      box-shadow: 0 0 10px var(--primary-color);
+      font-size: 1.2em;
+    }
 
-        .chat-log::-webkit-scrollbar { width: 5px; }
-        .chat-log::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 5px; }
-        .chat-log::-webkit-scrollbar-track { background: var(--input-bg-color); }
+    .chat-log {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      scroll-behavior: smooth;
+    }
 
-        .message {
-            display: flex;
-            max-width: 85%;
-            padding: 10px;
-            border-radius: 15px;
-            word-wrap: break-word;
-            font-family: var(--font-secondary);
-            animation: message-fade-in 0.5s ease-in-out;
-        }
-        
-        .user-message {
-            background-color: var(--primary-color);
-            color: var(--bg-color);
-            align-self: flex-end;
-        }
+    .chat-log::-webkit-scrollbar {
+      width: 4px;
+    }
+    .chat-log::-webkit-scrollbar-thumb {
+      background: var(--accent-color);
+      border-radius: 5px;
+    }
 
-        .ai-message {
-            background-color: var(--input-bg-color);
-            color: var(--secondary-color);
-            border: 1px solid var(--accent-color);
-            align-self: flex-start;
-        }
-        
-        .ai-message img {
-            max-width: 100%;
-            border-radius: 8px;
-            margin-top: 10px;
-            box-shadow: 0 0 10px var(--accent-color);
-        }
+    .message {
+      display: flex;
+      max-width: 90%;
+      padding: 10px;
+      border-radius: 15px;
+      word-wrap: break-word;
+      font-family: var(--font-secondary);
+      animation: message-fade-in 0.3s ease;
+    }
 
-        @keyframes message-fade-in {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    .user-message {
+      background-color: var(--primary-color);
+      color: var(--bg-color);
+      align-self: flex-end;
+    }
 
-        /* ====================
-           Área de Entrada (Inspirada en la captura)
-           ==================== */
-        .chat-input-area {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background-color: var(--input-bg-color);
-            border-top: 2px solid var(--primary-color);
-            box-shadow: 0 0 10px var(--primary-color);
-        }
-        
-        #attach-file-btn, #generate-btn, #send-btn {
-            background-color: transparent;
-            border: none;
-            color: var(--accent-color);
-            font-size: 1.5em;
-            padding: 10px;
-            cursor: pointer;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
-        }
+    .ai-message {
+      background-color: var(--input-bg-color);
+      color: var(--secondary-color);
+      border: 1px solid var(--accent-color);
+      align-self: flex-start;
+    }
 
-        #attach-file-btn:hover, #send-btn:hover {
-            color: var(--primary-color);
-            text-shadow: 0 0 10px var(--primary-color);
-        }
+    .ai-message img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-top: 10px;
+      box-shadow: 0 0 10px var(--accent-color);
+    }
 
-        #prompt-input {
-            flex-grow: 1;
-            background-color: transparent;
-            border: none;
-            outline: none;
-            color: var(--secondary-color);
-            padding: 10px;
-            font-family: var(--font-secondary);
-            font-size: 1em;
-            resize: none;
-        }
-        
-        /* Estilo del botón de generar imagen (Canvas) */
-        #generate-btn {
-            background-color: var(--accent-color);
-            color: var(--bg-color);
-            font-size: 1em;
-            font-family: var(--font-primary);
-            font-weight: bold;
-            border-radius: 20px;
-            padding: 10px 15px;
-            margin-left: 5px;
-            text-shadow: none;
-            box-shadow: 0 0 10px var(--accent-color);
-            transition: all 0.3s ease;
-        }
+    @keyframes message-fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-        #generate-btn:hover {
-            background-color: var(--primary-color);
-            box-shadow: 0 0 15px var(--primary-color);
-            color: var(--bg-color);
-        }
+    .chat-input-area {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 8px;
+      background-color: var(--input-bg-color);
+      border-top: 2px solid var(--primary-color);
+      box-shadow: 0 0 10px var(--primary-color);
+    }
 
-        #generate-btn:disabled {
-            background-color: #555;
-            color: #ccc;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-        
-        /* Input de archivo oculto */
-        #file-input { display: none; }
+    #prompt-input {
+      flex: 1 1 100%;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      color: var(--secondary-color);
+      padding: 10px;
+      font-family: var(--font-secondary);
+      font-size: 1em;
+      resize: none;
+      min-height: 40px;
+    }
 
-        /* Loader de la IA */
-        .loader {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid var(--accent-color);
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-        }
+    #attach-file-btn,
+    #generate-btn,
+    #send-btn {
+      background-color: transparent;
+      border: none;
+      color: var(--accent-color);
+      font-size: 1.5em;
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    #attach-file-btn:hover,
+    #send-btn:hover {
+      color: var(--primary-color);
+      text-shadow: 0 0 10px var(--primary-color);
+    }
+
+    #generate-btn {
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+      font-size: 1em;
+      font-family: var(--font-primary);
+      font-weight: bold;
+      border-radius: 20px;
+      padding: 8px 12px;
+      margin-left: auto;
+      box-shadow: 0 0 10px var(--accent-color);
+    }
+
+    #generate-btn:hover {
+      background-color: var(--primary-color);
+      box-shadow: 0 0 15px var(--primary-color);
+      color: var(--bg-color);
+    }
+
+    #generate-btn:disabled {
+      background-color: #555;
+      color: #ccc;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    #file-input {
+      display: none;
+    }
+
+    .loader {
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top: 4px solid var(--accent-color);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 600px) {
+      .chat-header {
+        font-size: 1em;
+      }
+
+      #generate-btn {
+        font-size: 0.9em;
+        padding: 6px 10px;
+      }
+
+      .chat-input-area {
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      #prompt-input {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="chat-container">
+    <header class="chat-header">IA Chat <i class="fas fa-robot"></i></header>
 
-    <div class="chat-container">
-        <header class="chat-header">
-            IA Chat <i class="fas fa-robot"></i>
-        </header>
-
-        <div class="chat-log" id="chat-log">
-            <div class="message ai-message">¡Hola! Soy una IA. Puedes preguntarme sobre una imagen o pedirme que genere una.</div>
-        </div>
-
-        <div class="chat-input-area">
-            <button id="attach-file-btn"><i class="fas fa-plus"></i></button>
-            <input type="file" id="file-input" accept="image/*">
-            <textarea id="prompt-input" rows="1" placeholder="Escribe un prompt o pregunta..."></textarea>
-            <button id="generate-btn">Generar</button>
-            <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
-        </div>
+    <div class="chat-log" id="chat-log">
+      <div class="message ai-message">¡Hola! Soy una IA. Puedes preguntarme sobre una imagen o pedirme que genere una.</div>
     </div>
 
-    <script>
-        const chatLog = document.getElementById('chat-log');
-        const promptInput = document.getElementById('prompt-input');
-        const sendBtn = document.getElementById('send-btn');
-        const attachFileBtn = document.getElementById('attach-file-btn');
-        const fileInput = document.getElementById('file-input');
-        const generateBtn = document.getElementById('generate-btn');
-        
-        const API_GEMINI = "https://g-mini-ia.vercel.app/api/gemini";
+    <div class="chat-input-area">
+      <button id="attach-file-btn"><i class="fas fa-plus"></i></button>
+      <input type="file" id="file-input" accept="image/*" />
+      <textarea id="prompt-input" rows="1" placeholder="Escribe un prompt o pregunta..."></textarea>
+      <button id="generate-btn">Generar</button>
+      <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
 
-        // Función para agregar mensajes al chat
-        function addMessage(text, sender, imageUrl = null) {
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'ai-message');
-            
-            if (imageUrl) {
-                const img = document.createElement('img');
-                img.src = imageUrl;
-                img.alt = text;
-                messageDiv.appendChild(img);
-            }
-            
-            const textNode = document.createTextNode(text);
-            messageDiv.appendChild(textNode);
-            
-            chatLog.appendChild(messageDiv);
-            chatLog.scrollTop = chatLog.scrollHeight;
-        }
-        
-        // Simular un mensaje de carga de la IA
-        function showLoadingMessage() {
-            const loadingMsg = document.createElement('div');
-            loadingMsg.classList.add('message', 'ai-message');
-            loadingMsg.innerHTML = '<div class="loader"></div>';
-            loadingMsg.id = 'loading-message';
-            chatLog.appendChild(loadingMsg);
-            chatLog.scrollTop = chatLog.scrollHeight;
-        }
+  <script>
+    const chatLog = document.getElementById('chat-log');
+    const promptInput = document.getElementById('prompt-input');
+    const sendBtn = document.getElementById('send-btn');
+    const attachFileBtn = document.getElementById('attach-file-btn');
+    const fileInput = document.getElementById('file-input');
+    const generateBtn = document.getElementById('generate-btn');
 
-        // Eliminar el mensaje de carga
-        function removeLoadingMessage() {
-            const loadingMsg = document.getElementById('loading-message');
-            if (loadingMsg) {
-                loadingMsg.remove();
-            }
-        }
-        
-        // Función para convertir una imagen a Base64
-        function toBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
-        }
+    const API_GEMINI = "https://g-mini-ia.vercel.app/api/gemini";
 
-        // Función unificada para manejar todas las peticiones
-        async function handleRequest(prompt, isImageGeneration = false) {
-            const imageFile = fileInput.files[0];
-            const payload = {
-                prompts: [prompt],
-                imageBase64List: [],
-                imageUrls: [],
-                mimeTypes: [],
-            };
-            
-            // Si el usuario quiere generar una imagen, modificamos el prompt
-            if (isImageGeneration) {
-                payload.prompts = [`Genera una imagen de: ${prompt}`];
-            } else if (imageFile) {
-                // Si hay un archivo adjunto, lo convertimos a Base64
-                const base64 = await toBase64(imageFile);
-                payload.imageBase64List.push(base64);
-                payload.mimeTypes.push(imageFile.type);
-            }
+    function addMessage(text, sender, imageUrl = null) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'ai-message');
 
-            // Muestra el mensaje del usuario y el loader
-            if (imageFile && !isImageGeneration) {
-                const userImageURL = URL.createObjectURL(imageFile);
-                addMessage(prompt, 'user', userImageURL);
-            } else {
-                addMessage(prompt, 'user');
-            }
-            showLoadingMessage();
+      if (imageUrl) {
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        img.alt = text;
+        messageDiv.appendChild(img);
+      }
 
-            try {
-                const response = await fetch(API_GEMINI, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                });
+      const textNode = document.createTextNode(text);
+      messageDiv.appendChild(textNode);
+      chatLog.appendChild(messageDiv);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
 
-                if (!response.ok) {
-                    throw new Error(`Error de red: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                removeLoadingMessage();
+    function showLoadingMessage() {
+      const loadingMsg = document.createElement('div');
+      loadingMsg.classList.add('message', 'ai-message');
+      loadingMsg.innerHTML = '<div class="loader"></div>';
+      loadingMsg.id = 'loading-message';
+      chatLog.appendChild(loadingMsg);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
 
-                // Manejar la respuesta
-                if (data.from === 'image-generator') {
-                    // Si la API devolvió una imagen (de la lógica interna)
-                    addMessage('Aquí está tu imagen generada:', 'ai', data.image);
-                } else if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-                    // Si la API devolvió texto
-                    addMessage(data.candidates[0].content.parts[0].text, 'ai');
-                } else {
-                    addMessage("No pude obtener una respuesta válida.", 'ai');
-                }
-            } catch (error) {
-                console.error("Error en la solicitud:", error);
-                removeLoadingMessage();
-                addMessage("Lo siento, hubo un error al procesar tu solicitud.", 'ai');
-            }
-            
-            // Limpiar los inputs
-            promptInput.value = '';
-            fileInput.value = null;
-        }
+    function removeLoadingMessage() {
+      const loadingMsg = document.getElementById('loading-message');
+      if (loadingMsg) loadingMsg.remove();
+    }
 
-        // Eventos de los botones
-        sendBtn.addEventListener('click', () => {
-            const prompt = promptInput.value.trim();
-            if (prompt || fileInput.files[0]) {
-                handleRequest(prompt);
-            } else {
-                addMessage("Por favor, escribe un prompt o adjunta una imagen.", 'ai');
-            }
+    function toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    async function handleRequest(prompt, isImageGeneration = false) {
+      const imageFile = fileInput.files[0];
+      const payload = {
+        prompts: [prompt],
+        imageBase64List: [],
+        imageUrls: [],
+        mimeTypes: [],
+      };
+
+      if (isImageGeneration) {
+        payload.prompts = [`Genera una imagen de: ${prompt}`];
+      } else if (imageFile) {
+        const base64 = await toBase64(imageFile);
+        payload.imageBase64List.push(base64);
+        payload.mimeTypes.push(imageFile.type);
+      }
+
+      if (imageFile && !isImageGeneration) {
+        const userImageURL = URL.createObjectURL(imageFile);
+        addMessage(prompt, 'user', userImageURL);
+      } else {
+        addMessage(prompt, 'user');
+      }
+
+      showLoadingMessage();
+
+      try {
+        const response = await fetch(API_GEMINI, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
         });
 
-        generateBtn.addEventListener('click', () => {
-            const prompt = promptInput.value.trim();
-            if (prompt) {
-                handleRequest(prompt, true); // Pasar 'true' para generar imagen
-            } else {
-                addMessage("Por favor, escribe una descripción para generar la imagen.", 'ai');
-            }
-        });
+        if (!response.ok) throw new Error(`Error de red: ${response.status}`);
+        const data = await response.json();
+        removeLoadingMessage();
 
-        attachFileBtn.addEventListener('click', () => {
-            fileInput.click();
-        });
+        if (data.from === 'image-generator') {
+          addMessage('Aquí está tu imagen generada:', 'ai', data.image);
+        } else if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+          addMessage(data.candidates[0].content.parts[0].text, 'ai');
+        } else {
+          addMessage("No pude obtener una respuesta válida.", 'ai');
+        }
+      } catch (error) {
+        console.error("Error en la solicitud:", error);
+        removeLoadingMessage();
+        addMessage("Lo siento, hubo un error al procesar tu solicitud.", 'ai');
+      }
 
-        promptInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault(); // Previene un salto de línea
-                sendBtn.click();
-            }
-        });
-    </script>
+      promptInput.value = '';
+      fileInput.value = null;
+    }
+
+    sendBtn.addEventListener('click', () => {
+      const prompt = promptInput.value.trim();
+      if (prompt || fileInput.files[0]) {
+        handleRequest(prompt);
+      } else {
+        addMessage("Por favor, escribe un prompt o adjunta una imagen.", 'ai');
+      }
+    });
+
+    generateBtn.addEventListener('click', () => {
+      const prompt = promptInput.value.trim();
+      if (prompt) {
+        handleRequest(prompt, true);
+      } else {
+        addMessage("Por favor, escribe una descripción para generar la imagen.", 'ai');
+      }
+    });
+
+    attachFileBtn.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    promptInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        sendBtn.click();
+      }
+    });
+  </script>
 </body>
 </html>
