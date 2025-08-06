@@ -1,436 +1,316 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KILLUA BOT - El futuro de la automatización</title>
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <style>
-        /* Variables CSS para colores */
-        :root {
-            --bg-color: #0d0d1b;
-            --neon-blue: #00e0ff;
-            --text-color: #f0f0f0;
-            --text-muted: #a0a0a0;
-            --gradient-bg: linear-gradient(180deg, #1a1a2b, #0d0d1b);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: auto;
-            padding: 0 2rem;
-        }
-
-        h1, h2, h3 {
-            text-align: center;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            color: var(--neon-blue);
-            margin-bottom: 2rem;
-            text-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
-        }
-
-        /* Encabezado principal */
-        .main-header {
-            background: var(--gradient-bg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            min-height: 100vh;
-            padding: 2rem;
-        }
-
-        .header-content {
-            animation: fadeIn 2s ease-in-out;
-        }
-
-        .bot-image {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            border: 3px solid var(--neon-blue);
-            box-shadow: 0 0 20px rgba(0, 224, 255, 0.7);
-            object-fit: cover;
-            margin-bottom: 1.5rem;
-        }
-
-        .main-header h1 {
-            font-size: 3.5rem;
-            letter-spacing: 2px;
-            color: var(--neon-blue);
-            text-shadow: 0 0 15px var(--neon-blue);
-            margin-bottom: 1rem;
-        }
-
-        .bot-description {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: auto;
-        }
-
-        /* Secciones generales */
-        section {
-            padding: 4rem 0;
-        }
-
-        /* Panel de características */
-        .features-section {
-            background-color: var(--bg-color);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .feature-item {
-            background-color: #1a1a2b;
-            border: 1px solid var(--neon-blue);
-            border-radius: 10px;
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            box-shadow: 0 0 15px rgba(0, 224, 255, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .feature-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0, 224, 255, 0.4);
-        }
-
-        .feature-item i {
-            font-size: 3rem;
-            color: var(--neon-blue);
-            text-shadow: 0 0 5px var(--neon-blue);
-        }
-
-        .feature-item div h3 {
-            font-size: 1.5rem;
-            color: var(--text-color);
-            text-transform: none;
-            margin: 0;
-            text-align: left;
-        }
-
-        .feature-item div p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin: 0;
-            text-align: left;
-        }
-
-        /* Botón de llamada a la acción */
-        .cta-button {
-            display: block;
-            width: 250px;
-            margin: auto;
-            padding: 1rem 2rem;
-            background-color: var(--neon-blue);
-            color: var(--bg-color);
-            text-align: center;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 0 10px var(--neon-blue);
-        }
-
-        .cta-button:hover {
-            background-color: #00c3e0;
-            transform: scale(1.05);
-        }
-
-        /* Sección de precios */
-        .pricing-section {
-            background: var(--gradient-bg);
-        }
-
-        .pricing-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-        }
-
-        .plan {
-            background-color: #1a1a2b;
-            border: 1px solid var(--neon-blue);
-            border-radius: 10px;
-            padding: 2rem;
-            text-align: center;
-            flex: 1 1 300px;
-            max-width: 350px;
-            box-shadow: 0 0 15px rgba(0, 224, 255, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .plan:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 15px 30px rgba(0, 224, 255, 0.4);
-        }
-
-        .plan img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-        }
-
-        .plan h4 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--neon-blue);
-            text-shadow: 0 0 5px var(--neon-blue);
-        }
-
-        .plan button {
-            background-color: var(--neon-blue);
-            color: var(--bg-color);
-            border: none;
-            padding: 0.8rem 1.5rem;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .plan button:hover {
-            background-color: #00c3e0;
-            transform: scale(1.05);
-        }
-
-        .payment-methods {
-            text-align: center;
-            margin-top: 3rem;
-        }
-
-        .payment-methods h3 {
-            color: var(--text-color);
-            margin-bottom: 1rem;
-        }
-
-        .payment-icons {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            font-size: 2.5rem;
-        }
-
-        .payment-icons i, .payment-icons span {
-            color: var(--neon-blue);
-            text-shadow: 0 0 5px var(--neon-blue);
-        }
-
-        /* Sección de contacto */
-        .contact-section {
-            background-color: #1a1a2b;
-        }
-
-        .contact-links {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .contact-links a {
-            color: var(--neon-blue);
-            text-decoration: none;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .contact-links a:hover {
-            color: #00c3e0;
-            transform: translateX(10px);
-        }
-
-        .contact-links i {
-            font-size: 1.5rem;
-        }
-
-        /* Pie de página */
-        footer {
-            text-align: center;
-            padding: 1.5rem;
-            background-color: #0d0d1b;
-            border-top: 1px solid rgba(0, 224, 255, 0.2);
-            color: var(--text-muted);
-        }
-
-        /* Animaciones */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Media Queries para diseño responsive */
-        @media (max-width: 768px) {
-            .main-header {
-                min-height: 80vh;
-            }
-            
-            .main-header h1 {
-                font-size: 2.5rem;
-            }
-            
-            h2 {
-                font-size: 2rem;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .cta-button {
-                width: 100%;
-            }
-            
-            .pricing-grid {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KILLUA BOT - El futuro de la automatización</title>
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0d0d1b;
+    color: #f0f0f0;
+    line-height: 1.6;
+    margin: 20px auto;
+    max-width: 1200px;
+    padding: 20px;
+    border: 5px solid #00e0ff;
+    border-radius: 10px;
+    text-align: center;
+}
+.main-header {
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+}
+.header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.bot-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid #00e0ff;
+    box-shadow: 0 0 10px rgba(0, 224, 255, 0.7);
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+.main-header h1 {
+    font-size: 2.5rem;
+    color: #00e0ff;
+    text-shadow: 0 0 10px #00e0ff;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+.bot-description {
+    font-size: 1rem;
+    color: #a0a0a0;
+    max-width: 600px;
+    margin: 0 auto 1rem;
+}
+.features-section {
+    padding: 2rem 0;
+    background-color: #1a1a2b;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+.features-section h2 {
+    color: #00e0ff;
+    text-shadow: 0 0 5px #00e0ff;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    font-size: 2rem;
+}
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 0 20px;
+}
+.feature-item {
+    background-color: #0d0d1b;
+    border: 1px solid #00e0ff;
+    border-radius: 5px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.feature-item i {
+    font-size: 2rem;
+    color: #00e0ff;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 3px #00e0ff;
+}
+.feature-item h3 {
+    font-size: 1.2rem;
+    color: #f0f0f0;
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+}
+.feature-item p {
+    font-size: 0.9rem;
+    color: #a0a0a0;
+}
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: #00e0ff;
+    color: #0d0d1b;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 1.5rem;
+    transition: background-color 0.3s ease;
+}
+.cta-button:hover {
+    background-color: #00b3cc;
+}
+.pricing-section {
+    padding: 2rem 0;
+    background-color: #1a1a2b;
+    border-radius: 8px;
+    margin-top: 2rem;
+}
+.pricing-section h2 {
+    color: #00e0ff;
+    text-shadow: 0 0 5px #00e0ff;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    font-size: 2rem;
+}
+.pricing-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 20px;
+}
+.plan {
+    background-color: #0d0d1b;
+    border: 1px solid #00e0ff;
+    border-radius: 5px;
+    padding: 1.5rem;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.plan img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+.plan h4 {
+    font-size: 1.5rem;
+    color: #00e0ff;
+    text-shadow: 0 0 3px #00e0ff;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+.plan p {
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    margin-bottom: 1rem;
+}
+.plan button {
+    background-color: #00e0ff;
+    color: #0d0d1b;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.plan button:hover {
+    background-color: #00b3cc;
+}
+.payment-methods {
+    margin-top: 2rem;
+}
+.payment-methods h3 {
+    color: #f0f0f0;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+}
+.payment-methods i {
+    font-size: 2rem;
+    color: #00e0ff;
+    text-shadow: 0 0 3px #00e0ff;
+}
+.contact-section {
+    padding: 2rem 0;
+    background-color: #1a1a2b;
+    border-radius: 8px;
+    margin-top: 2rem;
+}
+.contact-section h2 {
+    color: #00e0ff;
+    text-shadow: 0 0 5px #00e0ff;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    font-size: 2rem;
+}
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 20px;
+}
+.contact-info a {
+    color: #00e0ff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s ease;
+}
+.contact-info a:hover {
+    color: #00b3cc;
+}
+.contact-info i {
+    font-size: 1.5rem;
+}
+footer {
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+    color: #a0a0a0;
+    font-size: 0.8rem;
+}
+</style>
 </head>
 <body>
+<header class="main-header">
+    <div class="header-content">
+        <img src="https://i.postimg.cc/vBQjsMN3/IMG-20250805-WA0332.jpg" alt="Imagen del bot Killua" class="bot-image">
+        <h1>KILLUA BOT</h1>
+        <p class="bot-description">
+            Tu asistente definitivo para automatizar tareas, gestionar tu servidor y optimizar tu tiempo.
+            KILLUA BOT está diseñado para hacer tu vida digital más fácil y eficiente.
+        </p>
+        <a href="#precios-seccion" class="cta-button">Ver precios y comprar</a>
+    </div>
+</header>
 
-    <header class="main-header" id="inicio">
-        <div class="header-content">
-            <img src="https://i.postimg.cc/vBQjsMN3/IMG-20250805-WA0332.jpg" alt="Imagen del bot Killua" class="bot-image">
-            <h1>KILLUA BOT</h1>
-            <p class="bot-description">
-                Tu asistente definitivo para automatizar tareas, gestionar tus grupos y optimizar tu tiempo. 
-                KILLUA BOT está diseñado para hacer tu vida digital más fácil y eficiente.
-            </p>
+<main>
+    <section class="features-section" id="caracteristicas">
+        <h2>Características principales</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <i class="uil uil-robot"></i>
+                <h3>Automatización avanzada</h3>
+                <p>Ejecuta comandos, modera contenido y gestiona roles de forma automática.</p>
+            </div>
+            <div class="feature-item">
+                <i class="uil uil-chart-line"></i>
+                <h3>Estadísticas en tiempo real</h3>
+                <p>Monitorea la actividad de tu servidor con gráficos y reportes detallados.</p>
+            </div>
+            <div class="feature-item">
+                <i class="uil uil-shield-check"></i>
+                <h3>Seguridad integral</h3>
+                <p>Protege tu comunidad de spam, bots maliciosos y comportamientos tóxicos.</p>
+            </div>
+            <div class="feature-item">
+                <i class="uil uil-comment-alt-dots"></i>
+                <h3>Respuestas inteligentes</h3>
+                <p>Interactúa con los usuarios con respuestas personalizadas y dinámicas.</p>
+            </div>
         </div>
-    </header>
+    </section>
 
-    <main>
-        
-        <section class="features-section" id="caracteristicas">
-            <div class="container">
-                <h2>Características principales</h2>
-                <div class="features-grid">
-                    <div class="feature-item">
-                        <i class="uil uil-robot"></i>
-                        <div>
-                            <h3>Automatización avanzada</h3>
-                            <p>Ejecuta comandos, modera contenido y gestiona roles de forma automática.</p>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <i class="uil uil-chart-line"></i>
-                        <div>
-                            <h3>Estadísticas en tiempo real</h3>
-                            <p>Monitorea la actividad de tu servidor con gráficos y reportes detallados.</p>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <i class="uil uil-shield-check"></i>
-                        <div>
-                            <h3>Seguridad integral</h3>
-                            <p>Protege tu comunidad de spam, bots maliciosos y comportamientos tóxicos.</p>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <i class="uil uil-comment-alt-dots"></i>
-                        <div>
-                            <h3>Respuestas inteligentes</h3>
-                            <p>Interactúa con los usuarios con respuestas personalizadas y dinámicas.</p>
-                        </div>
-                    </div>
-                </div>
-                <a href="#precios" class="cta-button">Ver precios y comprar</a>
+    <section class="pricing-section" id="precios-seccion">
+        <h2>Planes de precios</h2>
+        <div class="pricing-grid">
+            <div class="plan">
+                <img src="https://i.postimg.cc/bvvC4H1g/plan-basico.jpg" alt="Plan Básico">
+                <h4>Plan Básico - $5</h4>
+                <p>Acceso a funciones básicas de automatización y soporte estándar.</p>
+                <button onclick="window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=tu_paypal@email.com&item_name=Plan%20B%C3%A1sico%20-%20KILLUA%20BOT&amount=5.00&currency_code=USD')">Comprar con PayPal</button>
             </div>
-        </section>
-
-        <section class="pricing-section" id="precios">
-            <div class="container">
-                <h2>Planes de precios</h2>
-                <div class="pricing-grid">
-                    <div class="plan">
-                        <img src="https://i.postimg.cc/bvvC4H1g/plan-basico.jpg" alt="Plan Básico">
-                        <h4>Plan Básico - $5</h4>
-                        <button onclick="window.open('https://wa.me/50489513153?text=Quiero%20comprar%20el%20Plan%20Básico%20por%20$5')">Comprar</button>
-                    </div>
-                    <div class="plan">
-                        <img src="https://i.postimg.cc/85z07n5t/plan-premium.jpg" alt="Plan Premium">
-                        <h4>Plan Premium - $10</h4>
-                        <button onclick="window.open('https://wa.me/50489513153?text=Quiero%20comprar%20el%20Plan%20Premium%20por%20$10')">Comprar</button>
-                    </div>
-                    <div class="plan">
-                        <img src="https://i.postimg.cc/fRwD4vTj/plan-ultimate.jpg" alt="Plan Ultimate">
-                        <h4>Plan Ultimate - $20</h4>
-                        <button onclick="window.open('https://wa.me/50489513153?text=Quiero%20comprar%20el%20Plan%20Ultimate%20por%20$20')">Comprar</button>
-                    </div>
-                </div>
-
-                <div class="payment-methods">
-                    <h3>Métodos de pago</h3>
-                    <div class="payment-icons">
-                        <i class="uil uil-paypal"></i>
-                        <i class="uil uil-wallet"></i>
-                        <span>Binance</span>
-                        <span>Crypto</span>
-                    </div>
-                </div>
+            <div class="plan">
+                <img src="https://i.postimg.cc/85z07n5t/plan-premium.jpg" alt="Plan Premium">
+                <h4>Plan Premium - $10</h4>
+                <p>Incluye todas las funciones básicas más estadísticas avanzadas y soporte prioritario.</p>
+                <button onclick="window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=tu_paypal@email.com&item_name=Plan%20Premium%20-%20KILLUA%20BOT&amount=10.00&currency_code=USD')">Comprar con PayPal</button>
             </div>
-        </section>
-
-        <section class="contact-section" id="contacto">
-            <div class="container">
-                <h2>Contacto oficial</h2>
-                <div class="contact-links">
-                    <a href="https://wa.me/50489513153" target="_blank">
-                        <i class="uil uil-whatsapp"></i><span>WhatsApp: +504 8951-3153</span>
-                    </a>
-                    <a href="https://wa.me/50489513153?text=Hola,%20tengo%20una%20pregunta%20sobre%20KILLUA%20BOT" target="_blank">
-                        <i class="uil uil-comment-dots"></i><span>Enviar mensaje directo</span>
-                    </a>
-                </div>
+            <div class="plan">
+                <img src="https://i.postimg.cc/fRwD4vTj/plan-ultimate.jpg" alt="Plan Ultimate">
+                <h4>Plan Ultimate - $20</h4>
+                <p>Acceso completo a todas las funciones, soporte VIP y personalización exclusiva.</p>
+                <button onclick="window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=tu_paypal@email.com&item_name=Plan%20Ultimate%20-%20KILLUA%20BOT&amount=20.00&currency_code=USD')">Comprar con PayPal</button>
             </div>
-        </section>
+        </div>
 
-    </main>
+        <div class="payment-methods">
+            <h3>Método de pago</h3>
+            <i class="uil uil-paypal"></i>
+        </div>
+    </section>
 
-    <footer>
-        <p>&copy; 2025 KILLUA BOT. Todos los derechos reservados.</p>
-    </footer>
+    <section class="contact-section" id="contacto-creador">
+        <h2>Contacto oficial</h2>
+        <div class="contact-info">
+            <a href="https://wa.me/50489513153" target="_blank">
+                <i class="uil uil-whatsapp"></i><span>WhatsApp: +504 8951-3153</span>
+            </a>
+            <a href="mailto:tu_email@ejemplo.com">
+                <i class="uil uil-envelope"></i><span>Email: tu_email@ejemplo.com</span>
+            </a>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 KILLUA BOT. Todos los derechos reservados.</p>
+</footer>
 
 </body>
 </html>
