@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Prueba 1 - Bot Premium</title>
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" type="image/png" />
-  <link href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" rel="stylesheet">
+  <link href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" rel="stylesheet" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
 
     :root {
       --neon: #00f0ff;
       --text-muted: #b8e9f1;
+      --dark-bg: #0e0e0e;
     }
 
     * {
@@ -21,7 +22,7 @@
     }
 
     body {
-      background: radial-gradient(circle at center, #0e0e0e, #000);
+      background: radial-gradient(circle at center, var(--dark-bg), #000);
       color: var(--neon);
       font-family: 'Orbitron', sans-serif;
       min-height: 100vh;
@@ -55,12 +56,18 @@
       padding: 1rem;
       border-radius: 12px;
       box-shadow: 0 0 10px #00f0ff33;
+      flex-wrap: wrap;
     }
 
     .feature-item i {
       font-size: 2.5rem;
       color: var(--neon);
       text-shadow: 0 0 5px var(--neon);
+    }
+
+    .feature-item div {
+      flex: 1;
+      text-align: left;
     }
 
     .feature-item div h3 {
@@ -72,6 +79,43 @@
       font-size: 0.9rem;
       color: var(--text-muted);
       margin: 0;
+    }
+
+    .feature-item img {
+      max-width: 100px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #00f0ff88;
+    }
+
+    .contact {
+      margin-top: 4rem;
+    }
+
+    .contact h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-links a {
+      color: var(--neon);
+      text-decoration: none;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-links a:hover {
+      transform: scale(1.1);
+      text-shadow: 0 0 8px var(--neon);
     }
 
     @keyframes glow {
@@ -94,8 +138,8 @@
         text-align: center;
       }
 
-      .feature-item i {
-        font-size: 2rem;
+      .feature-item div {
+        text-align: center;
       }
     }
   </style>
@@ -108,24 +152,35 @@
       <i class="uil uil-robot"></i>
       <div>
         <h3>Bot Inteligente</h3>
-        <p>Responde con IA, detecta comandos y actúa automáticamente en grupos y chats privados.</p>
+        <p>Detecta comandos, responde con IA y modera grupos automáticamente.</p>
       </div>
+      <img src="https://files.catbox.moe/e3qasc.jpg" alt="Vista previa del bot" />
     </div>
 
     <div class="feature-item">
       <i class="uil uil-shield-check"></i>
       <div>
-        <h3>Protección Avanzada</h3>
-        <p>Antilinks, antispam, antiflood y sistema de advertencias con baneo automático.</p>
+        <h3>Seguridad Avanzada</h3>
+        <p>Incluye protección contra enlaces, spam, y usuarios maliciosos.</p>
       </div>
+      <img src="https://files.catbox.moe/e3qasc.jpg" alt="Sistema de seguridad" />
     </div>
 
     <div class="feature-item">
-      <i class="uil uil-presentation-check"></i>
+      <i class="uil uil-mobile-android"></i>
       <div>
-        <h3>Control Total</h3>
-        <p>Comandos para admins, configuraciones personalizadas por grupo o usuario.</p>
+        <h3>100% Compatible</h3>
+        <p>Diseñado para funcionar perfectamente en cualquier dispositivo móvil.</p>
       </div>
+      <img src="https://files.catbox.moe/e3qasc.jpg" alt="Compatible con móviles" />
+    </div>
+  </div>
+
+  <div class="contact">
+    <h2>Contactos Oficiales</h2>
+    <div class="contact-links">
+      <a href="https://wa.me/50489513153" target="_blank"><i class="uil uil-whatsapp"></i> WhatsApp</a>
+      <a href="mailto:correo@tudominio.com"><i class="uil uil-envelope"></i> Email</a>
     </div>
   </div>
 </body>
