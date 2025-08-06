@@ -5,8 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Prueba 1 - Bot Premium</title>
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" type="image/png" />
+  <link href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" rel="stylesheet">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+
+    :root {
+      --neon: #00f0ff;
+      --text-muted: #b8e9f1;
+    }
 
     * {
       margin: 0;
@@ -16,52 +22,64 @@
 
     body {
       background: radial-gradient(circle at center, #0e0e0e, #000);
-      color: #00f0ff;
+      color: var(--neon);
       font-family: 'Orbitron', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
       min-height: 100vh;
       padding: 2rem;
       text-align: center;
-      border: 2px solid transparent;
-      outline: 2px solid #00f0ff;
+      outline: 2px solid var(--neon);
       outline-offset: -10px;
     }
 
     h1 {
       font-size: 3rem;
       margin-bottom: 1rem;
-      text-shadow: 0 0 8px #00f0ff, 0 0 16px #00f0ff;
+      text-shadow: 0 0 8px var(--neon), 0 0 16px var(--neon);
       animation: glow 2s infinite alternate ease-in-out;
     }
 
-    p {
-      font-size: 1.2rem;
-      max-width: 600px;
-      margin-bottom: 2rem;
-      color: #c0faff;
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      max-width: 800px;
+      margin: 2rem auto;
     }
 
-    img {
-      max-width: 100%;
-      height: auto;
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      background: #0a0a0a;
+      border: 1px solid #00f0ff44;
+      padding: 1rem;
       border-radius: 12px;
-      box-shadow: 0 0 15px #00f0ff88;
-      transition: transform 0.5s ease;
+      box-shadow: 0 0 10px #00f0ff33;
     }
 
-    img:hover {
-      transform: scale(1.03);
+    .feature-item i {
+      font-size: 2.5rem;
+      color: var(--neon);
+      text-shadow: 0 0 5px var(--neon);
+    }
+
+    .feature-item div h3 {
+      font-size: 1.3rem;
+      margin: 0 0 0.3rem;
+    }
+
+    .feature-item div p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
     }
 
     @keyframes glow {
       from {
-        text-shadow: 0 0 8px #00f0ff, 0 0 16px #00f0ff;
+        text-shadow: 0 0 8px var(--neon), 0 0 16px var(--neon);
       }
       to {
-        text-shadow: 0 0 20px #00f0ff, 0 0 40px #00f0ff;
+        text-shadow: 0 0 20px var(--neon), 0 0 40px var(--neon);
       }
     }
 
@@ -70,15 +88,45 @@
         font-size: 2.2rem;
       }
 
-      p {
-        font-size: 1rem;
+      .feature-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .feature-item i {
+        font-size: 2rem;
       }
     }
   </style>
 </head>
 <body>
   <h1>Prueba 1</h1>
-  <p>Este es un bot privado con funciones premium, diseñado para grupos y usuarios exigentes. Responde, modera, ejecuta comandos avanzados y se adapta a cualquier necesidad. Personalización total y soporte incluido.</p>
-  <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="Vista previa del bot" />
+
+  <div class="features">
+    <div class="feature-item">
+      <i class="uil uil-robot"></i>
+      <div>
+        <h3>Bot Inteligente</h3>
+        <p>Responde con IA, detecta comandos y actúa automáticamente en grupos y chats privados.</p>
+      </div>
+    </div>
+
+    <div class="feature-item">
+      <i class="uil uil-shield-check"></i>
+      <div>
+        <h3>Protección Avanzada</h3>
+        <p>Antilinks, antispam, antiflood y sistema de advertencias con baneo automático.</p>
+      </div>
+    </div>
+
+    <div class="feature-item">
+      <i class="uil uil-presentation-check"></i>
+      <div>
+        <h3>Control Total</h3>
+        <p>Comandos para admins, configuraciones personalizadas por grupo o usuario.</p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
