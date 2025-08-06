@@ -1,155 +1,238 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Venta de Bots Privados</title>
-  <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KILLUA BOT</title>
+  <link href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" rel="stylesheet">
   <style>
     :root {
-      --main-color: #00ffff;
-      --bg-color: #0a0a0a;
-      --text-color: #ffffff;
-      --text-muted: #aaaaaa;
+      --main-color: #007bff;
+      --text-muted: #666;
     }
 
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: var(--bg-color);
-      color: var(--text-color);
+      background-color: #f9f9f9;
+      color: #333;
     }
 
     header {
       text-align: center;
-      padding: 2rem 1rem;
-      background: #000;
-      border-bottom: 1px solid var(--main-color);
+      padding: 2rem 1rem 1rem;
+      background-color: #fff;
+      border-bottom: 2px solid var(--main-color);
+    }
+
+    header img {
+      max-width: 180px;
+      border-radius: 1rem;
+      border: 2px solid var(--main-color);
+      box-shadow: 0 0 12px rgba(0, 123, 255, 0.3);
+      animation: pulse 2s infinite;
     }
 
     header h1 {
+      margin: 1rem 0 0.3rem;
       font-size: 2rem;
       color: var(--main-color);
-      text-shadow: 0 0 10px var(--main-color);
-      margin-bottom: 0.5rem;
     }
 
     header p {
-      color: var(--text-muted);
+      margin: 0;
       font-size: 1rem;
+      color: var(--text-muted);
     }
 
-    .info-panel {
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+
+    .features {
       padding: 2rem 1rem;
-      display: grid;
-      gap: 1.5rem;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .info-card {
-      background: #111;
-      border: 1px solid var(--main-color);
-      border-radius: 10px;
-      padding: 1rem;
       display: flex;
       flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .feature-item {
+      display: flex;
       gap: 1rem;
-      animation: fadeIn 1s ease-in;
-    }
-
-    .info-card img {
-      width: 100%;
+      align-items: flex-start;
+      background: #fff;
+      border-left: 3px solid var(--main-color);
+      padding: 1rem;
       border-radius: 10px;
-      max-height: 300px;
-      object-fit: cover;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
 
-    .info-card h3 {
+    .feature-item i {
+      font-size: 2rem;
+      color: var(--main-color);
+    }
+
+    .feature-item div h3 {
       margin: 0;
-      color: var(--main-color);
+      font-size: 1.1rem;
     }
 
-    .info-card p {
-      font-size: 0.95rem;
+    .feature-item div p {
+      font-size: 0.9rem;
       color: var(--text-muted);
+      margin: 0;
     }
 
-    .info-card button {
+    .cta-button {
+      display: block;
+      margin: 2rem auto 0;
       background: var(--main-color);
-      color: #000;
+      color: white;
+      padding: 0.8rem 1.6rem;
       border: none;
-      padding: 0.7rem 1.2rem;
-      font-weight: bold;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: transform 0.2s ease-in-out;
-    }
-
-    .info-card button:hover {
-      transform: scale(1.05);
-    }
-
-    .contact-section {
-      background: #111;
-      padding: 2rem 1rem;
+      border-radius: 50px;
+      font-size: 1rem;
       text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+      width: fit-content;
     }
 
-    .contact-section h2 {
+    .cta-button:hover {
+      background: #005dc1;
+    }
+
+    #precios {
+      margin-top: 3rem;
+      background-color: #fff;
+      padding: 2rem 1rem;
+      border-top: 2px solid var(--main-color);
+    }
+
+    #precios h2 {
+      text-align: center;
       color: var(--main-color);
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
     }
 
-    .contact-section p {
+    .precio-card {
+      background: #f1f1f1;
+      border: 1px solid var(--main-color);
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    .precio-card h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .precio-card p {
+      margin: 0 0 1rem;
+      font-size: 0.9rem;
+    }
+
+    .precio-card a {
+      display: inline-block;
+      background: var(--main-color);
+      color: white;
+      padding: 0.5rem 1.2rem;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
     }
 
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(10px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
-    @media screen and (min-width: 600px) {
-      .info-panel {
-        grid-template-columns: repeat(2, 1fr);
+    @media (min-width: 600px) {
+      .features {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .feature-item {
+        width: 45%;
       }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>⚡ Venta de Bots Privados ⚡</h1>
-  <p>Alta calidad, funciones exclusivas y soporte directo</p>
-</header>
+  <header>
+    <img src="https://i.postimg.cc/vBQjsMN3/IMG-20250805-WA0332.jpg" alt="Killua Bot">
+    <h1>KILLUA BOT</h1>
+    <p>Bot privado de alta calidad para WhatsApp</p>
+  </header>
 
-<section class="info-panel">
+  <section class="features">
+    <div class="feature-item">
+      <i class="uil uil-robot"></i>
+      <div>
+        <h3>Funciones Avanzadas</h3>
+        <p>Automatizaciones, respuestas IA, comandos personalizados y mucho más.</p>
+      </div>
+    </div>
 
-  <!-- BOT 1 -->
-  <div class="info-card">
-    <img src="https://i.waifu.pics/IuUtyhT.png" alt="Bot Kirito" />
-    <h3>Kirito Bot MD</h3>
-    <p>Bot privado con funciones premium, integraciones avanzadas y soporte personalizado.</p>
-    <button onclick="window.open('https://wa.me/50489513153?text=Hola!%20Quiero%20comprar%20el%20bot%20Kirito%20por%20$15','_blank')">Comprar por $15</button>
-  </div>
+    <div class="feature-item">
+      <i class="uil uil-lock-alt"></i>
+      <div>
+        <h3>Privacidad garantizada</h3>
+        <p>Acceso exclusivo y seguro solo para clientes verificados.</p>
+      </div>
+    </div>
 
-  <!-- BOT 2 -->
-  <div class="info-card">
-    <img src="https://i.waifu.pics/gf-Vcog.png" alt="Bot Vegeta" />
-    <h3>Vegeta Super Bot</h3>
-    <p>Conexión por código, bien optimizado, bajo consumo y múltiples funciones únicas.</p>
-    <button onclick="window.open('https://wa.me/50489513153?text=Hola!%20Quiero%20comprar%20el%20bot%20Vegeta%20por%20$12','_blank')">Comprar por $12</button>
-  </div>
+    <div class="feature-item">
+      <i class="uil uil-star"></i>
+      <div>
+        <h3>Calidad Premium</h3>
+        <p>Diseño cuidado, sistema estable y soporte dedicado.</p>
+      </div>
+    </div>
 
-</section>
+    <div class="feature-item">
+      <i class="uil uil-whatsapp"></i>
+      <div>
+        <h3>Soporte en WhatsApp</h3>
+        <p>Contacta al creador directamente para dudas o instalación.</p>
+      </div>
+    </div>
+  </section>
 
-<section class="contact-section">
-  <h2>📞 Contacto Oficial</h2>
-  <p>📲 WhatsApp: <a href="https://wa.me/50489513153" style="color: var(--main-color)">+504 8951-3153</a></p>
-  <p>🌐 Canal: <a href="https://whatsapp.com/channel/0029VbB46nl2ER6dZac6Nd1o" target="_blank" style="color: var(--main-color)">Kirito Oficial</a></p>
-</section>
+  <a href="#precios" class="cta-button">Ver precios y comprar</a>
+
+  <section id="precios">
+    <h2>Planes y Precios</h2>
+
+    <div class="precio-card">
+      <h3>Plan Básico</h3>
+      <p>Acceso al bot sin funciones premium. Soporte limitado.</p>
+      <a href="https://wa.me/50489513153?text=Hola%20quiero%20comprar%20el%20Plan%20Básico%20de%20KILLUA%20BOT" target="_blank">Comprar por $5</a>
+    </div>
+
+    <div class="precio-card">
+      <h3>Plan Premium</h3>
+      <p>Incluye todas las funciones, soporte prioritario y actualizaciones.</p>
+      <a href="https://wa.me/50489513153?text=Hola%20quiero%20comprar%20el%20Plan%20Premium%20de%20KILLUA%20BOT" target="_blank">Comprar por $10</a>
+    </div>
+
+    <div class="precio-card">
+      <h3>Plan Full + Instalación</h3>
+      <p>Todo incluido + instalación y configuración del bot en tu dispositivo.</p>
+      <a href="https://wa.me/50489513153?text=Hola%20quiero%20el%20Plan%20Full%20con%20Instalación%20de%20KILLUA%20BOT" target="_blank">Comprar por $15</a>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 KILLUA BOT. Desarrollado por Deylin. Contacto oficial: <a href="https://wa.me/50489513153" target="_blank">+504 8951-3153</a>
+  </footer>
 
 </body>
 </html>
