@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Prueba 1 - Venta de Bots</title>
-  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" type="image/png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prueba 1 - Bot Premium</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" type="image/png" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
 
@@ -15,20 +15,42 @@
     }
 
     body {
-      height: 100vh;
-      background: radial-gradient(circle at center, #0f0f0f 0%, #000000 100%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background: radial-gradient(circle at center, #0e0e0e, #000);
+      color: #00f0ff;
       font-family: 'Orbitron', sans-serif;
-      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 2rem;
+      text-align: center;
     }
 
     h1 {
-      color: #00f0ff;
-      font-size: 4rem;
+      font-size: 3rem;
+      margin-bottom: 1rem;
       text-shadow: 0 0 8px #00f0ff, 0 0 16px #00f0ff;
       animation: glow 2s infinite alternate ease-in-out;
+    }
+
+    p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin-bottom: 2rem;
+      color: #c0faff;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #00f0ff88;
+      transition: transform 0.5s ease;
+    }
+
+    img:hover {
+      transform: scale(1.03);
     }
 
     @keyframes glow {
@@ -39,9 +61,21 @@
         text-shadow: 0 0 20px #00f0ff, 0 0 40px #00f0ff;
       }
     }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
   <h1>Prueba 1</h1>
+  <p>Este es un bot privado con funciones premium, diseñado para grupos y usuarios exigentes. Responde, modera, ejecuta comandos avanzados y se adapta a cualquier necesidad. Personalización total y soporte incluido.</p>
+  <img src="https://i.imgur.com/OJgD1bA.png" alt="Vista previa del bot" />
 </body>
 </html>
