@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Prueba 1 - Bot Premium</title>
+  <title>Prueba 1 - Venta de Bots Premium</title>
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" type="image/png" />
   <link href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" rel="stylesheet" />
   <style>
@@ -25,7 +25,6 @@
       background: radial-gradient(circle at center, var(--dark-bg), #000);
       color: var(--neon);
       font-family: 'Orbitron', sans-serif;
-      min-height: 100vh;
       padding: 2rem;
       text-align: center;
       outline: 2px solid var(--neon);
@@ -33,89 +32,86 @@
     }
 
     h1 {
-      font-size: 3rem;
+      font-size: 2.8rem;
       margin-bottom: 1rem;
       text-shadow: 0 0 8px var(--neon), 0 0 16px var(--neon);
       animation: glow 2s infinite alternate ease-in-out;
     }
 
-    .features {
+    section {
+      margin-top: 3rem;
+    }
+
+    .intro {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .intro img {
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #00f0ff66;
+    }
+
+    .intro p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .plan-list {
       display: flex;
       flex-direction: column;
       gap: 2rem;
-      max-width: 800px;
+      max-width: 900px;
       margin: 2rem auto;
     }
 
-    .feature-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
+    .plan {
       background: #0a0a0a;
-      border: 1px solid #00f0ff44;
+      border: 1px solid #00f0ff33;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00f0ff22;
       padding: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 0 10px #00f0ff33;
-      flex-wrap: wrap;
     }
 
-    .feature-item i {
-      font-size: 2.5rem;
-      color: var(--neon);
-      text-shadow: 0 0 5px var(--neon);
-    }
-
-    .feature-item div {
-      flex: 1;
-      text-align: left;
-    }
-
-    .feature-item div h3 {
-      font-size: 1.3rem;
-      margin: 0 0 0.3rem;
-    }
-
-    .feature-item div p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin: 0;
-    }
-
-    .feature-item img {
-      max-width: 100px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #00f0ff88;
-    }
-
-    .contact {
-      margin-top: 4rem;
-    }
-
-    .contact h2 {
-      font-size: 1.5rem;
+    .plan img {
+      width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00f0ff55;
       margin-bottom: 1rem;
     }
 
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
+    .plan h3 {
+      margin: 0.5rem 0;
+      font-size: 1.3rem;
     }
 
-    .contact-links a {
-      color: var(--neon);
+    .plan .price {
+      font-size: 1.1rem;
+      color: #aef9ff;
+      margin-bottom: 1rem;
+    }
+
+    .plan a {
+      display: inline-block;
+      background: var(--neon);
+      color: #000;
       text-decoration: none;
-      font-size: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      font-weight: bold;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
       transition: transform 0.3s ease;
     }
 
-    .contact-links a:hover {
-      transform: scale(1.1);
-      text-shadow: 0 0 8px var(--neon);
+    .plan a:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px var(--neon);
     }
 
     @keyframes glow {
@@ -129,59 +125,44 @@
 
     @media (max-width: 600px) {
       h1 {
-        font-size: 2.2rem;
-      }
-
-      .feature-item {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
-
-      .feature-item div {
-        text-align: center;
+        font-size: 2rem;
       }
     }
   </style>
 </head>
 <body>
+
   <h1>Prueba 1</h1>
 
-  <div class="features">
-    <div class="feature-item">
-      <i class="uil uil-robot"></i>
-      <div>
-        <h3>Bot Inteligente</h3>
-        <p>Detecta comandos, responde con IA y modera grupos automáticamente.</p>
-      </div>
-      <img src="https://files.catbox.moe/iy7ihp.jpg" alt="Vista previa del bot" />
+  <!-- Encabezado -->
+  <section class="intro">
+    <img src="https://i.imgur.com/OJgD1bA.png" alt="Banner del bot" />
+    <p>Bienvenido a nuestra tienda de bots premium. Aquí encontrarás bots inteligentes con funciones avanzadas y soporte personalizado. Elige el plan que más se adapte a ti y comienza hoy.</p>
+  </section>
+
+  <!-- Planes -->
+  <section class="plan-list">
+    <div class="plan">
+      <img src="https://i.imgur.com/VzdGnWz.png" alt="Bot Básico" />
+      <h3>Bot Básico</h3>
+      <div class="price">$5 USD</div>
+      <a href="https://wa.me/50489513153?text=Hola, quiero comprar el plan de $5 del bot.">Comprar por WhatsApp</a>
     </div>
 
-    <div class="feature-item">
-      <i class="uil uil-shield-check"></i>
-      <div>
-        <h3>Seguridad Avanzada</h3>
-        <p>Incluye protección contra enlaces, spam, y usuarios maliciosos.</p>
-      </div>
-      <img src="https://files.catbox.moe/iy7ihp.jpg" alt="Sistema de seguridad" />
+    <div class="plan">
+      <img src="https://i.imgur.com/7dtVhEk.png" alt="Bot Avanzado" />
+      <h3>Bot Avanzado</h3>
+      <div class="price">$10 USD</div>
+      <a href="https://wa.me/50489513153?text=Hola, quiero comprar el plan de $10 del bot.">Comprar por WhatsApp</a>
     </div>
 
-    <div class="feature-item">
-      <i class="uil uil-mobile-android"></i>
-      <div>
-        <h3>100% Compatible</h3>
-        <p>Diseñado para funcionar perfectamente en cualquier dispositivo móvil.</p>
-      </div>
-      <img src="https://files.catbox.moe/iy7ihp.jpg" alt="Compatible con móviles" />
+    <div class="plan">
+      <img src="https://i.imgur.com/F8NcZIL.png" alt="Bot Full Premium" />
+      <h3>Bot Full Premium</h3>
+      <div class="price">$20 USD</div>
+      <a href="https://wa.me/50489513153?text=Hola, quiero comprar el plan de $20 del bot.">Comprar por WhatsApp</a>
     </div>
-  </div>
+  </section>
 
-  <div class="contact">
-    <h2>Contactos Oficiales</h2>
-    <div class="contact-links">
-      <a href="https://wa.me/50489513153" target="_blank"><i class="uil uil-whatsapp"></i> WhatsApp</a>
-      <a href="mailto:correo@tudominio.com"><i class="uil uil-envelope"></i> Email</a>
-    </div>
-  </div>
 </body>
 </html>
