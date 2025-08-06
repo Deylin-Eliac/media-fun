@@ -2,167 +2,154 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Prueba 1 - Venta de Bots Premium</title>
-  <link rel="icon" href="https://i.postimg.cc/vBQjsMN3/IMG-20250805-WA0332.jpg" type="image/png" />
-  <link href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Venta de Bots Privados</title>
+  <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet"/>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
-
     :root {
-      --neon: #00f0ff;
-      --text-muted: #b8e9f1;
-      --dark-bg: #0e0e0e;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      --main-color: #00ffff;
+      --bg-color: #0a0a0a;
+      --text-color: #ffffff;
+      --text-muted: #aaaaaa;
     }
 
     body {
-      background: radial-gradient(circle at center, var(--dark-bg), #000);
-      color: var(--neon);
-      font-family: 'Orbitron', sans-serif;
-      padding: 2rem;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    header {
       text-align: center;
-      outline: 2px solid var(--neon);
-      outline-offset: -10px;
+      padding: 2rem 1rem;
+      background: #000;
+      border-bottom: 1px solid var(--main-color);
     }
 
-    h1 {
-      font-size: 2.8rem;
-      margin-bottom: 1rem;
-      text-shadow: 0 0 8px var(--neon), 0 0 16px var(--neon);
-      animation: glow 2s infinite alternate ease-in-out;
+    header h1 {
+      font-size: 2rem;
+      color: var(--main-color);
+      text-shadow: 0 0 10px var(--main-color);
+      margin-bottom: 0.5rem;
     }
 
-    section {
-      margin-top: 3rem;
-    }
-
-    .intro {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-      max-width: 800px;
-      margin: auto;
-    }
-
-    .intro img {
-      max-width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 0 15px #00f0ff66;
-    }
-
-    .intro p {
+    header p {
       color: var(--text-muted);
       font-size: 1rem;
     }
 
-    .plan-list {
+    .info-panel {
+      padding: 2rem 1rem;
+      display: grid;
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .info-card {
+      background: #111;
+      border: 1px solid var(--main-color);
+      border-radius: 10px;
+      padding: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
-      max-width: 900px;
-      margin: 2rem auto;
+      gap: 1rem;
+      animation: fadeIn 1s ease-in;
     }
 
-    .plan {
-      background: #0a0a0a;
-      border: 1px solid #00f0ff33;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #00f0ff22;
-      padding: 1rem;
-    }
-
-    .plan img {
+    .info-card img {
       width: 100%;
-      max-height: 250px;
-      object-fit: cover;
       border-radius: 10px;
-      box-shadow: 0 0 10px #00f0ff55;
-      margin-bottom: 1rem;
+      max-height: 300px;
+      object-fit: cover;
     }
 
-    .plan h3 {
-      margin: 0.5rem 0;
-      font-size: 1.3rem;
+    .info-card h3 {
+      margin: 0;
+      color: var(--main-color);
     }
 
-    .plan .price {
-      font-size: 1.1rem;
-      color: #aef9ff;
-      margin-bottom: 1rem;
+    .info-card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
     }
 
-    .plan a {
-      display: inline-block;
-      background: var(--neon);
+    .info-card button {
+      background: var(--main-color);
       color: #000;
-      text-decoration: none;
+      border: none;
+      padding: 0.7rem 1.2rem;
       font-weight: bold;
-      padding: 0.6rem 1.2rem;
-      border-radius: 8px;
-      transition: transform 0.3s ease;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
     }
 
-    .plan a:hover {
+    .info-card button:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 10px var(--neon);
     }
 
-    @keyframes glow {
-      from {
-        text-shadow: 0 0 8px var(--neon), 0 0 16px var(--neon);
-      }
-      to {
-        text-shadow: 0 0 20px var(--neon), 0 0 40px var(--neon);
-      }
+    .contact-section {
+      background: #111;
+      padding: 2rem 1rem;
+      text-align: center;
     }
 
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
+    .contact-section h2 {
+      color: var(--main-color);
+      margin-bottom: 1rem;
+    }
+
+    .contact-section p {
+      color: var(--text-muted);
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @media screen and (min-width: 600px) {
+      .info-panel {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
   </style>
 </head>
 <body>
 
-  <h1>Prueba 1</h1>
+<header>
+  <h1>⚡ Venta de Bots Privados ⚡</h1>
+  <p>Alta calidad, funciones exclusivas y soporte directo</p>
+</header>
 
-  <!-- Encabezado -->
-  <section class="intro">
-    <img src="https://i.postimg.cc/vBQjsMN3/IMG-20250805-WA0332.jpg" alt="Banner del bot" />
-    <p>Bienvenido a nuestra tienda de bots premium. Aquí encontrarás bots inteligentes con funciones avanzadas y soporte personalizado. Elige el plan que más se adapte a ti y comienza hoy.</p>
-  </section>
+<section class="info-panel">
 
-  <!-- Planes -->
-  <section class="plan-list">
-    <div class="plan">
-      <img src="https://i.postimg.cc/vBQjsMN3/IMG-20250805-WA0332.jpg" alt="Bot Básico" />
-      <h3>Bot Básico</h3>
-      <div class="price">$5 USD</div>
-      <a href="https://wa.me/50489513153?text=Hola, quiero comprar el plan de $5 del bot.">Comprar por WhatsApp</a>
-    </div>
+  <!-- BOT 1 -->
+  <div class="info-card">
+    <img src="https://i.waifu.pics/IuUtyhT.png" alt="Bot Kirito" />
+    <h3>Kirito Bot MD</h3>
+    <p>Bot privado con funciones premium, integraciones avanzadas y soporte personalizado.</p>
+    <button onclick="window.open('https://wa.me/50489513153?text=Hola!%20Quiero%20comprar%20el%20bot%20Kirito%20por%20$15','_blank')">Comprar por $15</button>
+  </div>
 
-    <div class="plan">
-      <img src="https://i.postimg.cc/vBQjsMN3/IMG-20250805-WA0332.jpg" alt="Bot Avanzado" />
-      <h3>Bot Avanzado</h3>
-      <div class="price">$10 USD</div>
-      <a href="https://wa.me/50489513153?text=Hola, quiero comprar el plan de $10 del bot.">Comprar por WhatsApp</a>
-    </div>
+  <!-- BOT 2 -->
+  <div class="info-card">
+    <img src="https://i.waifu.pics/gf-Vcog.png" alt="Bot Vegeta" />
+    <h3>Vegeta Super Bot</h3>
+    <p>Conexión por código, bien optimizado, bajo consumo y múltiples funciones únicas.</p>
+    <button onclick="window.open('https://wa.me/50489513153?text=Hola!%20Quiero%20comprar%20el%20bot%20Vegeta%20por%20$12','_blank')">Comprar por $12</button>
+  </div>
 
-    <div class="plan">
-      <img src="https://i.postimg.cc/vBQjsMN3/IMG-20250805-WA0332.jpg" alt="Bot Full Premium" />
-      <h3>Bot Full Premium</h3>
-      <div class="price">$20 USD</div>
-      <a href="https://wa.me/50489513153?text=Hola, quiero comprar el plan de $20 del bot.">Comprar por WhatsApp</a>
-    </div>
-  </section>
+</section>
+
+<section class="contact-section">
+  <h2>📞 Contacto Oficial</h2>
+  <p>📲 WhatsApp: <a href="https://wa.me/50489513153" style="color: var(--main-color)">+504 8951-3153</a></p>
+  <p>🌐 Canal: <a href="https://whatsapp.com/channel/0029VbB46nl2ER6dZac6Nd1o" target="_blank" style="color: var(--main-color)">Kirito Oficial</a></p>
+</section>
 
 </body>
 </html>
