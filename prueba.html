@@ -3,24 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Prueba 1</title>
-  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" type="image/png">
+  <title>Prueba 1 - Venta de Bots</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" type="image/png">
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       height: 100vh;
-      background-color: #0ff; /* azul neón */
+      background: radial-gradient(circle at center, #0f0f0f 0%, #000000 100%);
       display: flex;
-      align-items: center;
       justify-content: center;
-      font-family: Arial, sans-serif;
-      color: #000;
+      align-items: center;
+      font-family: 'Orbitron', sans-serif;
+      overflow: hidden;
+    }
+
+    h1 {
+      color: #00f0ff;
       font-size: 4rem;
-      text-shadow: 0 0 10px #00f, 0 0 20px #00f;
+      text-shadow: 0 0 8px #00f0ff, 0 0 16px #00f0ff;
+      animation: glow 2s infinite alternate ease-in-out;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 8px #00f0ff, 0 0 16px #00f0ff;
+      }
+      to {
+        text-shadow: 0 0 20px #00f0ff, 0 0 40px #00f0ff;
+      }
     }
   </style>
 </head>
 <body>
-  Prueba 1
+  <h1>Prueba 1</h1>
 </body>
 </html>
