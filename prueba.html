@@ -16,10 +16,11 @@
             --bg-color-light: #1e1e1e;
             --card-bg-color: #2a2a2a;
             --card-border-color: #444;
+            --font-family: 'Poppins', sans-serif;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: var(--font-family);
             margin: 0;
             padding: 0;
             color: var(--text-color);
@@ -107,11 +108,6 @@
             border: 1px solid var(--card-border-color);
             position: relative;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
         }
 
         .card::before {
@@ -141,17 +137,19 @@
             margin-top: 0;
             font-size: 1.5em;
         }
-
-        .card img.bot-image {
+        
+        .card .bot-image {
             width: 100%;
             max-width: 200px;
             border-radius: 10px;
             margin-bottom: 15px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
             transition: transform 0.5s ease;
+            display: block;
+            margin: 0 auto 15px;
         }
 
-        .card:hover img.bot-image {
+        .card:hover .bot-image {
             transform: scale(1.1) rotate(5deg);
         }
 
@@ -244,6 +242,74 @@
             color: var(--bg-color-dark);
         }
 
+        /* Seccion de comandos */
+        .commands-section {
+            background-color: var(--card-bg-color);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            margin-bottom: 40px;
+        }
+
+        .commands-section h2 {
+            text-align: center;
+            color: var(--secondary-color);
+            text-shadow: 0 0 8px var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .command-category {
+            background-color: var(--bg-color-light);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .command-category:hover {
+            transform: translateX(10px);
+            box-shadow: 0 0 15px rgba(255, 145, 0, 0.3);
+        }
+
+        .command-category h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .command-category ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .command-category li {
+            background-color: #383838;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+        .command-category li:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .owner-info {
+            text-align: center;
+            font-size: 0.9em;
+            color: #aaa;
+            margin-top: 40px;
+        }
+
         /* Responsive para móviles */
         @media (max-width: 600px) {
             h1 {
@@ -269,46 +335,162 @@
         <header>
             <img src="bot-image.png" alt="Logo de Naruto-Bot MD" class="logo">
             <h1>Naruto-Bot MD</h1>
-            <p>Tu asistente shinobi de WhatsApp, con el poder del Rasengan.</p>
+            <p>Tu asistente shinobi de WhatsApp, con el poder del Rasengan. <br>¡Potenciado por **Eliác**!</p>
         </header>
-
-        <section class="card-grid">
-            <div class="card">
-                <h2>Imágenes de Naruto-Bot MD</h2>
-                <img src="bot-image.png" alt="El bot en acción" class="bot-image">
-                <p>Aquí verás cómo se ve el bot en acción y algunas de sus funciones.</p>
-            </div>
-
-            <div class="card">
-                <h2>Características Principales</h2>
-                <ul>
-                    <li><i class="fas fa-check-circle" style="color: var(--primary-color);"></i> Comandos de imágenes de anime.</li>
-                    <li><i class="fas fa-check-circle" style="color: var(--primary-color);"></i> Conversor de texto a voz.</li>
-                    <li><i class="fas fa-check-circle" style="color: var(--primary-color);"></i> Juegos interactivos.</li>
-                    <li><i class="fas fa-check-circle" style="color: var(--primary-color);"></i> Información de personajes de Naruto.</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="social-links">
-            <a href="https://wa.me/" target="_blank" title="Añadir a WhatsApp">
-                <i class="fab fa-whatsapp"></i>
-            </a>
-            <a href="#" target="_blank" title="Servidor de Discord">
-                <i class="fab fa-discord"></i>
-            </a>
-            <a href="#" target="_blank" title="GitHub del Proyecto">
-                <i class="fab fa-github"></i>
-            </a>
-        </section>
         
         <hr style="width: 100%; border: none; border-top: 1px solid var(--card-border-color); margin: 40px 0;">
 
         <section class="invite-card">
             <h2>¡Únete a la aldea de Naruto-Bot MD!</h2>
             <p>Experimenta el poder del jutsu. Invítame a tu grupo de WhatsApp ahora mismo.</p>
-            <a href="https://wa.me/" target="_blank">Añadir a mi grupo</a>
+            <a href="https://chat.whatsapp.com/HuMh41LJftl4DH7G5MWcHP" target="_blank">Añadir a mi grupo</a>
         </section>
+
+        <hr style="width: 100%; border: none; border-top: 1px solid var(--card-border-color); margin: 40px 0;">
+
+        <section class="card">
+            <h2 style="text-align: center;">Enlaces Oficiales y de Soporte</h2>
+            <div class="social-links">
+                <a href="https://whatsapp.com/channel/0029VbAzn9GGU3BQw830eA0F" target="_blank" title="Canal de WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://chat.whatsapp.com/HuMh41LJftl4DH7G5MWcHP" target="_blank" title="Grupo de Soporte">
+                    <i class="fas fa-users"></i>
+                </a>
+                <a href="https://ko-fi.com/naruto_bot" target="_blank" title="Donar en Ko-fi">
+                    <i class="fas fa-coffee"></i>
+                </a>
+                <a href="https://wa.me/50432955554" target="_blank" title="Contacto y Soporte (Creador)">
+                    <i class="fas fa-headset"></i>
+                </a>
+            </div>
+        </section>
+
+        <hr style="width: 100%; border: none; border-top: 1px solid var(--card-border-color); margin: 40px 0;">
+
+        <section class="commands-section">
+            <h2>⚙️ Lista de Comandos del Bot ⚙️</h2>
+
+            <div class="command-category">
+                <h3><i class="fas fa-bolt"></i> ANIME</h3>
+                <ul>
+                    <li>.hello @tag</li>
+                    <li>.hola @tag</li>
+                    <li>.kiss @tag</li>
+                    <li>.kiss2 @tag</li>
+                    <li>.waifu</li>
+                </ul>
+            </div>
+
+            <div class="command-category">
+                <h3><i class="fas fa-crown"></i> INFO</h3>
+                <ul>
+                    <li>.owner</li>
+                    <li>.sugerir</li>
+                    <li>.update</li>
+                    <li>.actualizar</li>
+                </ul>
+            </div>
+
+            <div class="command-category">
+                <h3><i class="fas fa-fire"></i> SUB BOTS</h3>
+                <ul>
+                    <li>.qr</li>
+                    <li>.code</li>
+                </ul>
+            </div>
+
+            <div class="command-category">
+                <h3><i class="fas fa-image"></i> STICKER</h3>
+                <ul>
+                    <li>.pfp @user</li>
+                    <li>.pfp +numero</li>
+                    <li>.stiker &lt;img&gt;</li>
+                    <li>.sticker &lt;url&gt;</li>
+                </ul>
+            </div>
+            
+            <div class="command-category">
+                <h3><i class="fas fa-users"></i> GROUPS</h3>
+                <ul>
+                    <li>.lid</li>
+                </ul>
+            </div>
+
+            <div class="command-category">
+                <h3><i class="fas fa-toggle-on"></i> ON / OFF</h3>
+                <ul>
+                    <li>.welcome</li>
+                    <li>.bv</li>
+                    <li>.bienvenida</li>
+                    <li>.antiprivado</li>
+                    <li>.antibot</li>
+                    <li>.modoadmin</li>
+                    <li>.autoread</li>
+                    <li>.antiviewonce</li>
+                    <li>.reaction</li>
+                    <li>.nsfw</li>
+                    <li>.antispam</li>
+                    <li>.antidelete</li>
+                    <li>.jadibotmd</li>
+                    <li>.simi</li>
+                    <li>.antilink</li>
+                    <li>.antitoxic</li>
+                    <li>.antitraba</li>
+                    <li>.antifake</li>
+                </ul>
+            </div>
+            
+            <div class="command-category">
+                <h3><i class="fas fa-download"></i> DOWNLOAD</h3>
+                <ul>
+                    <li>.dcatbox &lt;url&gt;</li>
+                    <li>.play</li>
+                    <li>.ytmp3</li>
+                    <li>.ytmp4</li>
+                    <li>.spotify</li>
+                    <li>.music</li>
+                </ul>
+            </div>
+            
+            <div class="command-category">
+                <h3><i class="fas fa-tools"></i> TOOLS</h3>
+                <ul>
+                    <li>.get</li>
+                    <li>.inspect</li>
+                    <li>.invite</li>
+                    <li>.ssweb &lt;url&gt;</li>
+                    <li>.whatmusic &lt;audio/video&gt;</li>
+                </ul>
+            </div>
+
+            <div class="command-category">
+                <h3><i class="fas fa-dice"></i> FUN</h3>
+                <ul>
+                    <li>.meme</li>
+                    <li>.logo</li>
+                    <li>.reduce</li>
+                </ul>
+            </div>
+
+            <div class="command-category">
+                <h3><i class="fas fa-shield-alt"></i> OWNER</h3>
+                <ul>
+                    <li>.banchat</li>
+                    <li>.aceptar</li>
+                    <li>.dsowner</li>
+                    <li>.></li>
+                    <li>.=></li>
+                    <li>.invite</li>
+                    <li>.saveplugin</li>
+                </ul>
+            </div>
+
+        </section>
+
+        <footer class="owner-info">
+            <p>Hecho con ❤️ por **Deylin**</p>
+        </footer>
     </div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
