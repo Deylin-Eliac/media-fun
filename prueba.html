@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deylin | Naruto-Bot MD</title>
+    <title>Intro de Deylin</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
 
         :root {
             --primary-color: #ff9100; /* Naranja de Naruto */
-            --secondary-color: #3f51b5; /* Azul del chidori */
+            --secondary-color: #3f51b5; /* Azul Chidori */
+            --line-color: #00ffff; /* Color de las líneas del video */
             --text-color: #ffffff;
             --bg-color-dark: #121212;
-            --bg-color-light: #1e1e1e;
             --font-family: 'Poppins', sans-serif;
         }
 
@@ -20,8 +20,8 @@
             font-family: var(--font-family);
             margin: 0;
             padding: 0;
-            color: var(--text-color);
             background-color: var(--bg-color-dark);
+            color: var(--text-color);
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -29,32 +29,122 @@
             height: 100vh;
         }
 
-        /* Fondo animado con partículas (similar al video) */
-        #particles-js {
+        /* Fondo de puntos parpadeantes */
+        .background {
             position: fixed;
-            width: 100%;
-            height: 100%;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#2a2a2a 1px, transparent 1px);
+            background-size: 20px 20px;
+            animation: flicker 1s infinite alternate;
             z-index: -1;
-            background-color: var(--bg-color-dark);
         }
 
-        /* Contenedor principal de la animación */
+        @keyframes flicker {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        /* Contenedor principal de la intro */
         .intro-container {
             text-align: center;
-            opacity: 0;
-            animation: fadeIn 2s forwards;
-            animation-delay: 1s;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* Animación del logo de Naruto */
+        /* Contenedor SVG para las animaciones de las formas */
+        .shapes-container {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .shapes-container svg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .shapes-container path {
+            fill: none;
+            stroke: var(--line-color);
+            stroke-width: 2;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            opacity: 0;
+        }
+
+        /* Animaciones para las diferentes secuencias de formas */
+        /* Secuencia 1: Líneas iniciales */
+        #line1, #line2, #line3, #line4 {
+            animation: draw-line 0.5s ease-out forwards;
+            animation-delay: 1.5s;
+        }
+        @keyframes draw-line {
+            to { stroke-dashoffset: 0; opacity: 1; }
+        }
+        #line1, #line4 { animation-delay: 1.5s; }
+        #line2, #line3 { animation-delay: 2.0s; }
+
+        /* Secuencia 2: Hexágonos */
+        #hex1, #hex2, #hex3 {
+            animation: draw-shape 1s ease-out forwards;
+            animation-delay: 3s;
+        }
+        #hex1 { animation-delay: 3s; }
+        #hex2 { animation-delay: 3.5s; }
+        #hex3 { animation-delay: 4s; }
+
+        @keyframes draw-shape {
+            to { stroke-dashoffset: 0; opacity: 1; }
+        }
+        
+        /* Secuencia 3: Cuadrado y líneas del centro */
+        #square1, #square2, #line5, #line6 {
+            animation: draw-shape 0.8s ease-out forwards;
+            animation-delay: 5s;
+        }
+        
+        /* Limpiando las animaciones anteriores para la siguiente secuencia */
+        .shapes-container svg {
+            animation: fade-out 1s forwards;
+            animation-delay: 7s;
+        }
+        @keyframes fade-out {
+            to { opacity: 0; transform: scale(0.8); }
+        }
+
+        /* Animación final del logo y texto */
+        .final-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            animation: show-logo 1.5s forwards;
+            animation-delay: 8s;
+            text-align: center;
+        }
+        
+        @keyframes show-logo {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
         .logo-container {
-            position: relative;
             width: 150px;
             height: 150px;
+            position: relative;
             margin: 0 auto;
-            animation: scaleIn 1s ease-out;
         }
 
         .logo-img {
@@ -64,18 +154,12 @@
             animation: logo-glow 3s infinite alternate;
         }
 
-        @keyframes scaleIn {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
         @keyframes logo-glow {
             0% { filter: drop-shadow(0 0 5px var(--primary-color)); }
             100% { filter: drop-shadow(0 0 20px var(--primary-color)) drop-shadow(0 0 5px var(--secondary-color)); }
         }
 
-        /* Animación del nombre "Deylin" */
-        .title {
+        .logo-text {
             font-size: 3em;
             text-transform: uppercase;
             letter-spacing: 5px;
@@ -83,19 +167,6 @@
             position: relative;
             text-shadow: 0 0 10px var(--secondary-color);
             animation: text-glitch 4s infinite alternate;
-            opacity: 0;
-            animation: fadeInText 2s forwards;
-            animation-delay: 2s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes fadeInText {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
 
         @keyframes text-glitch {
@@ -108,123 +179,34 @@
     </style>
 </head>
 <body>
-
-    <div id="particles-js"></div>
+    <div class="background"></div>
 
     <div class="intro-container">
-        <div class="logo-container">
-            <img src="naruto-logo.png" alt="Logo de Naruto-Bot MD" class="logo-img">
+        <div class="shapes-container">
+            <svg width="100%" height="100%" viewBox="0 0 100 100">
+                <path id="line1" d="M 40 20 L 60 20" stroke-dasharray="20" stroke-dashoffset="20"></path>
+                <path id="line2" d="M 20 40 L 20 60" stroke-dasharray="20" stroke-dashoffset="20"></path>
+                <path id="line3" d="M 40 40 L 60 60" stroke-dasharray="28" stroke-dashoffset="28"></path>
+                <path id="line4" d="M 60 40 L 40 60" stroke-dasharray="28" stroke-dashoffset="28"></path>
+                
+                <path id="hex1" d="M50 30 L60 35 L60 45 L50 50 L40 45 L40 35 Z" stroke-dasharray="60" stroke-dashoffset="60" style="animation-delay: 3s;"></path>
+                <path id="hex2" d="M50 40 L60 45 L60 55 L50 60 L40 55 L40 45 Z" stroke-dasharray="60" stroke-dashoffset="60" style="animation-delay: 3.5s;"></path>
+                <path id="hex3" d="M50 50 L60 55 L60 65 L50 70 L40 65 L40 55 Z" stroke-dasharray="60" stroke-dashoffset="60" style="animation-delay: 4s;"></path>
+
+                <path id="square1" d="M25 25 L75 25 L75 75 L25 75 Z" stroke-dasharray="200" stroke-dashoffset="200" style="animation-delay: 5s;"></path>
+                <path id="square2" d="M40 40 L60 40 L60 60 L40 60 Z" stroke-dasharray="80" stroke-dashoffset="80" style="animation-delay: 5.5s;"></path>
+                <path id="line5" d="M50 35 L50 65" stroke-dasharray="30" stroke-dashoffset="30" style="animation-delay: 5.5s;"></path>
+                <path id="line6" d="M35 50 L65 50" stroke-dasharray="30" stroke-dashoffset="30" style="animation-delay: 5.5s;"></path>
+            </svg>
         </div>
-        <h1 class="title">Deylin</h1>
+
+        <div class="final-logo">
+            <div class="logo-container">
+                <img src="naruto-logo.png" alt="Logo de Naruto-Bot MD" class="logo-img">
+            </div>
+            <h1 class="logo-text">Deylin</h1>
+        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        particlesJS("particles-js", {
-            "particles": {
-                "number": {
-                    "value": 80,
-                    "density": {
-                        "enable": true,
-                        "value_area": 800
-                    }
-                },
-                "color": {
-                    "value": ["#ff9100", "#3f51b5", "#ffffff"]
-                },
-                "shape": {
-                    "type": "circle",
-                    "stroke": {
-                        "width": 0,
-                        "color": "#fff"
-                    },
-                    "polygon": {
-                        "nb_sides": 5
-                    }
-                },
-                "opacity": {
-                    "value": 0.5,
-                    "random": false,
-                    "anim": {
-                        "enable": false,
-                        "speed": 1,
-                        "opacity_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "size": {
-                    "value": 3,
-                    "random": true,
-                    "anim": {
-                        "enable": false,
-                        "speed": 40,
-                        "size_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "line_linked": {
-                    "enable": true,
-                    "distance": 150,
-                    "color": "#ffffff",
-                    "opacity": 0.4,
-                    "width": 1
-                },
-                "move": {
-                    "enable": true,
-                    "speed": 6,
-                    "direction": "none",
-                    "random": false,
-                    "straight": false,
-                    "out_mode": "out",
-                    "bounce": false,
-                    "attract": {
-                        "enable": false,
-                        "rotateX": 600,
-                        "rotateY": 1200
-                    }
-                }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": {
-                    "onhover": {
-                        "enable": true,
-                        "mode": "repulse"
-                    },
-                    "onclick": {
-                        "enable": true,
-                        "mode": "push"
-                    },
-                    "resize": true
-                },
-                "modes": {
-                    "grab": {
-                        "distance": 400,
-                        "line_linked": {
-                            "opacity": 1
-                        }
-                    },
-                    "bubble": {
-                        "distance": 400,
-                        "size": 40,
-                        "duration": 2,
-                        "opacity": 8,
-                        "speed": 3
-                    },
-                    "repulse": {
-                        "distance": 200,
-                        "duration": 0.4
-                    },
-                    "push": {
-                        "particles_nb": 4
-                    },
-                    "remove": {
-                        "particles_nb": 2
-                    }
-                }
-            },
-            "retina_detect": true
-        });
-    </script>
-</body>
+    </body>
 </html>
