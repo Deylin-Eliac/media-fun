@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intro de Deylin</title>
+    <title>Naruto-Bot MD</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+        /* ==================== ESTILOS GENERALES Y VARIABLES ==================== */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
 
         :root {
             --primary-color: #ff9100; /* Naranja de Naruto */
-            --secondary-color: #3f51b5; /* Azul Chidori */
-            --line-color: #00ffff; /* Color de las líneas del video */
+            --secondary-color: #3f51b5; /* Azul del chidori */
+            --line-color: #00ffff; /* Color de las líneas de la intro */
             --text-color: #ffffff;
             --bg-color-dark: #121212;
+            --bg-color-light: #1e1e1e;
+            --card-bg-color: #2a2a2a;
+            --card-border-color: #444;
             --font-family: 'Poppins', sans-serif;
         }
 
@@ -20,18 +25,39 @@
             font-family: var(--font-family);
             margin: 0;
             padding: 0;
-            background-color: var(--bg-color-dark);
             color: var(--text-color);
-            overflow: hidden;
+            background-color: var(--bg-color-dark);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Oculta la página principal hasta que la intro termine */
+        #main-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+            z-index: 2;
+        }
+
+        /* ==================== ESTILOS PARA LA INTRO ANIMADA ==================== */
+        #intro-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg-color-dark);
+            z-index: 1000;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
         }
 
         /* Fondo de puntos parpadeantes */
-        .background {
-            position: fixed;
+        .background-intro {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
@@ -41,28 +67,15 @@
             animation: flicker 1s infinite alternate;
             z-index: -1;
         }
-
         @keyframes flicker {
             0% { opacity: 0.8; }
             100% { opacity: 1; }
         }
 
-        /* Contenedor principal de la intro */
-        .intro-container {
-            text-align: center;
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Contenedor SVG para las animaciones de las formas */
         .shapes-container {
             position: absolute;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -84,10 +97,8 @@
         }
 
         /* Animaciones para las diferentes secuencias de formas */
-        /* Secuencia 1: Líneas iniciales */
         #line1, #line2, #line3, #line4 {
             animation: draw-line 0.5s ease-out forwards;
-            animation-delay: 1.5s;
         }
         @keyframes draw-line {
             to { stroke-dashoffset: 0; opacity: 1; }
@@ -95,26 +106,19 @@
         #line1, #line4 { animation-delay: 1.5s; }
         #line2, #line3 { animation-delay: 2.0s; }
 
-        /* Secuencia 2: Hexágonos */
         #hex1, #hex2, #hex3 {
             animation: draw-shape 1s ease-out forwards;
-            animation-delay: 3s;
         }
         #hex1 { animation-delay: 3s; }
         #hex2 { animation-delay: 3.5s; }
         #hex3 { animation-delay: 4s; }
-
         @keyframes draw-shape {
             to { stroke-dashoffset: 0; opacity: 1; }
         }
-        
-        /* Secuencia 3: Cuadrado y líneas del centro */
+
         #square1, #square2, #line5, #line6 {
             animation: draw-shape 0.8s ease-out forwards;
-            animation-delay: 5s;
         }
-        
-        /* Limpiando las animaciones anteriores para la siguiente secuencia */
         .shapes-container svg {
             animation: fade-out 1s forwards;
             animation-delay: 7s;
@@ -123,7 +127,6 @@
             to { opacity: 0; transform: scale(0.8); }
         }
 
-        /* Animación final del logo y texto */
         .final-logo {
             position: absolute;
             top: 50%;
@@ -153,7 +156,6 @@
             object-fit: cover;
             animation: logo-glow 3s infinite alternate;
         }
-
         @keyframes logo-glow {
             0% { filter: drop-shadow(0 0 5px var(--primary-color)); }
             100% { filter: drop-shadow(0 0 20px var(--primary-color)) drop-shadow(0 0 5px var(--secondary-color)); }
@@ -168,7 +170,6 @@
             text-shadow: 0 0 10px var(--secondary-color);
             animation: text-glitch 4s infinite alternate;
         }
-
         @keyframes text-glitch {
             0% { text-shadow: -2px -2px 0 var(--primary-color), 2px 2px 0 var(--secondary-color); }
             25% { text-shadow: 2px -2px 0 var(--primary-color), -2px 2px 0 var(--secondary-color); }
@@ -176,30 +177,187 @@
             75% { text-shadow: 2px 2px 0 var(--primary-color), -2px -2px 0 var(--secondary-color); }
             100% { text-shadow: 0 0 10px var(--secondary-color); }
         }
+
+        /* ==================== ESTILOS PARA LA PÁGINA PRINCIPAL ==================== */
+        .container {
+            max-width: 90%;
+            margin: 20px auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .main-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 0 15px var(--primary-color);
+            animation: pulse 2s infinite ease-in-out;
+            margin-bottom: 10px;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 15px var(--primary-color); }
+            50% { transform: scale(1.05); box-shadow: 0 0 25px var(--primary-color); }
+            100% { transform: scale(1); box-shadow: 0 0 15px var(--primary-color); }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .card {
+            background-color: var(--card-bg-color);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--card-border-color);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .social-links a {
+            color: var(--text-color);
+            font-size: 2.5em;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+        }
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .invite-card {
+            background: linear-gradient(45deg, #ff9100, #3f51b5);
+            color: var(--text-color);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+            animation: background-pan 10s infinite alternate;
+        }
+        @keyframes background-pan {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        .invite-card a {
+            display: inline-block;
+            background-color: var(--bg-color-dark);
+            color: var(--primary-color);
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            border: 2px solid var(--primary-color);
+            animation: button-hover-glow 1.5s infinite alternate;
+        }
+        @keyframes button-hover-glow {
+            0% { box-shadow: 0 0 10px var(--primary-color); }
+            100% { box-shadow: 0 0 20px var(--primary-color); }
+        }
+
+        .commands-section {
+            background-color: var(--card-bg-color);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            margin-bottom: 40px;
+        }
+        .command-category {
+            background-color: var(--bg-color-light);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        .command-category:hover {
+            transform: translateX(10px);
+            box-shadow: 0 0 15px rgba(255, 145, 0, 0.3);
+        }
+        .command-category h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .command-category ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .command-category li {
+            background-color: #383838;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+        .command-category li:hover {
+            background-color: var(--secondary-color);
+        }
+        .owner-info {
+            text-align: center;
+            font-size: 0.9em;
+            color: #aaa;
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            .container { padding: 10px; }
+            .card-grid { grid-template-columns: 1fr; }
+            .social-links a { font-size: 2em; }
+            .logo-text { font-size: 2em; }
+        }
     </style>
 </head>
 <body>
-    <div class="background"></div>
 
-    <div class="intro-container">
+    <div id="intro-container">
+        <div class="background-intro"></div>
         <div class="shapes-container">
             <svg width="100%" height="100%" viewBox="0 0 100 100">
                 <path id="line1" d="M 40 20 L 60 20" stroke-dasharray="20" stroke-dashoffset="20"></path>
                 <path id="line2" d="M 20 40 L 20 60" stroke-dasharray="20" stroke-dashoffset="20"></path>
                 <path id="line3" d="M 40 40 L 60 60" stroke-dasharray="28" stroke-dashoffset="28"></path>
                 <path id="line4" d="M 60 40 L 40 60" stroke-dasharray="28" stroke-dashoffset="28"></path>
-                
                 <path id="hex1" d="M50 30 L60 35 L60 45 L50 50 L40 45 L40 35 Z" stroke-dasharray="60" stroke-dashoffset="60" style="animation-delay: 3s;"></path>
                 <path id="hex2" d="M50 40 L60 45 L60 55 L50 60 L40 55 L40 45 Z" stroke-dasharray="60" stroke-dashoffset="60" style="animation-delay: 3.5s;"></path>
                 <path id="hex3" d="M50 50 L60 55 L60 65 L50 70 L40 65 L40 55 Z" stroke-dasharray="60" stroke-dashoffset="60" style="animation-delay: 4s;"></path>
-
                 <path id="square1" d="M25 25 L75 25 L75 75 L25 75 Z" stroke-dasharray="200" stroke-dashoffset="200" style="animation-delay: 5s;"></path>
                 <path id="square2" d="M40 40 L60 40 L60 60 L40 60 Z" stroke-dasharray="80" stroke-dashoffset="80" style="animation-delay: 5.5s;"></path>
                 <path id="line5" d="M50 35 L50 65" stroke-dasharray="30" stroke-dashoffset="30" style="animation-delay: 5.5s;"></path>
                 <path id="line6" d="M35 50 L65 50" stroke-dasharray="30" stroke-dashoffset="30" style="animation-delay: 5.5s;"></path>
             </svg>
         </div>
-
         <div class="final-logo">
             <div class="logo-container">
                 <img src="naruto-logo.png" alt="Logo de Naruto-Bot MD" class="logo-img">
@@ -207,6 +365,115 @@
             <h1 class="logo-text">Deylin</h1>
         </div>
     </div>
+    
+    <div id="main-content">
+        <div id="particles-js"></div>
 
-    </body>
+        <div class="container">
+            <header>
+                <img src="naruto-logo.png" alt="Logo de Naruto-Bot MD" class="main-logo">
+                <h1>Naruto-Bot MD</h1>
+                <p>Tu asistente shinobi de WhatsApp, con el poder del Rasengan. <br>¡Potenciado por **Eliác**!</p>
+            </header>
+
+            <hr style="width: 100%; border: none; border-top: 1px solid var(--card-border-color); margin: 40px 0;">
+
+            <section class="invite-card">
+                <h2>¡Únete a la aldea de Naruto-Bot MD!</h2>
+                <p>Experimenta el poder del jutsu. Invítame a tu grupo de WhatsApp ahora mismo.</p>
+                <a href="https://chat.whatsapp.com/HuMh41LJftl4DH7G5MWcHP" target="_blank">Añadir a mi grupo</a>
+            </section>
+
+            <hr style="width: 100%; border: none; border-top: 1px solid var(--card-border-color); margin: 40px 0;">
+
+            <section class="card">
+                <h2 style="text-align: center;">Enlaces Oficiales y de Soporte</h2>
+                <div class="social-links">
+                    <a href="https://whatsapp.com/channel/0029VbAzn9GGU3BQw830eA0F" target="_blank" title="Canal de WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="https://chat.whatsapp.com/HuMh41LJftl4DH7G5MWcHP" target="_blank" title="Grupo de Soporte">
+                        <i class="fas fa-users"></i>
+                    </a>
+                    <a href="https://ko-fi.com/naruto_bot" target="_blank" title="Donar en Ko-fi">
+                        <i class="fas fa-coffee"></i>
+                    </a>
+                    <a href="https://wa.me/50432955554" target="_blank" title="Contacto y Soporte (Creador)">
+                        <i class="fas fa-headset"></i>
+                    </a>
+                </div>
+            </section>
+
+            <hr style="width: 100%; border: none; border-top: 1px solid var(--card-border-color); margin: 40px 0;">
+
+            <section class="commands-section">
+                <h2>⚙️ Lista de Comandos del Bot ⚙️</h2>
+                <div class="command-category">
+                    <h3><i class="fas fa-bolt"></i> ANIME</h3>
+                    <ul>
+                        <li>.hello @tag</li>
+                        <li>.hola @tag</li>
+                        <li>.kiss @tag</li>
+                        <li>.waifu</li>
+                    </ul>
+                </div>
+                <div class="command-category">
+                    <h3><i class="fas fa-shield-alt"></i> OWNER</h3>
+                    <ul>
+                        <li>.banchat</li>
+                        <li>.aceptar</li>
+                        <li>.dsowner</li>
+                        <li>.></li>
+                        <li>.=></li>
+                    </ul>
+                </div>
+            </section>
+
+            <footer class="owner-info">
+                <p>Hecho con ❤️ por **Deylin**</p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Script para la transición de la intro a la página principal
+        window.onload = function() {
+            setTimeout(function() {
+                const intro = document.getElementById('intro-container');
+                const main = document.getElementById('main-content');
+                
+                // Oculta la intro con una transición suave
+                intro.style.opacity = '0';
+                setTimeout(function() {
+                    intro.style.display = 'none';
+                    // Muestra el contenido principal
+                    main.style.display = 'block';
+                    main.style.opacity = '1';
+                }, 1000); // Duración de la transición de opacidad
+
+                // Inicia el fondo de partículas una vez que la página principal es visible
+                particlesJS("particles-js", {
+                    "particles": {
+                        "number": {
+                            "value": 80, "density": { "enable": true, "value_area": 800 }
+                        },
+                        "color": { "value": ["#ff9100", "#3f51b5", "#ffffff"] },
+                        "shape": { "type": "circle" },
+                        "opacity": { "value": 0.5 },
+                        "size": { "value": 3, "random": true },
+                        "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 },
+                        "move": { "enable": true, "speed": 6, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }
+                    },
+                    "retina_detect": true
+                });
+
+            }, 10000); // Tiempo total de la animación de la intro (10 segundos)
+        };
+    </script>
+</body>
 </html>
