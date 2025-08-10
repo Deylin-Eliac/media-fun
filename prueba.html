@@ -38,7 +38,6 @@
             position: relative;
         }
 
-        /* Efecto de rejilla de fondo */
         body::before {
             content: '';
             position: absolute;
@@ -59,8 +58,7 @@
             from { background-position: 0 0; }
             to { background-position: 50px 50px; }
         }
-
-        /* Estilo de los módulos de la interfaz */
+        
         .module {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(0, 255, 192, 0.2);
@@ -101,7 +99,6 @@
             width: 100%;
         }
 
-        /* Estilo del módulo central (Nombre) */
         .hero-module {
             grid-column: 2;
             grid-row: 2;
@@ -116,7 +113,6 @@
             position: relative;
         }
         
-        /* Animación de texto que se desintegra y reaparece */
         .holo-text {
             display: inline-block;
             transition: all 0.5s;
@@ -154,8 +150,7 @@
         @keyframes holo-text-reveal {
             to { opacity: 1; }
         }
-
-        /* Estilo de los módulos de información */
+        
         .info-module {
             text-align: left;
             padding: 30px;
@@ -170,8 +165,7 @@
             color: var(--primary-color);
             text-shadow: 0 0 5px var(--primary-color);
         }
-
-        /* Estilo de las tarjetas de servicio */
+        
         .services-module {
             grid-column: 1 / span 3;
             grid-row: 3;
@@ -203,7 +197,6 @@
             margin-bottom: 10px;
         }
         
-        /* Estilo del módulo de contacto */
         .contact-module {
             grid-column: 3;
             grid-row: 1;
@@ -226,8 +219,7 @@
             transform: scale(1.2);
             text-shadow: 0 0 10px var(--secondary-color);
         }
-
-        /* Animación del "flujo de datos" */
+        
         .data-flow {
             position: fixed;
             bottom: 0;
@@ -247,6 +239,48 @@
             from { transform: translateX(0); }
             to { transform: translateX(-100%); }
         }
+
+        /* MEDIA QUERY PARA DISPOSITIVOS MÓVILES */
+        @media (max-width: 768px) {
+            body {
+                display: block; /* Desactiva la cuadrícula */
+                padding: 10px;
+                overflow-y: auto; /* Permite el scroll vertical */
+                height: auto;
+            }
+
+            .module {
+                margin-bottom: 15px; /* Espaciado entre módulos */
+            }
+
+            .hero-module {
+                height: 50vh; /* Altura más compacta para la sección principal */
+                padding: 40px 20px;
+            }
+
+            .hero-module h1 {
+                font-size: 2.5em;
+                letter-spacing: 2px;
+            }
+            
+            .holo-text:hover::after {
+                font-size: 0.8em;
+            }
+
+            .services-module {
+                flex-direction: column; /* Apila las tarjetas verticalmente */
+                flex-wrap: nowrap;
+                gap: 15px;
+            }
+
+            .service-card {
+                min-width: 100%; /* Las tarjetas ocupan todo el ancho */
+            }
+
+            .data-flow {
+                display: none; /* Oculta el flujo de datos para evitar desorden */
+            }
+        }
     </style>
 </head>
 <body>
@@ -265,7 +299,7 @@
             <div class="social-links">
                 <a href="https://wa.me/tunumerodetelefono?text=Hola%20Deylin%2C%20me%20interesa%20tu%20trabajo." target="_blank" aria-label="Contacto por WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 <a href="https://whatsapp.com/channel/tu-canal-id" target="_blank" aria-label="Canal de WhatsApp"><i class="fab fa-whatsapp" style="position: relative;"><i class="fas fa-bullhorn" style="font-size: 0.5em; position: absolute; bottom: 0; right: 0;"></i></i></a>
-                <a href="http://googleusercontent.com/youtube.com/3" target="_blank" aria-label="Canal de YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="http://googleusercontent.com/youtube.com/4" target="_blank" aria-label="Canal de YouTube"><i class="fab fa-youtube"></i></a>
                 <a href="https://github.com/tuusuario" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
             </div>
         </div>
