@@ -3,9 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mode | Soluciones Tecnológicas Personalizadas</title>
+  <title>Modeslap | Soluciones Tecnológicas Personalizadas</title>
+  
   <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ96z8peq+k6zVn26X+a+Lq3p4M3GzV3zR0hB8/f8/rG3/6W8+Vp1C8/F2/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  
   <style>
     body {
       background: #0d1117;
@@ -53,6 +58,10 @@
       scroll-snap-type: x mandatory;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
+      display: flex;
+    }
+    .testimonial-carousel::-webkit-scrollbar {
+      display: none;
     }
     .testimonial-carousel-item {
       scroll-snap-align: start;
@@ -70,6 +79,7 @@
       }
     }
   </style>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -82,20 +92,29 @@
   </div>
 
   <header class="p-6 flex justify-between items-center bg-transparent border-b border-gray-800 backdrop-blur-sm sticky top-0 z-50">
-    <a href="#" class="text-3xl font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600" data-aos="fade-right">🚀 Mode</a>
+    <a href="#" class="text-3xl font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600" data-aos="fade-right">🚀 Modeslap</a>
+    
     <nav class="hidden md:flex gap-8 font-semibold">
       <a href="#servicios" class="hover:text-cyan-400 transition-colors">Servicios</a>
       <a href="#testimonios" class="hover:text-cyan-400 transition-colors">Testimonios</a>
       <a href="#contacto" class="hover:text-cyan-400 transition-colors">Contacto</a>
+      <a href="#mas-info" class="hover:text-cyan-400 transition-colors">Más info</a>
     </nav>
-    <button id="menu-btn" class="md:hidden text-2xl">☰</button>
+    
+    <button id="menu-btn" class="md:hidden text-2xl"><i class="fas fa-bars"></i></button>
   </header>
   
   <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-[#0d1117]/95 backdrop-blur-sm z-50 flex-col items-center justify-center space-y-8 text-xl font-bold">
-    <button id="close-menu-btn" class="absolute top-6 right-6 text-3xl">✖</button>
-    <a href="#servicios" class="hover:text-cyan-400 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Servicios</a>
-    <a href="#testimonios" class="hover:text-cyan-400 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Testimonios</a>
-    <a href="#contacto" class="hover:text-cyan-400 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Contacto</a>
+    <button id="close-menu-btn" class="absolute top-6 right-6 text-3xl text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+    <a href="#servicios" class="flex items-center gap-4 hover:text-cyan-400 transition-colors" onclick="closeMobileMenu()"><i class="fas fa-cogs"></i>Servicios</a>
+    <a href="#testimonios" class="flex items-center gap-4 hover:text-cyan-400 transition-colors" onclick="closeMobileMenu()"><i class="fas fa-star"></i>Testimonios</a>
+    <a href="#contacto" class="flex items-center gap-4 hover:text-cyan-400 transition-colors" onclick="closeMobileMenu()"><i class="fas fa-envelope"></i>Contacto</a>
+    
+    <div class="h-px w-24 bg-gray-700 my-4"></div>
+    
+    <a href="mailto:deylin@tucorreo.com" class="flex items-center gap-4 hover:text-cyan-400 transition-colors" onclick="closeMobileMenu()"><i class="fas fa-user-circle"></i>Contacto del Creador</a>
+    <a href="https://youtube.com/" target="_blank" class="flex items-center gap-4 hover:text-cyan-400 transition-colors" onclick="closeMobileMenu()"><i class="fab fa-youtube"></i>Canal</a>
+    <a href="https://github.com/Deylin-Eliac" target="_blank" class="flex items-center gap-4 hover:text-cyan-400 transition-colors" onclick="closeMobileMenu()"><i class="fab fa-github"></i>GitHub</a>
   </div>
 
   <section class="relative text-center py-20 md:py-32 overflow-hidden">
@@ -105,7 +124,7 @@
         Impulsa tu Negocio con Tecnología de Vanguardia
       </h2>
       <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
-        Creamos soluciones digitales potentes y personalizadas: bots, APIs y páginas web que automatizan, conectan y hacen crecer tu marca.
+        Creamos soluciones digitales potentes y personalizadas: bots, APIs, páginas web y más para automatizar, conectar y hacer crecer tu marca.
       </p>
       <a href="#contacto" class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl transition-all transform hover:scale-105" data-aos="fade-up" data-aos-delay="400">
         Empieza tu proyecto hoy
@@ -115,43 +134,69 @@
 
   <section id="servicios" class="py-24 px-6 bg-[#111827] border-t border-b border-gray-800">
     <h3 class="text-4xl font-bold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-500" data-aos="fade-up">Nuestros Servicios Tecnológicos</h3>
-    <div class="container mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+    <div class="container mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
       
       <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-right">
         <div class="card-border-content p-6 rounded-3xl">
-          <div class="text-5xl mb-4 text-cyan-400">🤖</div>
+          <div class="text-5xl mb-4 text-cyan-400"><i class="fas fa-robot"></i></div>
           <h4 class="text-2xl font-bold mb-3 text-white">Bots de Automatización</h4>
-          <p class="text-gray-400 mb-4">Desde bots de WhatsApp para soporte 24/7 hasta asistentes virtuales para Telegram, automatizamos tus procesos y mejoramos la interacción con tus clientes.</p>
+          <p class="text-gray-400 mb-4">Automatizamos tus procesos y mejoramos la interacción con tus clientes con bots de WhatsApp, Telegram y más.</p>
           <ul class="text-sm space-y-2 text-gray-500">
-            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Soporte al cliente automatizado</li>
-            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Marketing y ventas por chat</li>
-            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Integración con bases de datos</li>
+            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Soporte al cliente 24/7</li>
+            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Marketing y ventas por chat</li>
+            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Integración con bases de datos</li>
           </ul>
         </div>
       </div>
       
-      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-up" data-aos-delay="200">
+      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-up" data-aos-delay="100">
         <div class="card-border-content p-6 rounded-3xl">
-          <div class="text-5xl mb-4 text-purple-400">⚡</div>
+          <div class="text-5xl mb-4 text-purple-400"><i class="fas fa-bolt"></i></div>
           <h4 class="text-2xl font-bold mb-3 text-white">APIs Personalizadas</h4>
-          <p class="text-gray-400 mb-4">Construimos la columna vertebral de tu infraestructura digital. Nuestras APIs conectan tus aplicaciones, automatizan procesos internos y permiten la comunicación entre diferentes sistemas.</p>
+          <p class="text-gray-400 mb-4">Construimos la columna vertebral de tu infraestructura digital para conectar tus aplicaciones y sistemas.</p>
           <ul class="text-sm space-y-2 text-gray-500">
-            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Integración de terceros</li>
-            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Microservicios optimizados</li>
-            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Seguridad y escalabilidad</li>
+            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Integración de terceros</li>
+            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Microservicios optimizados</li>
+            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Seguridad y escalabilidad</li>
           </ul>
         </div>
       </div>
       
-      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-left">
+      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-left" data-aos-delay="200">
         <div class="card-border-content p-6 rounded-3xl">
-          <div class="text-5xl mb-4 text-orange-400">🌐</div>
+          <div class="text-5xl mb-4 text-orange-400"><i class="fas fa-globe"></i></div>
           <h4 class="text-2xl font-bold mb-3 text-white">Desarrollo Web</h4>
-          <p class="text-gray-400 mb-4">Diseñamos y desarrollamos páginas web rápidas, modernas y totalmente adaptadas a tus necesidades. Desde landing pages hasta complejas aplicaciones web, tu presencia online será impecable.</p>
+          <p class="text-gray-400 mb-4">Diseñamos páginas web rápidas, modernas y adaptadas a tu marca. Desde landing pages hasta complejas aplicaciones web.</p>
           <ul class="text-sm space-y-2 text-gray-500">
-            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Diseño UX/UI optimizado</li>
-            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Páginas de alta velocidad</li>
-            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Full-stack desarrollo</li>
+            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Diseño UX/UI optimizado</li>
+            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Páginas de alta velocidad</li>
+            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Full-stack desarrollo</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-right">
+        <div class="card-border-content p-6 rounded-3xl">
+          <div class="text-5xl mb-4 text-pink-400"><i class="fas fa-cloud"></i></div>
+          <h4 class="text-2xl font-bold mb-3 text-white">Soluciones Cloud</h4>
+          <p class="text-gray-400 mb-4">Aprovecha el poder de la nube para escalar tus proyectos, gestionar datos y desplegar aplicaciones con confianza.</p>
+          <ul class="text-sm space-y-2 text-gray-500">
+            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Infraestructura como servicio (IaaS)</li>
+            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Despliegue y mantenimiento</li>
+            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Optimización de costos</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-up" data-aos-delay="100">
+        <div class="card-border-content p-6 rounded-3xl">
+          <div class="text-5xl mb-4 text-red-400"><i class="fas fa-shield-alt"></i></div>
+          <h4 class="text-2xl font-bold mb-3 text-white">Ciberseguridad</h4>
+          <p class="text-gray-400 mb-4">Protegemos tu infraestructura digital de amenazas. Implementamos medidas de seguridad robustas para tus aplicaciones y datos.</p>
+          <ul class="text-sm space-y-2 text-gray-500">
+            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Auditoría de seguridad</li>
+            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Firewalls y protección de datos</li>
+            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Planes de recuperación</li>
           </ul>
         </div>
       </div>
@@ -165,74 +210,58 @@
         
         <div class="testimonial-carousel-item bg-[#161b22] p-8 rounded-3xl shadow-xl border border-gray-700" data-aos="zoom-in">
           <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4">JG</div>
+            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4"><i class="fas fa-paint-brush"></i></div>
             <div>
               <p class="font-bold text-lg">Javier García</p>
               <p class="text-gray-400 text-sm">Diseñador UX/UI</p>
             </div>
           </div>
           <div class="flex mb-4">
-            <span class="text-yellow-400">★</span>
-            <span class="text-yellow-400">★</span>
-            <span class="text-yellow-400">★</span>
-            <span class="text-yellow-400">★</span>
-            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span>
           </div>
-          <p class="text-gray-300 italic">"Increíble servicio. El bot de WhatsApp que desarrollaron para mi negocio ha triplicado las ventas. La comunicación fue excelente y superaron todas mis expectativas."</p>
+          <p class="text-gray-300 italic">"El bot de WhatsApp que desarrollaron para mi negocio ha triplicado las ventas. La comunicación fue excelente y superaron todas mis expectativas."</p>
         </div>
 
         <div class="testimonial-carousel-item bg-[#161b22] p-8 rounded-3xl shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="100">
           <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4">AM</div>
+            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4"><i class="fas fa-hand-holding-usd"></i></div>
             <div>
               <p class="font-bold text-lg">Ana Mendoza</p>
               <p class="text-gray-400 text-sm">Emprendedora Digital</p>
             </div>
           </div>
           <div class="flex mb-4">
-            <span class="text-yellow-400">★</span>
-            <span class="text-yellow-400">★</span>
-            <span class="text-yellow-400">★</span>
-            <span class="text-yellow-400">★</span>
-            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span>
           </div>
           <p class="text-gray-300 italic">"La API que crearon para conectar mi inventario con mi tienda online es un game-changer. Todo funciona sin problemas y la atención al detalle es de primera."</p>
         </div>
         
         <div class="testimonial-carousel-item bg-[#161b22] p-8 rounded-3xl shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="200">
           <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4">RP</div>
+            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4"><i class="fas fa-tasks"></i></div>
             <div>
               <p class="font-bold text-lg">Roberto Pérez</p>
               <p class="text-gray-400 text-sm">Gerente de Proyectos</p>
             </div>
           </div>
           <div class="flex mb-4">
-            <span class="text-yellow-400">★</span>
-            <span class="text-yellow-400">★</span>
-            <span class="text-yellow-400">★</span>
-            <span class="text-yellow-400">★</span>
-            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span>
           </div>
           <p class="text-gray-300 italic">"Necesitábamos una landing page urgente y la entregaron en tiempo récord, con un diseño moderno y optimizada para conversiones. Altamente recomendados."</p>
         </div>
 
         <div class="testimonial-carousel-item bg-[#161b22] p-8 rounded-3xl shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="300">
           <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4">ES</div>
+            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4"><i class="fas fa-lightbulb"></i></div>
             <div>
               <p class="font-bold text-lg">Elena Sánchez</p>
               <p class="text-gray-400 text-sm">Fundadora de Startup</p>
             </div>
           </div>
           <div class="flex mb-4">
-            <span class="text-yellow-400">★</span>
-            <span class="text-yellow-400">★</span>
-            <span class="text-yellow-400">★</span>
-            <span class="text-yellow-400">★</span>
-            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span>
           </div>
-          <p class="text-gray-300 italic">"El equipo de Mode es excepcional. Crearon una API personalizada que automatiza el 80% de mis procesos internos. No podría estar más satisfecha con el resultado."</p>
+          <p class="text-gray-300 italic">"El equipo de Modeslap es excepcional. Crearon una API personalizada que automatiza el 80% de mis procesos internos. No podría estar más satisfecha con el resultado."</p>
         </div>
       </div>
     </div>
@@ -245,11 +274,11 @@
         ¿Tienes una idea innovadora? ¿Necesitas automatizar un proceso? Escríbenos y lleva tu proyecto al siguiente nivel con soluciones tecnológicas a tu medida.
       </p>
       <div class="flex flex-col md:flex-row justify-center gap-6" data-aos="fade-up" data-aos-delay="400">
-        <a href="https://wa.me/50200000000" target="_blank" class="bg-green-600 px-8 py-4 rounded-full font-bold text-white shadow-lg hover:bg-green-700 transition transform hover:scale-105">
-          <span class="mr-2">💬</span> Contactar por WhatsApp
+        <a href="https://wa.me/50200000000" target="_blank" class="bg-green-600 px-8 py-4 rounded-full font-bold text-white shadow-lg hover:bg-green-700 transition transform hover:scale-105 flex items-center justify-center gap-2">
+          <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
         </a>
-        <a href="mailto:deylin@tucorreo.com" class="bg-gray-700 px-8 py-4 rounded-full font-bold text-white shadow-lg hover:bg-gray-600 transition transform hover:scale-105">
-          <span class="mr-2">✉️</span> Enviar un Correo
+        <a href="mailto:deylin@tucorreo.com" class="bg-gray-700 px-8 py-4 rounded-full font-bold text-white shadow-lg hover:bg-gray-600 transition transform hover:scale-105 flex items-center justify-center gap-2">
+          <i class="fas fa-envelope"></i> Enviar un Correo
         </a>
       </div>
     </div>
@@ -257,8 +286,8 @@
 
   <footer class="py-8 text-center text-gray-500 text-sm bg-[#0d1117] border-t border-gray-800">
     <div class="container mx-auto">
-      <p>© 2025 Mode - Todos los derechos reservados.</p>
-      <p class="mt-2">Hecho con ❤️ y código.</p>
+      <p>© 2025 Modeslap - Todos los derechos reservados.</p>
+      <p class="mt-2">Hecho con <i class="fas fa-heart text-red-500"></i> y código.</p>
     </div>
   </footer>
 
@@ -300,12 +329,16 @@
     const closeMenuBtn = document.getElementById('close-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
 
+    function closeMobileMenu() {
+      mobileMenu.classList.add('hidden');
+    }
+
     menuBtn.addEventListener('click', () => {
       mobileMenu.classList.remove('hidden');
     });
 
     closeMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.add('hidden');
+      closeMobileMenu();
     });
 
   </script>
