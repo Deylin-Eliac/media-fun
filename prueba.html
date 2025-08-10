@@ -1,95 +1,454 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mode - Innovación y Desarrollo</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-  <style>
-    body {
-      background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
-      color: white;
-      font-family: 'Poppins', sans-serif;
-    }
-    .neon-text {
-      text-shadow: 0 0 5px #00f7ff, 0 0 10px #00f7ff, 0 0 20px #00f7ff;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deylin Dev - Soluciones Tecnológicas Avanzadas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Estilos CSS para el sitio web */
+        :root {
+            --primary-color: #00e5ff;
+            --secondary-color: #1a237e;
+            --bg-color: #0d1117;
+            --text-color: #ffffff;
+            --accent-color: #ff4081;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animación de fondo de partículas */
+        .particles-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background: linear-gradient(45deg, var(--bg-color), #0a0e14);
+        }
+
+        /* Estilo para las secciones */
+        .section {
+            padding: 60px 20px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Encabezado y barra de navegación */
+        header {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1em;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Sección de héroe */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(circle, rgba(0,229,255,0.1) 0%, rgba(13,17,23,0) 70%);
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            /* Animación de brillo */
+            text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: var(--primary-color);
+            color: var(--bg-color);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 0 25px var(--primary-color), 0 0 50px var(--primary-color);
+        }
+
+        /* Sección de "Sobre mí" y "Servicios" */
+        .section-title {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--accent-color);
+        }
+
+        .about-me p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1em;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .service-card .icon {
+            font-size: 3em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .service-card p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Pie de página */
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 30px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links {
+            margin-bottom: 20px;
+        }
+
+        .social-links a {
+            color: var(--primary-color);
+            font-size: 1.5em;
+            margin: 0 15px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: scale(1.2);
+        }
+
+        /* Media queries para responsividad móvil */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero p {
+                font-size: 1em;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            header {
+                justify-content: center;
+            }
+        }
+
+        /* Animación de la terminal de texto */
+        .terminal-text {
+            color: var(--primary-color);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.2em;
+            min-height: 1.2em;
+            white-space: pre;
+            overflow: hidden;
+            border-right: 2px solid var(--primary-color);
+            animation: blink-caret 0.75s step-end infinite;
+        }
+        
+        /* The typewriter cursor effect */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--primary-color) }
+        }
+
+    </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="flex justify-between items-center px-8 py-6 border-b border-gray-700">
-    <h1 class="text-3xl font-bold neon-text">Mode</h1>
-    <nav>
-      <ul class="flex gap-6 text-lg">
-        <li><a href="#servicios" class="hover:text-cyan-400">Servicios</a></li>
-        <li><a href="#proyectos" class="hover:text-cyan-400">Proyectos</a></li>
-        <li><a href="#contacto" class="hover:text-cyan-400">Contacto</a></li>
-      </ul>
-    </nav>
-  </header>
+    <div class="particles-background"></div>
 
-  <!-- Hero -->
-  <section class="text-center py-20" data-aos="fade-up">
-    <h2 class="text-5xl font-bold mb-4 neon-text">Automatiza, Crea, Innova</h2>
-    <p class="text-lg max-w-2xl mx-auto text-gray-300">
-      Desarrollamos bots de WhatsApp, APIs, sitios web y sistemas automatizados a tu medida.
-    </p>
-    <a href="#contacto" class="mt-6 inline-block px-6 py-3 bg-cyan-500 hover:bg-cyan-400 rounded-full text-black font-bold text-lg transition">Contáctanos</a>
-  </section>
+    <header>
+        <a href="#" class="logo">Deylin</a>
+        <nav>
+            <ul>
+                <li><a href="#about">Sobre Mí</a></li>
+                <li><a href="#services">Servicios</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <!-- Servicios -->
-  <section id="servicios" class="py-16 px-6" data-aos="fade-right">
-    <h3 class="text-3xl font-bold text-center mb-10">Nuestros Servicios</h3>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="bg-gray-900 p-6 rounded-xl shadow-lg hover:scale-105 transition">
-        <h4 class="text-xl font-bold mb-2 text-cyan-400">Bots de WhatsApp</h4>
-        <p class="text-gray-400">Conexiones avanzadas con Baileys, funciones personalizadas y sistemas multi-bot.</p>
-      </div>
-      <div class="bg-gray-900 p-6 rounded-xl shadow-lg hover:scale-105 transition">
-        <h4 class="text-xl font-bold mb-2 text-cyan-400">APIs Personalizadas</h4>
-        <p class="text-gray-400">Desarrollamos APIs potentes para tus integraciones y automatizaciones.</p>
-      </div>
-      <div class="bg-gray-900 p-6 rounded-xl shadow-lg hover:scale-105 transition">
-        <h4 class="text-xl font-bold mb-2 text-cyan-400">Sitios Web</h4>
-        <p class="text-gray-400">Diseños modernos, responsivos y con animaciones para tu negocio.</p>
-      </div>
-    </div>
-  </section>
+    <section class="hero">
+        <h1 class="fade-in">Deylin Dev</h1>
+        <p class="fade-in">Soluciones tecnológicas avanzadas para un futuro digital.</p>
+        <div class="terminal-text" id="terminal-text"></div>
+    </section>
 
-  <!-- Proyectos -->
-  <section id="proyectos" class="py-16 px-6 bg-gray-950" data-aos="zoom-in">
-    <h3 class="text-3xl font-bold text-center mb-10">Proyectos Destacados</h3>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="bg-gray-900 p-6 rounded-xl shadow-lg">Kirito-Bot-MD</div>
-      <div class="bg-gray-900 p-6 rounded-xl shadow-lg">Vegeta-Super-Bot</div>
-      <div class="bg-gray-900 p-6 rounded-xl shadow-lg">APIs Mode</div>
-    </div>
-  </section>
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">Sobre Mí</h2>
+            <p>
+                Hola, soy Deylin. Soy un apasionado desarrollador de software con un enfoque en la creación de soluciones innovadoras. Mi misión es convertir ideas complejas en productos digitales funcionales y seguros. Con experiencia en la creación de **APIs robustas**, **bots inteligentes para WhatsApp**, y **sitios web optimizados**, estoy listo para llevar tu proyecto al siguiente nivel.
+            </p>
+            <p>
+                Mi compromiso es garantizar la seguridad y la fiabilidad en cada línea de código, ofreciendo a los usuarios una experiencia fluida y protegida.
+            </p>
+        </div>
+    </section>
 
-  <!-- Contacto -->
-  <section id="contacto" class="py-16 px-6" data-aos="fade-up">
-    <h3 class="text-3xl font-bold text-center mb-10">Contáctanos</h3>
-    <div class="max-w-md mx-auto">
-      <form class="space-y-4">
-        <input type="text" placeholder="Tu nombre" class="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-cyan-400 outline-none">
-        <input type="email" placeholder="Tu correo" class="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-cyan-400 outline-none">
-        <textarea placeholder="Tu mensaje" class="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-cyan-400 outline-none"></textarea>
-        <button class="w-full py-3 bg-cyan-500 hover:bg-cyan-400 rounded-lg text-black font-bold">Enviar</button>
-      </form>
-    </div>
-  </section>
+    <section id="services" class="section">
+        <div class="container">
+            <h2 class="section-title">Servicios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-server"></i></div>
+                    <h3>Desarrollo de APIs</h3>
+                    <p>Creación de APIs RESTful y GraphQL seguras y escalables para conectar tus aplicaciones y servicios.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fab fa-whatsapp"></i></div>
+                    <h3>Bots de WhatsApp</h3>
+                    <p>Automatiza la comunicación con tus clientes a través de bots de WhatsApp inteligentes y personalizados.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-globe"></i></div>
+                    <h3>Diseño y Desarrollo Web</h3>
+                    <p>Creación de sitios web modernos, responsivos y de alto rendimiento que impactan y convierten.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Auditoría de Seguridad</h3>
+                    <p>Análisis y protección de tus sistemas digitales para garantizar la máxima seguridad de tus usuarios.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-code"></i></div>
+                    <h3>Consultoría en Programación</h3>
+                    <p>Asesoramiento experto para ayudarte a elegir las tecnologías adecuadas y a resolver desafíos técnicos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Footer -->
-  <footer class="text-center py-6 border-t border-gray-700 text-gray-400">
-    © 2025 Mode - Innovación y Desarrollo
-  </footer>
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Contacto</h2>
+            <p>
+                ¿Listo para empezar tu próximo proyecto? Contáctame a través de los siguientes canales:
+            </p>
+            <div class="social-links">
+                <a href="https://www.youtube.com/@tucanal" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://wa.me/tunumerodetelefono" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.linkedin.com/in/tuperfil" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/tuusuario" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+            <p>
+                Para cualquier consulta, también puedes enviarme un correo electrónico a <a href="mailto:tu-correo@example.com" style="color: var(--primary-color);">tu-correo@example.com</a>.
+            </p>
+        </div>
+    </section>
 
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script>
-    AOS.init({ duration: 1000, once: true });
-  </script>
+    <footer>
+        <p>&copy; 2025 Deylin Dev. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        /* JavaScript para las animaciones y funcionalidades */
+
+        // Animación de texto tipo terminal
+        const terminalTextElement = document.getElementById('terminal-text');
+        const phrases = [
+            'Creando APIs robustas...', 1500, // Pausa de 1.5 segundos
+            'Diseñando bots de WhatsApp...', 1500,
+            'Desarrollando sitios web seguros...', 1500,
+            'Innovación en cada línea de código.', 1500
+        ];
+        
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            if (isDeleting) {
+                terminalTextElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                terminalTextElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typingSpeed = 100;
+
+            if (isDeleting) {
+                typingSpeed /= 2; // Borrar más rápido
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typingSpeed = phrases[phraseIndex + 1] || 1500;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex++;
+                if (phraseIndex >= phrases.length) {
+                    phraseIndex = 0;
+                }
+            }
+
+            setTimeout(type, typingSpeed);
+        }
+
+        // Animación de secciones al hacer scroll
+        const sections = document.querySelectorAll('.section');
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.2 // 20% de la sección visible para activar la animación
+        });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            type();
+        });
+
+    </script>
 </body>
 </html>
