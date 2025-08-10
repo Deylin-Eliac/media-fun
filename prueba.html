@@ -3,399 +3,93 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Modeslap | Soluciones Tecnológicas de Vanguardia</title>
-  
+  <title>Mode - Innovación y Desarrollo</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <style>
     body {
-      background: #000000;
-      color: #e6edf3;
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
+      background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+      color: white;
+      font-family: 'Poppins', sans-serif;
     }
-    .hero-bg {
-      background: radial-gradient(circle, rgba(63, 94, 251, 0.5) 0%, rgba(252, 70, 107, 0.2) 100%);
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      opacity: 0.2;
-    }
-    .card-border {
-      position: relative;
-      background: #0f172a;
-      overflow: hidden;
-    }
-    .card-border::before {
-      content: '';
-      position: absolute;
-      top: -100%;
-      left: -100%;
-      width: 300%;
-      height: 300%;
-      background: conic-gradient(from 0deg, rgba(63, 94, 251, 0.8), rgba(252, 70, 107, 0.8), rgba(63, 94, 251, 0.8));
-      animation: rotate 6s linear infinite;
-      z-index: 0;
-      opacity: 0.4;
-    }
-    .card-border-content {
-      position: relative;
-      z-index: 1;
-      background: #0f172a;
-    }
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .testimonial-carousel {
-      scroll-snap-type: x mandatory;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .testimonial-carousel-item {
-      scroll-snap-align: start;
-      flex: 0 0 90%;
-      margin-right: 1.5rem;
-    }
-    @media (min-width: 768px) {
-      .testimonial-carousel-item {
-        flex: 0 0 45%;
-      }
-    }
-    @media (min-width: 1024px) {
-      .testimonial-carousel-item {
-        flex: 0 0 30%;
-      }
-    }
-    .text-glow {
-      text-shadow: 0 0 8px #fff, 0 0 4px #000;
-    }
-    .neon-glow {
-      box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #0ff, 0 0 20px #0ff;
-    }
-    .neon-purple {
-      box-shadow: 0 0 5px #f0f, 0 0 10px #f0f, 0 0 15px #f0f, 0 0 20px #f0f;
+    .neon-text {
+      text-shadow: 0 0 5px #00f7ff, 0 0 10px #00f7ff, 0 0 20px #00f7ff;
     }
   </style>
 </head>
+<body>
 
-<body class="bg-[#000000] text-gray-100">
-  
-  <div class="fixed top-0 left-0 w-full h-full z-[-1]">
-    <div id="hero-particles" class="w-full h-full opacity-10"></div>
-  </div>
-
-  <header class="p-6 flex justify-between items-center bg-transparent border-b border-gray-800 backdrop-blur-sm sticky top-0 z-50">
-    <a href="#" class="text-3xl font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600 text-glow" data-aos="fade-right">Modeslap</a>
-    <nav class="hidden md:flex gap-8 font-semibold">
-      <a href="#servicios" class="hover:text-cyan-400 transition-colors">Servicios</a>
-      <a href="#productos" class="hover:text-cyan-400 transition-colors">Productos</a>
-      <a href="#testimonios" class="hover:text-cyan-400 transition-colors">Testimonios</a>
-      <a href="#contacto" class="hover:text-cyan-400 transition-colors">Contacto</a>
+  <!-- Header -->
+  <header class="flex justify-between items-center px-8 py-6 border-b border-gray-700">
+    <h1 class="text-3xl font-bold neon-text">Mode</h1>
+    <nav>
+      <ul class="flex gap-6 text-lg">
+        <li><a href="#servicios" class="hover:text-cyan-400">Servicios</a></li>
+        <li><a href="#proyectos" class="hover:text-cyan-400">Proyectos</a></li>
+        <li><a href="#contacto" class="hover:text-cyan-400">Contacto</a></li>
+      </ul>
     </nav>
-    <button id="menu-btn" class="md:hidden text-2xl text-white">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
   </header>
-  
-  <div id="mobile-menu" class="transform -translate-x-full fixed top-0 left-0 w-full md:w-80 h-full bg-[#0f172a]/95 backdrop-blur-sm z-50 transition-transform duration-300 ease-in-out">
-    <div class="p-8">
-      <button id="close-menu-btn" class="absolute top-6 right-6 text-3xl text-gray-400 hover:text-white transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-      <h3 class="text-3xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">Navegación</h3>
-      <nav class="flex flex-col space-y-6 text-xl">
-        <a href="#servicios" class="flex items-center gap-4 hover:text-cyan-400 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('-translate-x-full')">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L12 19.25L14.25 17M12 19.25V4.75M12 4.75h-.25c-2.3 0-4.43 1.25-5.5 3.25L3.5 13.5M12 4.75h.25c2.3 0 4.43 1.25 5.5 3.25L20.5 13.5"></path></svg>
-          Servicios
-        </a>
-        <a href="#productos" class="flex items-center gap-4 hover:text-cyan-400 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('-translate-x-full')">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-          Productos
-        </a>
-        <a href="#testimonios" class="flex items-center gap-4 hover:text-cyan-400 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('-translate-x-full')">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h-1a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h1a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3zM7 20H6a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h1a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3z"></path></svg>
-          Testimonios
-        </a>
-        <a href="#contacto" class="flex items-center gap-4 hover:text-cyan-400 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('-translate-x-full')">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-2 13H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2z" /></svg>
-          Contacto
-        </a>
-        
-        <div class="h-px w-20 bg-gray-600 my-6"></div>
-        
-        <a href="https://wa.me/50200000000" target="_blank" class="flex items-center gap-4 text-green-400 hover:text-green-500 transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16h6M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-          Contacto del Creador
-        </a>
-        <a href="#" target="_blank" class="flex items-center gap-4 text-red-400 hover:text-red-500 transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21.54 12a9 9 0 1 1-18.08 0a9 9 0 0 1 18.08 0z"></path><path d="M15 12l-5 3v-6l5 3z"></path></svg>
-          Canal de YouTube
-        </a>
-        <a href="https://github.com/Deylin-Eliac" target="_blank" class="flex items-center gap-4 text-purple-400 hover:text-purple-500 transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77a5.07 5.07 0 0 0-.09-2.2v-.03L16.5 2.1c-.59-.2-1.2-.2-1.8 0c-2.4 0-3.7 1.5-4 2.5c-.32 1-.22 2 .5 2.75l.1.1.2.2c.2.2.3.4.3.6V17"></path></svg>
-          GitHub
-        </a>
-      </nav>
-    </div>
-  </div>
 
-  <section class="relative text-center py-20 md:py-32 overflow-hidden">
-    <div class="hero-bg"></div>
-    <div class="container mx-auto px-6 relative z-10">
-      <h2 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 text-glow" data-aos="fade-up">
-        Impulsa tu Negocio con Tecnología de Vanguardia
-      </h2>
-      <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
-        En **Modeslap** creamos soluciones digitales potentes y personalizadas: bots, APIs y páginas web que automatizan, conectan y hacen crecer tu marca.
-      </p>
-      <a href="#contacto" class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl transition-all transform hover:scale-105 neon-purple" data-aos="fade-up" data-aos-delay="400">
-        Empieza tu proyecto hoy
-      </a>
-    </div>
+  <!-- Hero -->
+  <section class="text-center py-20" data-aos="fade-up">
+    <h2 class="text-5xl font-bold mb-4 neon-text">Automatiza, Crea, Innova</h2>
+    <p class="text-lg max-w-2xl mx-auto text-gray-300">
+      Desarrollamos bots de WhatsApp, APIs, sitios web y sistemas automatizados a tu medida.
+    </p>
+    <a href="#contacto" class="mt-6 inline-block px-6 py-3 bg-cyan-500 hover:bg-cyan-400 rounded-full text-black font-bold text-lg transition">Contáctanos</a>
   </section>
 
-  <section id="servicios" class="py-24 px-6 bg-[#000000] border-t border-b border-gray-800">
-    <h3 class="text-4xl font-bold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-500 text-glow" data-aos="fade-up">Nuestros Servicios Tecnológicos</h3>
-    <div class="container mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-      
-      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-right">
-        <div class="card-border-content p-6 rounded-3xl">
-          <div class="text-5xl mb-4 text-cyan-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm0 14.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5.67 1.5 1.5s-.67 1.5-1.5 1.5zm-3-3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5.67 1.5 1.5s-.67 1.5-1.5 1.5zm6 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5.67 1.5 1.5s-.67 1.5-1.5 1.5z"></path></svg>
-          </div>
-          <h4 class="text-2xl font-bold mb-3 text-white">Bots de Automatización</h4>
-          <p class="text-gray-400 mb-4">Automatiza tus procesos con bots para WhatsApp, Telegram y más, mejorando la interacción y eficiencia de tu negocio.</p>
-          <ul class="text-sm space-y-2 text-gray-500">
-            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Soporte al cliente 24/7</li>
-            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Marketing y ventas automatizadas</li>
-          </ul>
-        </div>
+  <!-- Servicios -->
+  <section id="servicios" class="py-16 px-6" data-aos="fade-right">
+    <h3 class="text-3xl font-bold text-center mb-10">Nuestros Servicios</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-gray-900 p-6 rounded-xl shadow-lg hover:scale-105 transition">
+        <h4 class="text-xl font-bold mb-2 text-cyan-400">Bots de WhatsApp</h4>
+        <p class="text-gray-400">Conexiones avanzadas con Baileys, funciones personalizadas y sistemas multi-bot.</p>
       </div>
-      
-      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-up" data-aos-delay="200">
-        <div class="card-border-content p-6 rounded-3xl">
-          <div class="text-5xl mb-4 text-purple-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M13 2v7h7"></path></svg>
-          </div>
-          <h4 class="text-2xl font-bold mb-3 text-white">APIs Personalizadas</h4>
-          <p class="text-gray-400 mb-4">Conecta tus sistemas, automatiza procesos internos y crea integraciones únicas con APIs robustas y seguras.</p>
-          <ul class="text-sm space-y-2 text-gray-500">
-            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Integración de servicios</li>
-            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Desarrollo de microservicios</li>
-          </ul>
-        </div>
+      <div class="bg-gray-900 p-6 rounded-xl shadow-lg hover:scale-105 transition">
+        <h4 class="text-xl font-bold mb-2 text-cyan-400">APIs Personalizadas</h4>
+        <p class="text-gray-400">Desarrollamos APIs potentes para tus integraciones y automatizaciones.</p>
       </div>
-      
-      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-left">
-        <div class="card-border-content p-6 rounded-3xl">
-          <div class="text-5xl mb-4 text-teal-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2z"></path><path d="M12 2c-3.14 0-5.83 1.94-7 4.7L12 12l7-5.3C17.83 3.94 15.14 2 12 2z"></path><path d="M12 22c3.14 0 5.83-1.94 7-4.7l-7-5.3l-7 5.3c1.17 2.76 3.86 4.7 7 4.7z"></path><path d="M12 12L5 6.7c-1.17 2.76-1.17 6.24 0 9L12 12z"></path><path d="M12 12l7 5.3c1.17-2.76 1.17-6.24 0-9L12 12z"></path></svg>
-          </div>
-          <h4 class="text-2xl font-bold mb-3 text-white">Desarrollo Web</h4>
-          <p class="text-gray-400 mb-4">Diseñamos y desarrollamos páginas web, desde landing pages hasta aplicaciones complejas, garantizando rapidez y una gran experiencia de usuario.</p>
-          <ul class="text-sm space-y-2 text-gray-500">
-            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Diseño responsive</li>
-            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>SEO y optimización</li>
-          </ul>
-        </div>
+      <div class="bg-gray-900 p-6 rounded-xl shadow-lg hover:scale-105 transition">
+        <h4 class="text-xl font-bold mb-2 text-cyan-400">Sitios Web</h4>
+        <p class="text-gray-400">Diseños modernos, responsivos y con animaciones para tu negocio.</p>
       </div>
     </div>
   </section>
 
-  <section id="productos" class="py-24 px-6 bg-[#000000]">
-    <h3 class="text-4xl font-bold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-500 text-glow" data-aos="fade-up">Productos que puedes adquirir</h3>
-    <div class="container mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-10">
-
-      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="zoom-in">
-        <div class="card-border-content p-6 rounded-3xl text-center">
-          <div class="text-5xl mb-4 text-pink-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h18v18H3zM9 13.5a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3zm6 0a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3zm-3-6a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3z" /></svg>
-          </div>
-          <h4 class="text-xl font-bold mb-2 text-white">Bot de E-commerce</h4>
-          <p class="text-gray-400 text-sm">Automatiza ventas, notificaciones de envío y atención al cliente para tu tienda online.</p>
-        </div>
-      </div>
-      
-      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="zoom-in" data-aos-delay="100">
-        <div class="card-border-content p-6 rounded-3xl text-center">
-          <div class="text-5xl mb-4 text-green-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zM4 14v-2c0-.55.45-1 1-1h14c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1H5c-.55 0-1-.45-1-1z" /></svg>
-          </div>
-          <h4 class="text-xl font-bold mb-2 text-white">API de Inventario</h4>
-          <p class="text-gray-400 text-sm">Sincroniza el stock de tu tienda física y online en tiempo real, evitando errores.</p>
-        </div>
-      </div>
-      
-      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="zoom-in" data-aos-delay="200">
-        <div class="card-border-content p-6 rounded-3xl text-center">
-          <div class="text-5xl mb-4 text-yellow-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm-1 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5s1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5z"></path></svg>
-          </div>
-          <h4 class="text-xl font-bold mb-2 text-white">Landing Page de Lanzamiento</h4>
-          <p class="text-gray-400 text-sm">Una página web de alto impacto para presentar tu nuevo producto o servicio.</p>
-        </div>
-      </div>
-      
-      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="zoom-in" data-aos-delay="300">
-        <div class="card-border-content p-6 rounded-3xl text-center">
-          <div class="text-5xl mb-4 text-red-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm0 15c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5z"></path></svg>
-          </div>
-          <h4 class="text-xl font-bold mb-2 text-white">Chatbot con IA</h4>
-          <p class="text-gray-400 text-sm">Un asistente virtual inteligente que aprende de las interacciones para ofrecer un soporte superior.</p>
-        </div>
-      </div>
+  <!-- Proyectos -->
+  <section id="proyectos" class="py-16 px-6 bg-gray-950" data-aos="zoom-in">
+    <h3 class="text-3xl font-bold text-center mb-10">Proyectos Destacados</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-gray-900 p-6 rounded-xl shadow-lg">Kirito-Bot-MD</div>
+      <div class="bg-gray-900 p-6 rounded-xl shadow-lg">Vegeta-Super-Bot</div>
+      <div class="bg-gray-900 p-6 rounded-xl shadow-lg">APIs Mode</div>
     </div>
   </section>
 
-  <section id="testimonios" class="py-24 px-6 bg-[#0f172a] border-t border-b border-gray-800">
-    <h3 class="text-4xl font-bold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-indigo-500 text-glow" data-aos="fade-up">Lo que nuestros clientes dicen</h3>
-    <div class="container mx-auto">
-      <div class="flex testimonial-carousel space-x-6 pb-4">
-        
-        <div class="testimonial-carousel-item bg-[#161b22] p-8 rounded-3xl shadow-xl border border-gray-700" data-aos="zoom-in">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4">JG</div>
-            <div>
-              <p class="font-bold text-lg">Javier García</p>
-              <p class="text-gray-400 text-sm">Diseñador UX/UI</p>
-            </div>
-          </div>
-          <div class="flex mb-4">
-            <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span>
-          </div>
-          <p class="text-gray-300 italic">"Increíble servicio. El bot de WhatsApp que desarrollaron para mi negocio ha triplicado las ventas. La comunicación fue excelente y superaron todas mis expectativas."</p>
-        </div>
-
-        <div class="testimonial-carousel-item bg-[#161b22] p-8 rounded-3xl shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="100">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4">AM</div>
-            <div>
-              <p class="font-bold text-lg">Ana Mendoza</p>
-              <p class="text-gray-400 text-sm">Emprendedora Digital</p>
-            </div>
-          </div>
-          <div class="flex mb-4">
-            <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span>
-          </div>
-          <p class="text-gray-300 italic">"La API que crearon para conectar mi inventario con mi tienda online es un game-changer. Todo funciona sin problemas y la atención al detalle es de primera."</p>
-        </div>
-        
-        <div class="testimonial-carousel-item bg-[#161b22] p-8 rounded-3xl shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="200">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4">RP</div>
-            <div>
-              <p class="font-bold text-lg">Roberto Pérez</p>
-              <p class="text-gray-400 text-sm">Gerente de Proyectos</p>
-            </div>
-          </div>
-          <div class="flex mb-4">
-            <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span>
-          </div>
-          <p class="text-gray-300 italic">"Necesitábamos una landing page urgente y la entregaron en tiempo récord, con un diseño moderno y optimizada para conversiones. Altamente recomendados."</p>
-        </div>
-
-        <div class="testimonial-carousel-item bg-[#161b22] p-8 rounded-3xl shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="300">
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4">ES</div>
-            <div>
-              <p class="font-bold text-lg">Elena Sánchez</p>
-              <p class="text-gray-400 text-sm">Fundadora de Startup</p>
-            </div>
-          </div>
-          <div class="flex mb-4">
-            <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span>
-          </div>
-          <p class="text-gray-300 italic">"El equipo de Modeslap es excepcional. Crearon una API personalizada que automatiza el 80% de mis procesos internos. No podría estar más satisfecha con el resultado."</p>
-        </div>
-      </div>
+  <!-- Contacto -->
+  <section id="contacto" class="py-16 px-6" data-aos="fade-up">
+    <h3 class="text-3xl font-bold text-center mb-10">Contáctanos</h3>
+    <div class="max-w-md mx-auto">
+      <form class="space-y-4">
+        <input type="text" placeholder="Tu nombre" class="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-cyan-400 outline-none">
+        <input type="email" placeholder="Tu correo" class="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-cyan-400 outline-none">
+        <textarea placeholder="Tu mensaje" class="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-cyan-400 outline-none"></textarea>
+        <button class="w-full py-3 bg-cyan-500 hover:bg-cyan-400 rounded-lg text-black font-bold">Enviar</button>
+      </form>
     </div>
   </section>
 
-  <section id="contacto" class="py-24 text-center bg-[#000000] border-t border-gray-800">
-    <div class="container mx-auto px-6">
-      <h3 class="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500 text-glow" data-aos="fade-up">¡Hablemos de tu Proyecto!</h3>
-      <p class="text-lg text-gray-300 mb-10 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
-        ¿Tienes una idea innovadora? ¿Necesitas automatizar un proceso? Escríbenos y lleva tu proyecto al siguiente nivel con soluciones tecnológicas a tu medida.
-      </p>
-      <div class="flex flex-col md:flex-row justify-center gap-6" data-aos="fade-up" data-aos-delay="400">
-        <a href="https://wa.me/50200000000" target="_blank" class="bg-green-600 px-8 py-4 rounded-full font-bold text-white shadow-lg hover:bg-green-700 transition transform hover:scale-105 neon-glow">
-          <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16h6M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-          Contactar por WhatsApp
-        </a>
-        <a href="mailto:deylin@tucorreo.com" class="bg-gray-700 px-8 py-4 rounded-full font-bold text-white shadow-lg hover:bg-gray-600 transition transform hover:scale-105">
-          <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-2 13H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2z" /></svg>
-          Enviar un Correo
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <footer class="py-8 text-center text-gray-500 text-sm bg-[#0f172a] border-t border-gray-800">
-    <div class="container mx-auto">
-      <p>© 2025 Modeslap - Todos los derechos reservados.</p>
-      <p class="mt-2">Desarrollado con pasión y tecnología.</p>
-    </div>
+  <!-- Footer -->
+  <footer class="text-center py-6 border-t border-gray-700 text-gray-400">
+    © 2025 Mode - Innovación y Desarrollo
   </footer>
 
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
-    // Inicializar AOS
-    AOS.init({
-      duration: 1200,
-      once: true,
-    });
-    
-    // Animación de partículas de fondo (anime.js)
-    anime({
-      targets: '#hero-particles div',
-      translateX: function() { return anime.random(-1000, 1000); },
-      translateY: function() { return anime.random(-1000, 1000); },
-      scale: function() { return anime.random(1, 5); },
-      opacity: function() { return anime.random(0.1, 0.5); },
-      duration: 3000,
-      delay: anime.stagger(100),
-      easing: 'easeInOutQuad',
-      loop: true,
-      direction: 'alternate'
-    });
-    
-    // Crear las partículas del fondo
-    const heroParticles = document.getElementById('hero-particles');
-    for (let i = 0; i < 50; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'absolute w-2 h-2 bg-purple-500 rounded-full';
-      particle.style.top = `${Math.random() * 100}%`;
-      particle.style.left = `${Math.random() * 100}%`;
-      heroParticles.appendChild(particle);
-    }
-    
-    // Funcionalidad del menú móvil
-    const menuBtn = document.getElementById('menu-btn');
-    const closeMenuBtn = document.getElementById('close-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.remove('-translate-x-full');
-    });
-
-    closeMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.add('-translate-x-full');
-    });
-
+    AOS.init({ duration: 1000, once: true });
   </script>
 </body>
 </html>
