@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deylin Dev // Holo-Interface_01</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <title>Deylin Dev // Holo-Matrix System_1.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
-        /* Estilos CSS Avanzados para la Holo-Interface */
+        /* Estilos CSS para el Sistema Holo-Matrix */
         :root {
-            --primary-color: #00fff2;
-            --secondary-color: #ff00c8;
-            --bg-color: #050a12;
+            --primary-color: #00ffc0;
+            --secondary-color: #ff0077;
+            --bg-color: #0d1117;
             --text-color: #e0e0e0;
-            --accent-color: #00ffaa;
             --border-color: #1a233a;
+            --glow-color: #00ffc0;
         }
 
         * {
@@ -25,409 +25,307 @@
         }
 
         body {
-            font-family: 'Space Mono', monospace;
+            font-family: 'Share Tech Mono', monospace;
             background-color: var(--bg-color);
             color: var(--text-color);
-            line-height: 1.6;
-            overflow-x: hidden;
-            perspective: 1000px; /* Habilitar perspectiva 3D */
-        }
-
-        /* Contenedor principal con efecto 3D */
-        .viewport {
             height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-rows: 1fr 2fr 1fr;
+            gap: 20px;
+            padding: 20px;
             overflow: hidden;
             position: relative;
         }
 
-        /* Capas de parallax para el efecto 3D */
-        .parallax-layer {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            pointer-events: none;
-        }
-
-        .layer-1 { z-index: 1; transform: translateZ(-200px) scale(1.2); }
-        .layer-2 { z-index: 2; transform: translateZ(-100px) scale(1.1); }
-        .layer-3 { z-index: 3; transform: translateZ(0) scale(1); }
-
-        .bg-pattern {
-            background-image: 
-                linear-gradient(to right, var(--border-color) 1px, transparent 1px),
-                linear-gradient(to bottom, var(--border-color) 1px, transparent 1px);
-            background-size: 50px 50px;
-            opacity: 0.2;
-        }
-        
-        /* Animación de la rejilla de fondo */
-        .grid-glow {
+        /* Efecto de rejilla de fondo */
+        body::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: radial-gradient(circle, var(--primary-color) 0%, transparent 50%);
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
+            background-image: 
+                linear-gradient(to right, var(--border-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--border-color) 1px, transparent 1px);
+            background-size: 50px 50px;
             opacity: 0.1;
-            transition: opacity 0.5s;
+            animation: grid-flow 30s linear infinite;
+            pointer-events: none;
         }
 
-        /* Estilo para las secciones */
-        .section {
-            padding: 100px 20px;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-            position: relative;
-            z-index: 10; /* Para que el contenido esté por encima del fondo */
+        @keyframes grid-flow {
+            from { background-position: 0 0; }
+            to { background-position: 50px 50px; }
         }
 
-        .section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Encabezado y barra de navegación */
-        header {
-            background: rgba(0, 0, 0, 0.5);
+        /* Estilo de los módulos de la interfaz */
+        .module {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 255, 192, 0.2);
+            backdrop-filter: blur(5px);
             padding: 20px;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(15px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8em;
-            color: var(--primary-color);
-            text-decoration: none;
-            text-shadow: 0 0 10px var(--primary-color);
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-        }
-
-        nav ul li {
-            margin-left: 30px;
-        }
-
-        nav ul li a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 1.1em;
-            position: relative;
-            transition: color 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: var(--secondary-color);
-        }
-
-        /* Sección de héroe con animación holográfica */
-        .hero {
-            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
             position: relative;
-            color: var(--text-color);
+            box-shadow: 0 0 10px rgba(0, 255, 192, 0.1);
+            animation: module-appear 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            opacity: 0;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .holo-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 5em;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            margin-bottom: 20px;
+        @keyframes module-appear {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .module:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+        
+        .module-header {
+            position: absolute;
+            top: 10px;
+            left: 10px;
             color: var(--primary-color);
-            text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color);
-            animation: text-glow 2s infinite alternate;
-        }
-        
-        @keyframes text-glow {
-            from { text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color); }
-            to { text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color), 0 0 60px var(--primary-color); }
+            font-size: 0.8em;
+            text-transform: uppercase;
         }
 
-        .hero p {
-            font-size: 1.5em;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 40px;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        .module-content {
+            text-align: center;
+            width: 100%;
         }
 
-        /* Terminal de código */
-        .terminal {
-            background-color: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--primary-color);
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 800px;
-            margin: 40px auto 0;
-            text-align: left;
-            position: relative;
-            box-shadow: 0 0 15px var(--primary-color);
-            animation: terminal-glow 3s infinite alternate;
+        /* Estilo del módulo central (Nombre) */
+        .hero-module {
+            grid-column: 2;
+            grid-row: 2;
         }
         
-        @keyframes terminal-glow {
-            from { box-shadow: 0 0 10px var(--primary-color); }
-            to { box-shadow: 0 0 25px var(--primary-color); }
-        }
-        
-        .terminal-header {
-            color: var(--accent-color);
+        .hero-module h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.2em;
+            font-size: 4em;
+            color: var(--primary-color);
+            text-shadow: 0 0 20px var(--primary-color);
+            letter-spacing: 5px;
+            position: relative;
+        }
+        
+        /* Animación de texto que se desintegra y reaparece */
+        .holo-text {
+            display: inline-block;
+            transition: all 0.5s;
+            cursor: pointer;
+        }
+        
+        .holo-text:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 30px var(--primary-color);
+        }
+        
+        .holo-text span {
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        
+        .holo-text:hover span {
+            opacity: 0;
+            transform: translateY(-20px) rotateX(90deg);
+        }
+        
+        .holo-text::after {
+            content: "DEYLIN_DEV_ONLINE";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--secondary-color);
+            opacity: 0;
+            font-size: 0.5em;
+            animation: holo-text-reveal 1s forwards;
+            transition: opacity 0.5s;
+        }
+        
+        @keyframes holo-text-reveal {
+            to { opacity: 1; }
+        }
+
+        /* Estilo de los módulos de información */
+        .info-module {
+            text-align: left;
+            padding: 30px;
+        }
+        
+        .info-module p {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+        
+        .info-module strong {
+            color: var(--primary-color);
+            text-shadow: 0 0 5px var(--primary-color);
+        }
+
+        /* Estilo de las tarjetas de servicio */
+        .services-module {
+            grid-column: 1 / span 3;
+            grid-row: 3;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .service-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 255, 192, 0.2);
+            padding: 20px;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            transition: transform 0.3s, background 0.3s;
+            cursor: pointer;
+        }
+        
+        .service-card:hover {
+            background: rgba(0, 255, 192, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+        
+        .service-card .icon {
+            font-size: 2.5em;
+            color: var(--primary-color);
             margin-bottom: 10px;
         }
         
-        .terminal-content {
-            white-space: pre-wrap;
-            color: var(--text-color);
-            font-family: 'Space Mono', monospace;
-            line-height: 1.4;
-            opacity: 0;
-            animation: type-code 4s steps(60, end) forwards;
+        /* Estilo del módulo de contacto */
+        .contact-module {
+            grid-column: 3;
+            grid-row: 1;
         }
-
-        @keyframes type-code {
-            from { width: 0; opacity: 1; }
-            to { width: 100%; opacity: 1; }
+        
+        .contact-module .social-links {
+            display: flex;
+            gap: 20px;
         }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        /* Tarjetas de servicio con efecto holográfico */
-        .service-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            transition: transform 0.5s, box-shadow 0.5s;
-            backdrop-filter: blur(8px);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
-        }
-
-        .service-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 15px 40px rgba(0, 255, 255, 0.4);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .service-card .icon {
-            font-size: 3.5em;
-            color: var(--primary-color);
-            margin-bottom: 25px;
-            animation: pulse-icon 2s infinite;
-        }
-
-        .service-card h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8em;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-
-        .social-links {
-            margin-bottom: 25px;
-        }
-
+        
         .social-links a {
             color: var(--primary-color);
             font-size: 2em;
-            margin: 0 20px;
             transition: color 0.3s, transform 0.3s;
+            position: relative;
         }
-
+        
         .social-links a:hover {
             color: var(--secondary-color);
-            transform: scale(1.3);
+            transform: scale(1.2);
             text-shadow: 0 0 10px var(--secondary-color);
         }
 
-        @media (max-width: 768px) {
-            .holo-title { font-size: 3em; }
-            .hero p { font-size: 1.2em; }
-            nav ul { display: none; }
-            header { justify-content: center; }
-            .terminal { max-width: 100%; padding: 15px; }
+        /* Animación del "flujo de datos" */
+        .data-flow {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            border-top: 1px solid rgba(0, 255, 192, 0.2);
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 0.9em;
+            color: var(--primary-color);
+            animation: data-flow 20s linear infinite;
+        }
+        
+        @keyframes data-flow {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
         }
     </style>
 </head>
 <body>
 
-    <div class="viewport">
-        <div class="parallax-layer layer-1">
-            <div class="bg-pattern"></div>
+    <div class="module info-module" style="grid-column: 1; grid-row: 1;">
+        <div class="module-header">/system/about.txt</div>
+        <div class="module-content">
+            <p><strong>[ Estado: OK ]</strong> Conector digital, especializado en desarrollo de software de alto nivel. Me dedico a la creación de **APIs robustas**, **bots de WhatsApp** y **sitios web seguros**. Mi misión es llevar la innovación a cada proyecto, garantizando la máxima seguridad para los usuarios.</p>
         </div>
-        <div class="parallax-layer layer-2">
-            <div class="grid-glow"></div>
-        </div>
-        <div class="parallax-layer layer-3"></div>
-        
-        <section class="hero">
-            <h1 class="holo-title">DEYLIN DEV</h1>
-            <p>Arquitecto de software y creador de futuros digitales.</p>
-            <div class="terminal">
-                <div class="terminal-header">[ System_Log_Online ]</div>
-                <pre class="terminal-content" id="terminal-code">
-> Iniciando interfaz Holo-UI...
-> Cargando módulos de programación...
-> **API_Development_Module** - OK
-> **WhatsApp_Bots_Module** - OK
-> **Web_Solutions_Module** - OK
-> Bienvenido, Deylin. <span style="color: var(--secondary-color);">Tu sitio está activo.</span>
-                </pre>
-            </div>
-        </section>
-
-        <section id="about" class="section">
-            <div class="container">
-                <h2 class="holo-title" style="font-size: 2.5em;">[ SOY DEYLIN ]</h2>
-                <p>
-                    Mi nombre es Deylin, y mi trabajo es construir los pilares del futuro digital. Me especializo en transformar ideas en realidad a través de la programación, creando **APIs escalables**, **bots de WhatsApp inteligentes** y **sitios web inmersivos y seguros**.
-                </p>
-                <p>
-                    La seguridad de los usuarios es mi máxima prioridad. Cada línea de código es sometida a rigurosas pruebas para garantizar una experiencia confiable y protegida. Mi objetivo es no solo resolver problemas, sino crear soluciones que duren.
-                </p>
-            </div>
-        </section>
-
-        <section id="services" class="section">
-            <div class="container">
-                <h2 class="holo-title" style="font-size: 2.5em;">[ SERVICIOS_DE_DATOS ]</h2>
-                <div class="services-grid">
-                    <div class="service-card">
-                        <div class="icon"><i class="fas fa-server"></i></div>
-                        <h3>APIs de Vanguardia</h3>
-                        <p>Diseño y desarrollo de interfaces de programación (APIs) seguras y de alto rendimiento.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="icon"><i class="fab fa-whatsapp"></i></div>
-                        <h3>Bots de WhatsApp</h3>
-                        <p>Automatización de comunicaciones y atención al cliente a través de bots personalizados.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="icon"><i class="fas fa-globe"></i></div>
-                        <h3>Sitios Web Interactivos</h3>
-                        <p>Construcción de sitios web optimizados, responsivos y visualmente impresionantes.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="icon"><i class="fas fa-shield-alt"></i></div>
-                        <h3>Ciberseguridad</h3>
-                        <p>Implementación de medidas de seguridad para garantizar la protección de datos y sistemas.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="section">
-            <div class="container">
-                <h2 class="holo-title" style="font-size: 2.5em;">[ CONECTAR ]</h2>
-                <p>
-                    <span style="color: var(--accent-color);">[ Conexión establecida. Protocolo seguro. ]</span><br>
-                    Puedes contactarme a través de mis canales oficiales y redes.
-                </p>
-                <div class="social-links">
-                    <a href="http://googleusercontent.com/youtube.com/2" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                    <a href="https://whatsapp.com/channel/tu-canal-id" target="_blank" aria-label="WhatsApp Channel"><i class="fab fa-whatsapp"></i><i class="fas fa-music" style="font-size: 0.5em; position: absolute; top: -5px; right: -5px;"></i></a>
-                    <a href="https://wa.me/tunumerodetelefono?text=Hola%2C%20Deylin%2C%20me%20interesa%20tu%20trabajo." target="_blank" aria-label="Contacto WhatsApp"><i class="fas fa-comment-dots"></i></a>
-                    <a href="https://www.linkedin.com/in/tuperfil" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/tuusuario" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <p>
-                <span class="holo-title" style="font-size: 1em;">Deylin Dev</span> // System_Online
-            </p>
-        </footer>
     </div>
 
-    <script>
-        /* JavaScript para las animaciones y funcionalidades */
+    <div class="module contact-module">
+        <div class="module-header">/system/contact.exe</div>
+        <div class="module-content">
+            <p><strong>[ Conectar ]</strong></p>
+            <div class="social-links">
+                <a href="https://wa.me/tunumerodetelefono?text=Hola%20Deylin%2C%20me%20interesa%20tu%20trabajo." target="_blank" aria-label="Contacto por WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://whatsapp.com/channel/tu-canal-id" target="_blank" aria-label="Canal de WhatsApp"><i class="fab fa-whatsapp" style="position: relative;"><i class="fas fa-bullhorn" style="font-size: 0.5em; position: absolute; bottom: 0; right: 0;"></i></i></a>
+                <a href="http://googleusercontent.com/youtube.com/3" target="_blank" aria-label="Canal de YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://github.com/tuusuario" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </div>
 
-        // Animación de Parallax
-        const parallaxLayers = document.querySelectorAll('.parallax-layer');
-        const viewport = document.querySelector('.viewport');
+    <div class="module hero-module">
+        <div class="module-header">/system/id.txt</div>
+        <h1 class="holo-text">
+            <span>D</span><span>E</span><span>Y</span><span>L</span><span>I</span><span>N</span>
+            <br>
+            <span>D</span><span>E</span><span>V</span>
+        </h1>
+    </div>
 
-        viewport.addEventListener('mousemove', (e) => {
-            const x = (window.innerWidth - e.pageX) / 50;
-            const y = (window.innerHeight - e.pageY) / 50;
+    <div class="module" style="grid-column: 1; grid-row: 2;">
+        <div class="module-header">/system/status.log</div>
+        <div class="module-content">
+            <pre style="color: var(--primary-color);">
+> Iniciando_servicios...
+> Verificando_integridad...
+> Status: <span style="color: #00ffaa;">ONLINE</span>
+> Acceso_concedido: DEYLIN_DEV
+            </pre>
+        </div>
+    </div>
 
-            parallaxLayers.forEach((layer, index) => {
-                const depth = 20 * (index + 1);
-                layer.style.transform = `translate3d(${x * (index + 1)}px, ${y * (index + 1)}px, -${depth}px) scale(${1 + (index * 0.1)})`;
-            });
-            document.querySelector('.grid-glow').style.backgroundPosition = `${e.pageX}px ${e.pageY}px`;
-        });
+    <div class="module info-module" style="grid-column: 3; grid-row: 2;">
+        <div class="module-header">/system/skills.txt</div>
+        <div class="module-content">
+            <p><strong>[ Habilidades ]</strong></p>
+            <p>- **Desarrollo de APIs**: Microservicios RESTful, GraphQL.</p>
+            <p>- **Automatización**: Bots de WhatsApp, scripts de tareas.</p>
+            <p>- **Web**: Full-stack, interfaces responsivas.</p>
+            <p>- **Seguridad**: Cifrado, auditoría de código.</p>
+        </div>
+    </div>
 
-        // Animación de secciones al hacer scroll
-        const sections = document.querySelectorAll('.section');
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
+    <div class="module services-module">
+        <div class="module-header">/system/services.cfg</div>
+        <div class="service-card">
+            <div class="icon"><i class="fas fa-server"></i></div>
+            <h3>APIs</h3>
+        </div>
+        <div class="service-card">
+            <div class="icon"><i class="fab fa-whatsapp"></i></div>
+            <h3>Bots</h3>
+        </div>
+        <div class="service-card">
+            <div class="icon"><i class="fas fa-globe"></i></div>
+            <h3>Sitios Web</h3>
+        </div>
+        <div class="service-card">
+            <div class="icon"><i class="fas fa-shield-alt"></i></div>
+            <h3>Seguridad</h3>
+        </div>
+    </div>
+    
+    <div class="data-flow">
+        <span>>_system_status: DeylinDev.online // 2025-08-09 // Protocolo_Seguro_Verificado // Cifrado_Quantum_Activado //</span>
+    </div>
 
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-
-        // Animación de texto tipo terminal
-        document.addEventListener('DOMContentLoaded', () => {
-            const codeContent = document.getElementById('terminal-code').textContent;
-            document.getElementById('terminal-code').textContent = '';
-            
-            let i = 0;
-            function typeWriter() {
-                if (i < codeContent.length) {
-                    document.getElementById('terminal-code').textContent += codeContent.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 40); // Velocidad de escritura
-                }
-            }
-            typeWriter();
-        });
-
-    </script>
 </body>
 </html>
