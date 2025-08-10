@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Modeslap | Soluciones Tecnológicas Personalizadas</title>
+  <title>Modeslap | Soluciones Tecnológicas de Vanguardia</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ96z8peq+k6zVn26X+a+Lq3p4M3GzV3zR0hB8/f8/rG3/6W8+Vp1C8/F2/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     body {
@@ -58,10 +58,6 @@
       scroll-snap-type: x mandatory;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      display: flex;
-    }
-    .testimonial-carousel::-webkit-scrollbar {
-      display: none;
     }
     .testimonial-carousel-item {
       scroll-snap-align: start;
@@ -79,10 +75,6 @@
       }
     }
   </style>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body class="bg-[#0d1117] text-gray-200">
@@ -93,28 +85,36 @@
 
   <header class="p-6 flex justify-between items-center bg-transparent border-b border-gray-800 backdrop-blur-sm sticky top-0 z-50">
     <a href="#" class="text-3xl font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600" data-aos="fade-right">🚀 Modeslap</a>
-    
     <nav class="hidden md:flex gap-8 font-semibold">
       <a href="#servicios" class="hover:text-cyan-400 transition-colors">Servicios</a>
+      <a href="#productos" class="hover:text-cyan-400 transition-colors">Productos</a>
       <a href="#testimonios" class="hover:text-cyan-400 transition-colors">Testimonios</a>
       <a href="#contacto" class="hover:text-cyan-400 transition-colors">Contacto</a>
-      <a href="#mas-info" class="hover:text-cyan-400 transition-colors">Más info</a>
     </nav>
-    
-    <button id="menu-btn" class="md:hidden text-2xl"><i class="fas fa-bars"></i></button>
+    <button id="menu-btn" class="md:hidden text-2xl">☰</button>
   </header>
   
   <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-[#0d1117]/95 backdrop-blur-sm z-50 flex-col items-center justify-center space-y-8 text-xl font-bold">
-    <button id="close-menu-btn" class="absolute top-6 right-6 text-3xl text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
-    <a href="#servicios" class="flex items-center gap-4 hover:text-cyan-400 transition-colors" onclick="closeMobileMenu()"><i class="fas fa-cogs"></i>Servicios</a>
-    <a href="#testimonios" class="flex items-center gap-4 hover:text-cyan-400 transition-colors" onclick="closeMobileMenu()"><i class="fas fa-star"></i>Testimonios</a>
-    <a href="#contacto" class="flex items-center gap-4 hover:text-cyan-400 transition-colors" onclick="closeMobileMenu()"><i class="fas fa-envelope"></i>Contacto</a>
+    <button id="close-menu-btn" class="absolute top-6 right-6 text-3xl">✖</button>
+    <a href="#servicios" class="hover:text-cyan-400 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Servicios</a>
+    <a href="#productos" class="hover:text-cyan-400 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Productos</a>
+    <a href="#testimonios" class="hover:text-cyan-400 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Testimonios</a>
+    <a href="#contacto" class="hover:text-cyan-400 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Contacto</a>
     
-    <div class="h-px w-24 bg-gray-700 my-4"></div>
+    <div class="h-px w-20 bg-gray-600 my-4"></div>
     
-    <a href="mailto:deylin@tucorreo.com" class="flex items-center gap-4 hover:text-cyan-400 transition-colors" onclick="closeMobileMenu()"><i class="fas fa-user-circle"></i>Contacto del Creador</a>
-    <a href="https://youtube.com/" target="_blank" class="flex items-center gap-4 hover:text-cyan-400 transition-colors" onclick="closeMobileMenu()"><i class="fab fa-youtube"></i>Canal</a>
-    <a href="https://github.com/Deylin-Eliac" target="_blank" class="flex items-center gap-4 hover:text-cyan-400 transition-colors" onclick="closeMobileMenu()"><i class="fab fa-github"></i>GitHub</a>
+    <a href="#" target="_blank" class="flex items-center gap-4 hover:text-cyan-400 transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+      Contacto del Creador
+    </a>
+    <a href="#" target="_blank" class="flex items-center gap-4 hover:text-cyan-400 transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 15.2 0 2 2 0 0 1 1.4 1.4 24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-15.2 0 2 2 0 0 1-1.4-1.4z"></path><path d="M10 9l6 3l-6 3V9z"></path></svg>
+      Canal de YouTube
+    </a>
+    <a href="https://github.com/Deylin-Eliac" target="_blank" class="flex items-center gap-4 hover:text-cyan-400 transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77a5.07 5.07 0 0 0-.09-2.2v-.03L16.5 2.1c-.59-.2-1.2-.2-1.8 0c-2.4 0-3.7 1.5-4 2.5c-.32 1-.22 2 .5 2.75l.1.1.2.2c.2.2.3.4.3.6V17"></path><path d="M9 19c-3.11 0-3.6-1.5-3.6-3s.4-3 3.6-3h.4c3.2 0 3.6 1.5 3.6 3s-.4 3-3.6 3z"></path></svg>
+      GitHub
+    </a>
   </div>
 
   <section class="relative text-center py-20 md:py-32 overflow-hidden">
@@ -124,7 +124,7 @@
         Impulsa tu Negocio con Tecnología de Vanguardia
       </h2>
       <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
-        Creamos soluciones digitales potentes y personalizadas: bots, APIs, páginas web y más para automatizar, conectar y hacer crecer tu marca.
+        En **Modeslap** creamos soluciones digitales potentes y personalizadas: bots, APIs y páginas web que automatizan, conectan y hacen crecer tu marca.
       </p>
       <a href="#contacto" class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl transition-all transform hover:scale-105" data-aos="fade-up" data-aos-delay="400">
         Empieza tu proyecto hoy
@@ -134,83 +134,98 @@
 
   <section id="servicios" class="py-24 px-6 bg-[#111827] border-t border-b border-gray-800">
     <h3 class="text-4xl font-bold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-500" data-aos="fade-up">Nuestros Servicios Tecnológicos</h3>
-    <div class="container mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+    <div class="container mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-10">
       
       <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-right">
         <div class="card-border-content p-6 rounded-3xl">
-          <div class="text-5xl mb-4 text-cyan-400"><i class="fas fa-robot"></i></div>
+          <div class="text-5xl mb-4 text-cyan-400">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm0 14.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5.67 1.5 1.5s-.67 1.5-1.5 1.5zm-3-3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5.67 1.5 1.5s-.67 1.5-1.5 1.5zm6 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5.67 1.5 1.5s-.67 1.5-1.5 1.5z"/></svg>
+          </div>
           <h4 class="text-2xl font-bold mb-3 text-white">Bots de Automatización</h4>
-          <p class="text-gray-400 mb-4">Automatizamos tus procesos y mejoramos la interacción con tus clientes con bots de WhatsApp, Telegram y más.</p>
+          <p class="text-gray-400 mb-4">Automatiza tus procesos con bots para WhatsApp, Telegram y más, mejorando la interacción y eficiencia de tu negocio.</p>
           <ul class="text-sm space-y-2 text-gray-500">
-            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Soporte al cliente 24/7</li>
-            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Marketing y ventas por chat</li>
-            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Integración con bases de datos</li>
+            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Soporte al cliente 24/7</li>
+            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Marketing y ventas automatizadas</li>
           </ul>
         </div>
       </div>
       
-      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-up" data-aos-delay="100">
+      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-up" data-aos-delay="200">
         <div class="card-border-content p-6 rounded-3xl">
-          <div class="text-5xl mb-4 text-purple-400"><i class="fas fa-bolt"></i></div>
+          <div class="text-5xl mb-4 text-purple-400">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M13 2v7h7"></path></svg>
+          </div>
           <h4 class="text-2xl font-bold mb-3 text-white">APIs Personalizadas</h4>
-          <p class="text-gray-400 mb-4">Construimos la columna vertebral de tu infraestructura digital para conectar tus aplicaciones y sistemas.</p>
+          <p class="text-gray-400 mb-4">Conecta tus sistemas, automatiza procesos internos y crea integraciones únicas con APIs robustas y seguras.</p>
           <ul class="text-sm space-y-2 text-gray-500">
-            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Integración de terceros</li>
-            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Microservicios optimizados</li>
-            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Seguridad y escalabilidad</li>
+            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Integración de servicios</li>
+            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Desarrollo de microservicios</li>
           </ul>
         </div>
       </div>
       
-      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-left" data-aos-delay="200">
+      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-left">
         <div class="card-border-content p-6 rounded-3xl">
-          <div class="text-5xl mb-4 text-orange-400"><i class="fas fa-globe"></i></div>
+          <div class="text-5xl mb-4 text-orange-400">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2z"></path><path d="M12 2c-3.14 0-5.83 1.94-7 4.7L12 12l7-5.3C17.83 3.94 15.14 2 12 2z"></path><path d="M12 22c3.14 0 5.83-1.94 7-4.7l-7-5.3l-7 5.3c1.17 2.76 3.86 4.7 7 4.7z"></path><path d="M12 12L5 6.7c-1.17 2.76-1.17 6.24 0 9L12 12z"></path><path d="M12 12l7 5.3c1.17-2.76 1.17-6.24 0-9L12 12z"></path></svg>
+          </div>
           <h4 class="text-2xl font-bold mb-3 text-white">Desarrollo Web</h4>
-          <p class="text-gray-400 mb-4">Diseñamos páginas web rápidas, modernas y adaptadas a tu marca. Desde landing pages hasta complejas aplicaciones web.</p>
+          <p class="text-gray-400 mb-4">Diseñamos y desarrollamos páginas web, desde landing pages hasta aplicaciones complejas, garantizando rapidez y una gran experiencia de usuario.</p>
           <ul class="text-sm space-y-2 text-gray-500">
-            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Diseño UX/UI optimizado</li>
-            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Páginas de alta velocidad</li>
-            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Full-stack desarrollo</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-right">
-        <div class="card-border-content p-6 rounded-3xl">
-          <div class="text-5xl mb-4 text-pink-400"><i class="fas fa-cloud"></i></div>
-          <h4 class="text-2xl font-bold mb-3 text-white">Soluciones Cloud</h4>
-          <p class="text-gray-400 mb-4">Aprovecha el poder de la nube para escalar tus proyectos, gestionar datos y desplegar aplicaciones con confianza.</p>
-          <ul class="text-sm space-y-2 text-gray-500">
-            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Infraestructura como servicio (IaaS)</li>
-            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Despliegue y mantenimiento</li>
-            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Optimización de costos</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-up" data-aos-delay="100">
-        <div class="card-border-content p-6 rounded-3xl">
-          <div class="text-5xl mb-4 text-red-400"><i class="fas fa-shield-alt"></i></div>
-          <h4 class="text-2xl font-bold mb-3 text-white">Ciberseguridad</h4>
-          <p class="text-gray-400 mb-4">Protegemos tu infraestructura digital de amenazas. Implementamos medidas de seguridad robustas para tus aplicaciones y datos.</p>
-          <ul class="text-sm space-y-2 text-gray-500">
-            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Auditoría de seguridad</li>
-            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Firewalls y protección de datos</li>
-            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i>Planes de recuperación</li>
+            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Diseño responsive</li>
+            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>SEO y optimización</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="testimonios" class="py-24 px-6 bg-[#0d1117]">
+  <section id="productos" class="py-24 px-6 bg-[#0d1117]">
+    <h3 class="text-4xl font-bold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-500" data-aos="fade-up">Productos que puedes adquirir</h3>
+    <div class="container mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+
+      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="zoom-in">
+        <div class="card-border-content p-6 rounded-3xl text-center">
+          <div class="text-5xl mb-4 text-pink-400">🛍️</div>
+          <h4 class="text-xl font-bold mb-2 text-white">Bot de E-commerce</h4>
+          <p class="text-gray-400 text-sm">Automatiza ventas, notificaciones de envío y atención al cliente para tu tienda online.</p>
+        </div>
+      </div>
+      
+      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="zoom-in" data-aos-delay="100">
+        <div class="card-border-content p-6 rounded-3xl text-center">
+          <div class="text-5xl mb-4 text-green-400">📦</div>
+          <h4 class="text-xl font-bold mb-2 text-white">API de Inventario</h4>
+          <p class="text-gray-400 text-sm">Sincroniza el stock de tu tienda física y online en tiempo real, evitando errores.</p>
+        </div>
+      </div>
+      
+      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="zoom-in" data-aos-delay="200">
+        <div class="card-border-content p-6 rounded-3xl text-center">
+          <div class="text-5xl mb-4 text-yellow-400">🚀</div>
+          <h4 class="text-xl font-bold mb-2 text-white">Landing Page de Lanzamiento</h4>
+          <p class="text-gray-400 text-sm">Una página web de alto impacto para presentar tu nuevo producto o servicio.</p>
+        </div>
+      </div>
+      
+      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="zoom-in" data-aos-delay="300">
+        <div class="card-border-content p-6 rounded-3xl text-center">
+          <div class="text-5xl mb-4 text-red-400">🧠</div>
+          <h4 class="text-xl font-bold mb-2 text-white">Chatbot con IA</h4>
+          <p class="text-gray-400 text-sm">Un asistente virtual inteligente que aprende de las interacciones para ofrecer un soporte superior.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonios" class="py-24 px-6 bg-[#111827]">
     <h3 class="text-4xl font-bold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-indigo-500" data-aos="fade-up">Lo que nuestros clientes dicen</h3>
     <div class="container mx-auto">
       <div class="flex testimonial-carousel space-x-6 pb-4">
         
         <div class="testimonial-carousel-item bg-[#161b22] p-8 rounded-3xl shadow-xl border border-gray-700" data-aos="zoom-in">
           <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4"><i class="fas fa-paint-brush"></i></div>
+            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4">JG</div>
             <div>
               <p class="font-bold text-lg">Javier García</p>
               <p class="text-gray-400 text-sm">Diseñador UX/UI</p>
@@ -219,12 +234,12 @@
           <div class="flex mb-4">
             <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span>
           </div>
-          <p class="text-gray-300 italic">"El bot de WhatsApp que desarrollaron para mi negocio ha triplicado las ventas. La comunicación fue excelente y superaron todas mis expectativas."</p>
+          <p class="text-gray-300 italic">"Increíble servicio. El bot de WhatsApp que desarrollaron para mi negocio ha triplicado las ventas. La comunicación fue excelente y superaron todas mis expectativas."</p>
         </div>
 
         <div class="testimonial-carousel-item bg-[#161b22] p-8 rounded-3xl shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="100">
           <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4"><i class="fas fa-hand-holding-usd"></i></div>
+            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4">AM</div>
             <div>
               <p class="font-bold text-lg">Ana Mendoza</p>
               <p class="text-gray-400 text-sm">Emprendedora Digital</p>
@@ -238,7 +253,7 @@
         
         <div class="testimonial-carousel-item bg-[#161b22] p-8 rounded-3xl shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="200">
           <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4"><i class="fas fa-tasks"></i></div>
+            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4">RP</div>
             <div>
               <p class="font-bold text-lg">Roberto Pérez</p>
               <p class="text-gray-400 text-sm">Gerente de Proyectos</p>
@@ -252,7 +267,7 @@
 
         <div class="testimonial-carousel-item bg-[#161b22] p-8 rounded-3xl shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="300">
           <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4"><i class="fas fa-lightbulb"></i></div>
+            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4">ES</div>
             <div>
               <p class="font-bold text-lg">Elena Sánchez</p>
               <p class="text-gray-400 text-sm">Fundadora de Startup</p>
@@ -267,27 +282,29 @@
     </div>
   </section>
 
-  <section id="contacto" class="py-24 text-center bg-[#111827] border-t border-gray-800">
+  <section id="contacto" class="py-24 text-center bg-[#0d1117] border-t border-gray-800">
     <div class="container mx-auto px-6">
       <h3 class="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500" data-aos="fade-up">¡Hablemos de tu Proyecto!</h3>
       <p class="text-lg text-gray-300 mb-10 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
         ¿Tienes una idea innovadora? ¿Necesitas automatizar un proceso? Escríbenos y lleva tu proyecto al siguiente nivel con soluciones tecnológicas a tu medida.
       </p>
       <div class="flex flex-col md:flex-row justify-center gap-6" data-aos="fade-up" data-aos-delay="400">
-        <a href="https://wa.me/50200000000" target="_blank" class="bg-green-600 px-8 py-4 rounded-full font-bold text-white shadow-lg hover:bg-green-700 transition transform hover:scale-105 flex items-center justify-center gap-2">
-          <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+        <a href="https://wa.me/50200000000" target="_blank" class="bg-green-600 px-8 py-4 rounded-full font-bold text-white shadow-lg hover:bg-green-700 transition transform hover:scale-105">
+          <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-6 w-6 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8a14.3 14.3 0 0 1-2.93 3.81a14.4 14.4 0 0 1-3.8 2.93a8.38 8.38 0 0 1-3.8.9h-.5a8.38 8.38 0 0 1-3.8-.9a14.3 14.3 0 0 1-3.81-2.93a14.4 14.4 0 0 1-2.93-3.8a8.38 8.38 0 0 1-.9-3.8v-.5a8.38 8.38 0 0 1 .9-3.8a14.3 14.3 0 0 1 2.93-3.81a14.4 14.4 0 0 1 3.8-2.93a8.38 8.38 0 0 1 3.8-.9h.5a8.38 8.38 0 0 1 3.8.9a14.3 14.3 0 0 1 3.81 2.93a14.4 14.4 0 0 1 2.93 3.8a8.38 8.38 0 0 1 .9 3.8v.5z" stroke-miterlimit="10"></path></svg>
+          Contactar por WhatsApp
         </a>
-        <a href="mailto:deylin@tucorreo.com" class="bg-gray-700 px-8 py-4 rounded-full font-bold text-white shadow-lg hover:bg-gray-600 transition transform hover:scale-105 flex items-center justify-center gap-2">
-          <i class="fas fa-envelope"></i> Enviar un Correo
+        <a href="mailto:deylin@tucorreo.com" class="bg-gray-700 px-8 py-4 rounded-full font-bold text-white shadow-lg hover:bg-gray-600 transition transform hover:scale-105">
+          <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-6 w-6 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M22 6L12 13L2 6"></path></svg>
+          Enviar un Correo
         </a>
       </div>
     </div>
   </section>
 
-  <footer class="py-8 text-center text-gray-500 text-sm bg-[#0d1117] border-t border-gray-800">
+  <footer class="py-8 text-center text-gray-500 text-sm bg-[#111827] border-t border-gray-800">
     <div class="container mx-auto">
       <p>© 2025 Modeslap - Todos los derechos reservados.</p>
-      <p class="mt-2">Hecho con <i class="fas fa-heart text-red-500"></i> y código.</p>
+      <p class="mt-2">Desarrollado con pasión y tecnología.</p>
     </div>
   </footer>
 
@@ -329,16 +346,12 @@
     const closeMenuBtn = document.getElementById('close-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
 
-    function closeMobileMenu() {
-      mobileMenu.classList.add('hidden');
-    }
-
     menuBtn.addEventListener('click', () => {
       mobileMenu.classList.remove('hidden');
     });
 
     closeMenuBtn.addEventListener('click', () => {
-      closeMobileMenu();
+      mobileMenu.classList.add('hidden');
     });
 
   </script>
