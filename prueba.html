@@ -1,479 +1,313 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naruto-Bot MD</title>
-    <style>
-        /* ==================== ESTILOS GENERALES Y VARIABLES ==================== */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
-
-        :root {
-            --primary-color: #ff9100; /* Naranja de Naruto */
-            --secondary-color: #3f51b5; /* Azul del chidori */
-            --line-color: #00ffff; /* Color de las líneas de la intro */
-            --text-color: #ffffff;
-            --bg-color-dark: #121212;
-            --bg-color-light: #1e1e1e;
-            --card-bg-color: #2a2a2a;
-            --card-border-color: #444;
-            --font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            font-family: var(--font-family);
-            margin: 0;
-            padding: 0;
-            color: var(--text-color);
-            background-color: var(--bg-color-dark);
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Oculta la página principal hasta que la intro termine */
-        #main-content {
-            display: none;
-            opacity: 0;
-            transition: opacity 1s ease-in;
-            z-index: 2;
-        }
-
-        /* ==================== ESTILOS PARA LA INTRO ANIMADA ==================== */
-        #intro-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: var(--bg-color-dark);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Fondo de puntos parpadeantes */
-        .background-intro {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(#2a2a2a 1px, transparent 1px);
-            background-size: 20px 20px;
-            animation: flicker 1s infinite alternate;
-            z-index: -1;
-        }
-        @keyframes flicker {
-            0% { opacity: 0.8; }
-            100% { opacity: 1; }
-        }
-
-        .shapes-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .shapes-container svg {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-        }
-
-        .shapes-container path {
-            fill: none;
-            stroke: var(--line-color);
-            stroke-width: 2;
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            opacity: 0;
-        }
-
-        /* Animaciones para las diferentes secuencias de formas */
-        #line1, #line2, #line3, #line4 {
-            animation: draw-line 0.5s ease-out forwards;
-        }
-        @keyframes draw-line {
-            to { stroke-dashoffset: 0; opacity: 1; }
-        }
-        #line1, #line4 { animation-delay: 1.5s; }
-        #line2, #line3 { animation-delay: 2.0s; }
-
-        #hex1, #hex2, #hex3 {
-            animation: draw-shape 1s ease-out forwards;
-        }
-        #hex1 { animation-delay: 3s; }
-        #hex2 { animation-delay: 3.5s; }
-        #hex3 { animation-delay: 4s; }
-        @keyframes draw-shape {
-            to { stroke-dashoffset: 0; opacity: 1; }
-        }
-
-        #square1, #square2, #line5, #line6 {
-            animation: draw-shape 0.8s ease-out forwards;
-        }
-        .shapes-container svg {
-            animation: fade-out 1s forwards;
-            animation-delay: 7s;
-        }
-        @keyframes fade-out {
-            to { opacity: 0; transform: scale(0.8); }
-        }
-
-        .final-logo {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            animation: show-logo 1.5s forwards;
-            animation-delay: 8s;
-            text-align: center;
-        }
-        
-        @keyframes show-logo {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        }
-
-        .logo-container {
-            width: 150px;
-            height: 150px;
-            position: relative;
-            margin: 0 auto;
-        }
-
-        .logo-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            animation: logo-glow 3s infinite alternate;
-        }
-        @keyframes logo-glow {
-            0% { filter: drop-shadow(0 0 5px var(--primary-color)); }
-            100% { filter: drop-shadow(0 0 20px var(--primary-color)) drop-shadow(0 0 5px var(--secondary-color)); }
-        }
-
-        .logo-text {
-            font-size: 3em;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            margin-top: 20px;
-            position: relative;
-            text-shadow: 0 0 10px var(--secondary-color);
-            animation: text-glitch 4s infinite alternate;
-        }
-        @keyframes text-glitch {
-            0% { text-shadow: -2px -2px 0 var(--primary-color), 2px 2px 0 var(--secondary-color); }
-            25% { text-shadow: 2px -2px 0 var(--primary-color), -2px 2px 0 var(--secondary-color); }
-            50% { text-shadow: -2px 2px 0 var(--primary-color), 2px -2px 0 var(--secondary-color); }
-            75% { text-shadow: 2px 2px 0 var(--primary-color), -2px -2px 0 var(--secondary-color); }
-            100% { text-shadow: 0 0 10px var(--secondary-color); }
-        }
-
-        /* ==================== ESTILOS PARA LA PÁGINA PRINCIPAL ==================== */
-        .container {
-            max-width: 90%;
-            margin: 20px auto;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .main-logo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--primary-color);
-            box-shadow: 0 0 15px var(--primary-color);
-            animation: pulse 2s infinite ease-in-out;
-            margin-bottom: 10px;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 15px var(--primary-color); }
-            50% { transform: scale(1.05); box-shadow: 0 0 25px var(--primary-color); }
-            100% { transform: scale(1); box-shadow: 0 0 15px var(--primary-color); }
-        }
-
-        h1 {
-            font-size: 2.5em;
-            color: var(--primary-color);
-            text-shadow: 0 0 10px var(--primary-color);
-        }
-
-        .card {
-            background-color: var(--card-bg-color);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid var(--card-border-color);
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .social-links a {
-            color: var(--text-color);
-            font-size: 2.5em;
-            transition: color 0.3s ease, transform 0.3s ease;
-            position: relative;
-        }
-        .social-links a:hover {
-            color: var(--primary-color);
-            transform: scale(1.2) rotate(10deg);
-        }
-
-        .invite-card {
-            background: linear-gradient(45deg, #ff9100, #3f51b5);
-            color: var(--text-color);
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
-            animation: background-pan 10s infinite alternate;
-        }
-        @keyframes background-pan {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-        .invite-card a {
-            display: inline-block;
-            background-color: var(--bg-color-dark);
-            color: var(--primary-color);
-            padding: 12px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 20px;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-            border: 2px solid var(--primary-color);
-            animation: button-hover-glow 1.5s infinite alternate;
-        }
-        @keyframes button-hover-glow {
-            0% { box-shadow: 0 0 10px var(--primary-color); }
-            100% { box-shadow: 0 0 20px var(--primary-color); }
-        }
-
-        .commands-section {
-            background-color: var(--card-bg-color);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            margin-bottom: 40px;
-        }
-        .command-category {
-            background-color: var(--bg-color-light);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-left: 5px solid var(--primary-color);
-            transition: all 0.3s ease;
-        }
-        .command-category:hover {
-            transform: translateX(10px);
-            box-shadow: 0 0 15px rgba(255, 145, 0, 0.3);
-        }
-        .command-category h3 {
-            margin-top: 0;
-            color: var(--primary-color);
-            font-size: 1.2em;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .command-category ul {
-            list-style: none;
-            padding: 0;
-            margin: 10px 0 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .command-category li {
-            background-color: #383838;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-family: monospace;
-            font-size: 0.9em;
-            transition: background-color 0.3s ease;
-        }
-        .command-category li:hover {
-            background-color: var(--secondary-color);
-        }
-        .owner-info {
-            text-align: center;
-            font-size: 0.9em;
-            color: #aaa;
-            margin-top: 40px;
-        }
-        
-        @media (max-width: 600px) {
-            h1 { font-size: 2em; }
-            .container { padding: 10px; }
-            .card-grid { grid-template-columns: 1fr; }
-            .social-links a { font-size: 2em; }
-            .logo-text { font-size: 2em; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mode | Soluciones Tecnológicas Personalizadas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    body {
+      background: #0d1117;
+      color: #e6edf3;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    .hero-bg {
+      background: radial-gradient(circle, rgba(63, 94, 251, 0.5) 0%, rgba(252, 70, 107, 0.2) 100%);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.2;
+    }
+    .card-border {
+      position: relative;
+      background: #161b22;
+      overflow: hidden;
+    }
+    .card-border::before {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: -100%;
+      width: 300%;
+      height: 300%;
+      background: conic-gradient(from 0deg, rgba(63, 94, 251, 0.8), rgba(252, 70, 107, 0.8), rgba(63, 94, 251, 0.8));
+      animation: rotate 6s linear infinite;
+      z-index: 0;
+      opacity: 0.4;
+    }
+    .card-border-content {
+      position: relative;
+      z-index: 1;
+      background: #161b22;
+    }
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .testimonial-carousel {
+      scroll-snap-type: x mandatory;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .testimonial-carousel-item {
+      scroll-snap-align: start;
+      flex: 0 0 90%;
+      margin-right: 1.5rem;
+    }
+    @media (min-width: 768px) {
+      .testimonial-carousel-item {
+        flex: 0 0 45%;
+      }
+    }
+    @media (min-width: 1024px) {
+      .testimonial-carousel-item {
+        flex: 0 0 30%;
+      }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body>
 
-    <div id="intro-container">
-        <div class="background-intro"></div>
-        <div class="shapes-container">
-            <svg width="100%" height="100%" viewBox="0 0 100 100">
-                <path id="line1" d="M 40 20 L 60 20" stroke-dasharray="20" stroke-dashoffset="20"></path>
-                <path id="line2" d="M 20 40 L 20 60" stroke-dasharray="20" stroke-dashoffset="20"></path>
-                <path id="line3" d="M 40 40 L 60 60" stroke-dasharray="28" stroke-dashoffset="28"></path>
-                <path id="line4" d="M 60 40 L 40 60" stroke-dasharray="28" stroke-dashoffset="28"></path>
-                <path id="hex1" d="M50 30 L60 35 L60 45 L50 50 L40 45 L40 35 Z" stroke-dasharray="60" stroke-dashoffset="60" style="animation-delay: 3s;"></path>
-                <path id="hex2" d="M50 40 L60 45 L60 55 L50 60 L40 55 L40 45 Z" stroke-dasharray="60" stroke-dashoffset="60" style="animation-delay: 3.5s;"></path>
-                <path id="hex3" d="M50 50 L60 55 L60 65 L50 70 L40 65 L40 55 Z" stroke-dasharray="60" stroke-dashoffset="60" style="animation-delay: 4s;"></path>
-                <path id="square1" d="M25 25 L75 25 L75 75 L25 75 Z" stroke-dasharray="200" stroke-dashoffset="200" style="animation-delay: 5s;"></path>
-                <path id="square2" d="M40 40 L60 40 L60 60 L40 60 Z" stroke-dasharray="80" stroke-dashoffset="80" style="animation-delay: 5.5s;"></path>
-                <path id="line5" d="M50 35 L50 65" stroke-dasharray="30" stroke-dashoffset="30" style="animation-delay: 5.5s;"></path>
-                <path id="line6" d="M35 50 L65 50" stroke-dasharray="30" stroke-dashoffset="30" style="animation-delay: 5.5s;"></path>
-            </svg>
+<body class="bg-[#0d1117] text-gray-200">
+  
+  <div class="fixed top-0 left-0 w-full h-full z-[-1]">
+    <div id="hero-particles" class="w-full h-full opacity-10"></div>
+  </div>
+
+  <header class="p-6 flex justify-between items-center bg-transparent border-b border-gray-800 backdrop-blur-sm sticky top-0 z-50">
+    <a href="#" class="text-3xl font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600" data-aos="fade-right">🚀 Mode</a>
+    <nav class="hidden md:flex gap-8 font-semibold">
+      <a href="#servicios" class="hover:text-cyan-400 transition-colors">Servicios</a>
+      <a href="#testimonios" class="hover:text-cyan-400 transition-colors">Testimonios</a>
+      <a href="#contacto" class="hover:text-cyan-400 transition-colors">Contacto</a>
+    </nav>
+    <button id="menu-btn" class="md:hidden text-2xl">☰</button>
+  </header>
+  
+  <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-[#0d1117]/95 backdrop-blur-sm z-50 flex-col items-center justify-center space-y-8 text-xl font-bold">
+    <button id="close-menu-btn" class="absolute top-6 right-6 text-3xl">✖</button>
+    <a href="#servicios" class="hover:text-cyan-400 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Servicios</a>
+    <a href="#testimonios" class="hover:text-cyan-400 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Testimonios</a>
+    <a href="#contacto" class="hover:text-cyan-400 transition-colors" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Contacto</a>
+  </div>
+
+  <section class="relative text-center py-20 md:py-32 overflow-hidden">
+    <div class="hero-bg"></div>
+    <div class="container mx-auto px-6 relative z-10">
+      <h2 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600" data-aos="fade-up">
+        Impulsa tu Negocio con Tecnología de Vanguardia
+      </h2>
+      <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+        Creamos soluciones digitales potentes y personalizadas: bots, APIs y páginas web que automatizan, conectan y hacen crecer tu marca.
+      </p>
+      <a href="#contacto" class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl transition-all transform hover:scale-105" data-aos="fade-up" data-aos-delay="400">
+        Empieza tu proyecto hoy
+      </a>
+    </div>
+  </section>
+
+  <section id="servicios" class="py-24 px-6 bg-[#111827] border-t border-b border-gray-800">
+    <h3 class="text-4xl font-bold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-500" data-aos="fade-up">Nuestros Servicios Tecnológicos</h3>
+    <div class="container mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+      
+      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-right">
+        <div class="card-border-content p-6 rounded-3xl">
+          <div class="text-5xl mb-4 text-cyan-400">🤖</div>
+          <h4 class="text-2xl font-bold mb-3 text-white">Bots de Automatización</h4>
+          <p class="text-gray-400 mb-4">Desde bots de WhatsApp para soporte 24/7 hasta asistentes virtuales para Telegram, automatizamos tus procesos y mejoramos la interacción con tus clientes.</p>
+          <ul class="text-sm space-y-2 text-gray-500">
+            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Soporte al cliente automatizado</li>
+            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Marketing y ventas por chat</li>
+            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Integración con bases de datos</li>
+          </ul>
         </div>
-        <div class="final-logo">
-            <div class="logo-container">
-                <img src="naruto-logo.png" alt="Logo de Naruto-Bot MD" class="logo-img">
+      </div>
+      
+      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-up" data-aos-delay="200">
+        <div class="card-border-content p-6 rounded-3xl">
+          <div class="text-5xl mb-4 text-purple-400">⚡</div>
+          <h4 class="text-2xl font-bold mb-3 text-white">APIs Personalizadas</h4>
+          <p class="text-gray-400 mb-4">Construimos la columna vertebral de tu infraestructura digital. Nuestras APIs conectan tus aplicaciones, automatizan procesos internos y permiten la comunicación entre diferentes sistemas.</p>
+          <ul class="text-sm space-y-2 text-gray-500">
+            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Integración de terceros</li>
+            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Microservicios optimizados</li>
+            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Seguridad y escalabilidad</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="card-border p-6 rounded-3xl shadow-2xl transition-transform hover:scale-105" data-aos="fade-left">
+        <div class="card-border-content p-6 rounded-3xl">
+          <div class="text-5xl mb-4 text-orange-400">🌐</div>
+          <h4 class="text-2xl font-bold mb-3 text-white">Desarrollo Web</h4>
+          <p class="text-gray-400 mb-4">Diseñamos y desarrollamos páginas web rápidas, modernas y totalmente adaptadas a tus necesidades. Desde landing pages hasta complejas aplicaciones web, tu presencia online será impecable.</p>
+          <ul class="text-sm space-y-2 text-gray-500">
+            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Diseño UX/UI optimizado</li>
+            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Páginas de alta velocidad</li>
+            <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Full-stack desarrollo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonios" class="py-24 px-6 bg-[#0d1117]">
+    <h3 class="text-4xl font-bold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-indigo-500" data-aos="fade-up">Lo que nuestros clientes dicen</h3>
+    <div class="container mx-auto">
+      <div class="flex testimonial-carousel space-x-6 pb-4">
+        
+        <div class="testimonial-carousel-item bg-[#161b22] p-8 rounded-3xl shadow-xl border border-gray-700" data-aos="zoom-in">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4">JG</div>
+            <div>
+              <p class="font-bold text-lg">Javier García</p>
+              <p class="text-gray-400 text-sm">Diseñador UX/UI</p>
             </div>
-            <h1 class="logo-text">Deylin</h1>
+          </div>
+          <div class="flex mb-4">
+            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span>
+          </div>
+          <p class="text-gray-300 italic">"Increíble servicio. El bot de WhatsApp que desarrollaron para mi negocio ha triplicado las ventas. La comunicación fue excelente y superaron todas mis expectativas."</p>
         </div>
+
+        <div class="testimonial-carousel-item bg-[#161b22] p-8 rounded-3xl shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="100">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4">AM</div>
+            <div>
+              <p class="font-bold text-lg">Ana Mendoza</p>
+              <p class="text-gray-400 text-sm">Emprendedora Digital</p>
+            </div>
+          </div>
+          <div class="flex mb-4">
+            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span>
+          </div>
+          <p class="text-gray-300 italic">"La API que crearon para conectar mi inventario con mi tienda online es un game-changer. Todo funciona sin problemas y la atención al detalle es de primera."</p>
+        </div>
+        
+        <div class="testimonial-carousel-item bg-[#161b22] p-8 rounded-3xl shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="200">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4">RP</div>
+            <div>
+              <p class="font-bold text-lg">Roberto Pérez</p>
+              <p class="text-gray-400 text-sm">Gerente de Proyectos</p>
+            </div>
+          </div>
+          <div class="flex mb-4">
+            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span>
+          </div>
+          <p class="text-gray-300 italic">"Necesitábamos una landing page urgente y la entregaron en tiempo récord, con un diseño moderno y optimizada para conversiones. Altamente recomendados."</p>
+        </div>
+
+        <div class="testimonial-carousel-item bg-[#161b22] p-8 rounded-3xl shadow-xl border border-gray-700" data-aos="zoom-in" data-aos-delay="300">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl text-white font-bold mr-4">ES</div>
+            <div>
+              <p class="font-bold text-lg">Elena Sánchez</p>
+              <p class="text-gray-400 text-sm">Fundadora de Startup</p>
+            </div>
+          </div>
+          <div class="flex mb-4">
+            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span>
+            <span class="text-yellow-400">★</span>
+          </div>
+          <p class="text-gray-300 italic">"El equipo de Mode es excepcional. Crearon una API personalizada que automatiza el 80% de mis procesos internos. No podría estar más satisfecha con el resultado."</p>
+        </div>
+      </div>
     </div>
+  </section>
+
+  <section id="contacto" class="py-24 text-center bg-[#111827] border-t border-gray-800">
+    <div class="container mx-auto px-6">
+      <h3 class="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500" data-aos="fade-up">¡Hablemos de tu Proyecto!</h3>
+      <p class="text-lg text-gray-300 mb-10 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+        ¿Tienes una idea innovadora? ¿Necesitas automatizar un proceso? Escríbenos y lleva tu proyecto al siguiente nivel con soluciones tecnológicas a tu medida.
+      </p>
+      <div class="flex flex-col md:flex-row justify-center gap-6" data-aos="fade-up" data-aos-delay="400">
+        <a href="https://wa.me/50200000000" target="_blank" class="bg-green-600 px-8 py-4 rounded-full font-bold text-white shadow-lg hover:bg-green-700 transition transform hover:scale-105">
+          <span class="mr-2">💬</span> Contactar por WhatsApp
+        </a>
+        <a href="mailto:deylin@tucorreo.com" class="bg-gray-700 px-8 py-4 rounded-full font-bold text-white shadow-lg hover:bg-gray-600 transition transform hover:scale-105">
+          <span class="mr-2">✉️</span> Enviar un Correo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-8 text-center text-gray-500 text-sm bg-[#0d1117] border-t border-gray-800">
+    <div class="container mx-auto">
+      <p>© 2025 Mode - Todos los derechos reservados.</p>
+      <p class="mt-2">Hecho con ❤️ y código.</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script>
+    // Inicializar AOS
+    AOS.init({
+      duration: 1200,
+      once: true,
+    });
     
-    <div id="main-content">
-        <div id="particles-js"></div>
+    // Animación de partículas de fondo (anime.js)
+    anime({
+      targets: '#hero-particles div',
+      translateX: function() { return anime.random(-1000, 1000); },
+      translateY: function() { return anime.random(-1000, 1000); },
+      scale: function() { return anime.random(1, 5); },
+      opacity: function() { return anime.random(0.1, 0.5); },
+      duration: 3000,
+      delay: anime.stagger(100),
+      easing: 'easeInOutQuad',
+      loop: true,
+      direction: 'alternate'
+    });
+    
+    // Crear las partículas del fondo
+    const heroParticles = document.getElementById('hero-particles');
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'absolute w-2 h-2 bg-purple-500 rounded-full';
+      particle.style.top = `${Math.random() * 100}%`;
+      particle.style.left = `${Math.random() * 100}%`;
+      heroParticles.appendChild(particle);
+    }
+    
+    // Funcionalidad del menú móvil
+    const menuBtn = document.getElementById('menu-btn');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-        <div class="container">
-            <header>
-                <img src="naruto-logo.png" alt="Logo de Naruto-Bot MD" class="main-logo">
-                <h1>Naruto-Bot MD</h1>
-                <p>Tu asistente shinobi de WhatsApp, con el poder del Rasengan. <br>¡Potenciado por **Eliác**!</p>
-            </header>
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.remove('hidden');
+    });
 
-            <hr style="width: 100%; border: none; border-top: 1px solid var(--card-border-color); margin: 40px 0;">
+    closeMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+    });
 
-            <section class="invite-card">
-                <h2>¡Únete a la aldea de Naruto-Bot MD!</h2>
-                <p>Experimenta el poder del jutsu. Invítame a tu grupo de WhatsApp ahora mismo.</p>
-                <a href="https://chat.whatsapp.com/HuMh41LJftl4DH7G5MWcHP" target="_blank">Añadir a mi grupo</a>
-            </section>
-
-            <hr style="width: 100%; border: none; border-top: 1px solid var(--card-border-color); margin: 40px 0;">
-
-            <section class="card">
-                <h2 style="text-align: center;">Enlaces Oficiales y de Soporte</h2>
-                <div class="social-links">
-                    <a href="https://whatsapp.com/channel/0029VbAzn9GGU3BQw830eA0F" target="_blank" title="Canal de WhatsApp">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="https://chat.whatsapp.com/HuMh41LJftl4DH7G5MWcHP" target="_blank" title="Grupo de Soporte">
-                        <i class="fas fa-users"></i>
-                    </a>
-                    <a href="https://ko-fi.com/naruto_bot" target="_blank" title="Donar en Ko-fi">
-                        <i class="fas fa-coffee"></i>
-                    </a>
-                    <a href="https://wa.me/50432955554" target="_blank" title="Contacto y Soporte (Creador)">
-                        <i class="fas fa-headset"></i>
-                    </a>
-                </div>
-            </section>
-
-            <hr style="width: 100%; border: none; border-top: 1px solid var(--card-border-color); margin: 40px 0;">
-
-            <section class="commands-section">
-                <h2>⚙️ Lista de Comandos del Bot ⚙️</h2>
-                <div class="command-category">
-                    <h3><i class="fas fa-bolt"></i> ANIME</h3>
-                    <ul>
-                        <li>.hello @tag</li>
-                        <li>.hola @tag</li>
-                        <li>.kiss @tag</li>
-                        <li>.waifu</li>
-                    </ul>
-                </div>
-                <div class="command-category">
-                    <h3><i class="fas fa-shield-alt"></i> OWNER</h3>
-                    <ul>
-                        <li>.banchat</li>
-                        <li>.aceptar</li>
-                        <li>.dsowner</li>
-                        <li>.></li>
-                        <li>.=></li>
-                    </ul>
-                </div>
-            </section>
-
-            <footer class="owner-info">
-                <p>Hecho con ❤️ por **Deylin**</p>
-            </footer>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        // Script para la transición de la intro a la página principal
-        window.onload = function() {
-            setTimeout(function() {
-                const intro = document.getElementById('intro-container');
-                const main = document.getElementById('main-content');
-                
-                // Oculta la intro con una transición suave
-                intro.style.opacity = '0';
-                setTimeout(function() {
-                    intro.style.display = 'none';
-                    // Muestra el contenido principal
-                    main.style.display = 'block';
-                    main.style.opacity = '1';
-                }, 1000); // Duración de la transición de opacidad
-
-                // Inicia el fondo de partículas una vez que la página principal es visible
-                particlesJS("particles-js", {
-                    "particles": {
-                        "number": {
-                            "value": 80, "density": { "enable": true, "value_area": 800 }
-                        },
-                        "color": { "value": ["#ff9100", "#3f51b5", "#ffffff"] },
-                        "shape": { "type": "circle" },
-                        "opacity": { "value": 0.5 },
-                        "size": { "value": 3, "random": true },
-                        "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 },
-                        "move": { "enable": true, "speed": 6, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
-                    },
-                    "interactivity": {
-                        "detect_on": "canvas",
-                        "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }
-                    },
-                    "retina_detect": true
-                });
-
-            }, 10000); // Tiempo total de la animación de la intro (10 segundos)
-        };
-    </script>
+  </script>
 </body>
 </html>
