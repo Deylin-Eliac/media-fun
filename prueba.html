@@ -3,639 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transformando Ideas en Realidad Digital | Tu Nombre</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>Guía de Reacciones para Plugins</title>
     <style>
-        /* Variables de Colores */
-        :root {
-            --bg-color: #0d1117;
-            --primary-color: #00F0FF; /* Azul neón */
-            --secondary-color: #8A2BE2; /* Púrpura brillante */
-            --text-color: #e6e6e6;
-            --card-bg: #161b22;
-            --border-color: #30363d;
-        }
-
-        /* Base y Tipografía */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: Arial, sans-serif;
             line-height: 1.6;
-            overflow-x: hidden; /* Evitar scroll horizontal */
-        }
-
-        h1, h2, h3 {
-            font-family: 'Roboto Mono', monospace;
-            font-weight: 700;
-        }
-
-        h1 { font-size: 3rem; }
-        h2 { font-size: 2.5rem; }
-        h3 { font-size: 1.5rem; }
-
-        a {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        a:hover {
-            color: var(--secondary-color);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Efecto de Glitch para el Título Principal */
-        .glitch-effect {
-            position: relative;
-            color: var(--primary-color);
-            font-size: 3.5rem;
-            text-transform: uppercase;
-        }
-
-        .glitch-effect::before,
-        .glitch-effect::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-color);
-            overflow: hidden;
-            clip: rect(0, 900px, 0, 0);
-        }
-
-        .glitch-effect::before {
-            left: 2px;
-            text-shadow: -1px 0 var(--secondary-color);
-            animation: glitch-anim-1 2s infinite linear alternate-reverse;
-        }
-
-        .glitch-effect::after {
-            left: -2px;
-            text-shadow: -1px 0 var(--primary-color);
-            animation: glitch-anim-2 3s infinite linear alternate-reverse;
-        }
-
-        @keyframes glitch-anim-1 {
-            0% { clip: rect(44px, 9999px, 50px, 0); }
-            10% { clip: rect(80px, 9999px, 90px, 0); }
-            20% { clip: rect(10px, 9999px, 20px, 0); }
-            30% { clip: rect(60px, 9999px, 70px, 0); }
-            40% { clip: rect(30px, 9999px, 40px, 0); }
-            50% { clip: rect(75px, 9999px, 85px, 0); }
-            60% { clip: rect(25px, 9999px, 35px, 0); }
-            70% { clip: rect(55px, 9999px, 65px, 0); }
-            80% { clip: rect(95px, 9999px, 105px, 0); }
-            90% { clip: rect(15px, 9999px, 25px, 0); }
-            100% { clip: rect(0, 9999px, 0, 0); }
-        }
-
-        @keyframes glitch-anim-2 {
-            0% { clip: rect(2px, 9999px, 10px, 0); }
-            15% { clip: rect(90px, 9999px, 100px, 0); }
-            30% { clip: rect(50px, 9999px, 60px, 0); }
-            45% { clip: rect(10px, 9999px, 20px, 0); }
-            60% { clip: rect(70px, 9999px, 80px, 0); }
-            75% { clip: rect(30px, 9999px, 40px, 0); }
-            90% { clip: rect(65px, 9999px, 75px, 0); }
-            100% { clip: rect(0, 9999px, 0, 0); }
-        }
-
-        /* Header (Hero Section) */
-        .hero {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: linear-gradient(rgba(13, 17, 23, 0.9), rgba(13, 17, 23, 0.9)), url('https://images.unsplash.com/photo-1518770660439-466a9c1e7a57?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
-            background-attachment: fixed;
-            position: relative;
-            border-bottom: 2px solid var(--primary-color);
-        }
-
-        .hero-content {
-            animation: fadeIn 2s ease-out;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 10px var(--primary-color);
-        }
-
-        .subtitle {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 1.25rem;
-            color: var(--text-color);
-            margin-bottom: 2rem;
-            animation: fadeIn 2.5s ease-out;
-        }
-
-        .cta-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-
-        .cta-btn {
-            padding: 15px 30px;
-            border-radius: 5px;
-            font-weight: 600;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-        .primary-btn {
-            background-color: var(--primary-color);
-            color: var(--bg-color);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .primary-btn:hover {
-            box-shadow: 0 0 15px var(--primary-color);
-        }
-
-        .secondary-btn {
-            background-color: transparent;
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-        }
-
-        .secondary-btn:hover {
-            background-color: var(--primary-color);
-            color: var(--bg-color);
-            box-shadow: 0 0 15px var(--primary-color);
-        }
-
-        /* Secciones Generales */
-        .section {
-            padding: 100px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-            color: var(--primary-color);
-            text-transform: uppercase;
-            position: relative;
-            animation: text-glow 2s infinite alternate;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: var(--secondary-color);
-            margin: 20px auto 0;
-            border-radius: 2px;
-        }
-
-        /* About Me Section */
-        .about-me {
-            background-color: var(--card-bg);
-        }
-
-        .about-content {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .about-text, .about-skills {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .about-skills h3 {
-            color: var(--secondary-color);
-            margin-bottom: 20px;
-        }
-
-        .about-skills ul {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .skill-item {
-            background: var(--bg-color);
-            border: 1px solid var(--primary-color);
-            padding: 8px 16px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .skill-item:hover {
-            background: var(--primary-color);
-            color: var(--bg-color);
-            box-shadow: 0 0 10px var(--primary-color);
-        }
-
-        /* Services Section */
-        .services {
-            background-color: var(--bg-color);
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .service-card {
-            background-color: var(--card-bg);
-            padding: 40px;
-            border-radius: 10px;
-            text-align: center;
-            border: 2px solid transparent;
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-color);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
-        }
-
-        .service-icon {
-            margin-bottom: 20px;
-        }
-
-        .service-card h3 {
-            margin-bottom: 10px;
-            color: var(--primary-color);
-        }
-
-        /* Portfolio Section */
-        .portfolio {
-            background-color: var(--card-bg);
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .portfolio-item {
-            position: relative;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .portfolio-item:hover {
-            transform: scale(1.05);
-        }
-
-        .portfolio-item img {
-            width: 100%;
-            display: block;
-            transition: filter 0.3s ease;
-        }
-
-        .portfolio-item:hover img {
-            filter: brightness(0.3);
-        }
-
-        .item-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 240, 255, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .portfolio-item:hover .item-overlay {
-            opacity: 1;
-        }
-
-        .item-details {
-            color: var(--bg-color);
-            text-align: center;
+            margin: 0;
             padding: 20px;
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
+            background-color: #f4f4f4;
+            color: #333;
         }
-
-        .portfolio-item:hover .item-details {
-            transform: translateY(0);
-        }
-
-        /* Testimonials Section */
-        .testimonials {
-            background-color: var(--bg-color);
-        }
-
-        .testimonial-card {
+        .container {
             max-width: 800px;
-            margin: 0 auto;
-            background-color: var(--card-bg);
-            padding: 40px;
-            border-radius: 10px;
-            border-left: 5px solid var(--secondary-color);
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
-        .testimonial-text {
-            font-style: italic;
-            font-size: 1.1rem;
-            margin-bottom: 20px;
+        h1, h2 {
+            color: #0056b3;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 5px;
         }
-
-        .testimonial-author {
-            text-align: right;
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        /* Contact Section */
-        .contact {
-            background-color: var(--card-bg);
-        }
-
-        .contact-subtitle {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-            background-color: var(--bg-color);
-            border: 1px solid var(--border-color);
-            padding: 15px;
+        pre, code {
+            background-color: #e9e9e9;
+            padding: 10px;
             border-radius: 5px;
-            color: var(--text-color);
-            font-family: 'Poppins', sans-serif;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', Courier, monospace;
+            display: block;
+            overflow-x: auto;
         }
-
-        .contact-form input:focus,
-        .contact-form textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        .code-explanation {
+            font-style: italic;
+            color: #555;
+            margin-top: -10px;
+            margin-bottom: 20px;
+            border-left: 3px solid #007bff;
+            padding-left: 10px;
         }
-
-        /* Footer */
-        .footer {
-            background-color: #000;
-            color: #fff;
-            text-align: center;
-            padding: 40px 0;
-            border-top: 1px solid var(--border-color);
+        strong {
+            color: #d9534f;
         }
-
-        .footer .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 20px;
-        }
-
-        .social-link img {
-            width: 24px;
-            height: 24px;
-            filter: invert(1);
-            transition: transform 0.3s ease;
-        }
-
-        .social-link:hover img {
-            transform: scale(1.2);
-        }
-
-        /* Animaciones CSS */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes text-glow {
-            from { text-shadow: 0 0 5px var(--primary-color); }
-            to { text-shadow: 0 0 15px var(--primary-color); }
-        }
-
-        .section.hidden {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-
-        .section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Media Queries para Responsividad */
-        @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .about-content {
-                flex-direction: column;
-            }
-
-            .footer .container {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .glitch-effect {
-                font-size: 2.5rem;
-            }
+        .step {
+            margin-bottom: 40px;
         }
     </style>
 </head>
 <body>
 
-    <header class="hero">
-        <div class="hero-content">
-            <h1 class="glitch-effect" data-text="Transformando Ideas en Realidad Digital">Transformando Ideas en Realidad Digital</h1>
-            <p class="subtitle">Especializado en **bots de WhatsApp inteligentes**, desarrollo web, APIs y software a medida.</p>
-            <div class="cta-buttons">
-                <a href="#portfolio" class="cta-btn primary-btn">Ver mis proyectos</a>
-                <a href="#contact" class="cta-btn secondary-btn">Contáctame</a>
-            </div>
+    <div class="container">
+        <h1>Guía de Reacciones para Plugins</h1>
+        <p>Aprende a implementar la lógica de reacciones en cualquier comando de tu bot. La clave es seguir 3 pasos.</p>
+        
+        <hr>
+
+        <div class="step">
+            <h2>Paso 1: La Preparación (Importación de Funciones)</h2>
+            <p>En la parte superior de tu archivo de plugin, debes importar las dos funciones de la librería de reacciones. Estas son tus herramientas para comunicarte con la librería.</p>
+            <pre><code>
+// Importa las funciones de la librería de reacciones.
+// Asegúrate de que la ruta sea correcta según la ubicación de tu plugin.
+import { createMessageWithReactions, setActionCallback } from '../lib/reacciones.js';
+            </code></pre>
+            <p class="code-explanation"><strong>Nota:</strong> <code>../lib/reacciones.js</code> es la ruta más común. Adáptala si tu archivo de librería está en otro lugar.</p>
         </div>
-    </header>
+        
+        <hr>
 
-    <section id="about" class="section about-me">
-        <div class="container">
-            <h2 class="section-title">Sobre Mí</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Mi pasión es construir soluciones tecnológicas que resuelvan problemas reales. Con años de experiencia en el desarrollo de software, me especializo en crear **productos digitales innovadores** que son escalables, eficientes y fáciles de usar. Mi enfoque se centra en la calidad y la entrega de valor, asegurando que cada proyecto no solo cumpla con los requisitos, sino que también supere las expectativas.</p>
-                    <p>Estoy comprometido con el aprendizaje continuo y la adopción de nuevas tecnologías para ofrecer las soluciones más modernas y efectivas del mercado.</p>
-                </div>
-                <div class="about-skills">
-                    <h3 class="skills-title">Habilidades Clave</h3>
-                    <ul>
-                        <li><span class="skill-item">Bots de WhatsApp</span></li>
-                        <li><span class="skill-item">Desarrollo Frontend & Backend</span></li>
-                        <li><span class="skill-item">APIs & Microservicios</span></li>
-                        <li><span class="skill-item">Bases de Datos</span></li>
-                        <li><span class="skill-item">Cloud & DevOps</span></li>
-                    </ul>
-                </div>
-            </div>
+        <div class="step">
+            <h2>Paso 2: La Lógica del Comando (Dentro del handler)</h2>
+            <p>Dentro de tu <code>handler</code>, harás tres cosas: preparar el mensaje, definir las acciones para los emojis, y registrar el mensaje.</p>
+            <pre><code>
+let handler = async (m, { conn, text, command }) => {
+  // Prepara el mensaje que quieres enviar al usuario.
+  const mensajeParaReaccionar = `¡Hola! ¿Qué quieres hacer?\n\n👍 = Opción 1\n👎 = Opción 2`;
+
+  // Define las acciones. Asigna cada emoji a un 'type' único.
+  // 'data' puede contener cualquier información que necesites para la acción.
+  const actions = {
+      '👍': { type: 'opcion_uno', data: { parametro1: 'valorA' } },
+      '👎': { type: 'opcion_dos', data: { parametro2: 'valorB' } },
+  };
+
+  try {
+      // Envía el mensaje y guarda el objeto del mensaje. Esto es CRUCIAL.
+      const msg = await conn.sendMessage(m.chat, { text: mensajeParaReaccionar }, { quoted: m });
+
+      // Llama a esta función para decirle a la librería que este mensaje
+      // debe escuchar las reacciones definidas en el objeto 'actions'.
+      await createMessageWithReactions(conn, msg, actions);
+
+  } catch (error) {
+      console.error(error);
+      return m.reply('Ocurrió un error al procesar tu solicitud.');
+  }
+};
+            </code></pre>
+            <p class="code-explanation"><strong>Nota:</strong> El objeto <code>msg</code> que devuelve <code>conn.sendMessage</code> contiene el ID del mensaje, que la librería necesita para funcionar.</p>
         </div>
-    </section>
 
-    <section id="services" class="section services">
-        <div class="container">
-            <h2 class="section-title">Mis Servicios</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon"><img src="https://img.icons8.com/material-outlined/48/00F0FF/bot.png" alt="Bot Icon"></div>
-                    <h3>Bots de WhatsApp</h3>
-                    <p>Automatización de atención al cliente, marketing, notificaciones y más, para mantener tu negocio funcionando 24/7.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><img src="https://img.icons8.com/material-outlined/48/00F0FF/web-design.png" alt="Web Icon"></div>
-                    <h3>Sitios Web y APIs</h3>
-                    <p>Diseño y desarrollo de sitios web modernos y funcionales, junto con APIs robustas para conectar tus aplicaciones.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><img src="https://img.icons8.com/material-outlined/48/00F0FF/software.png" alt="Software Icon"></div>
-                    <h3>Desarrollo de Software</h3>
-                    <p>Soluciones de software a medida para gestionar procesos empresariales y optimizar la productividad.</p>
-                </div>
-            </div>
+        <hr>
+
+        <div class="step">
+            <h2>Paso 3: Las Acciones (Fuera del handler)</h2>
+            <p>Ahora tienes que crear las funciones que se ejecutarán cuando se detecten las reacciones. Estas funciones deben ir <strong>fuera de tu <code>handler</code></strong>.</p>
+            <pre><code>
+// Crea la función para la acción 'opcion_uno'
+setActionCallback('opcion_uno', async (conn, chat, data) => {
+    // La lógica de esta acción.
+    // 'data' contiene el objeto que le pasaste en el handler.
+    await conn.sendMessage(chat, { text: `Has elegido la Opción 1. Dato extra: ${data.parametro1}` });
+});
+
+// Crea la función para la acción 'opcion_dos'
+setActionCallback('opcion_dos', async (conn, chat, data) => {
+    // La lógica de esta otra acción.
+    await conn.sendMessage(chat, { text: `Has elegido la Opción 2. Dato extra: ${data.parametro2}` });
+});
+            </code></pre>
+            <p class="code-explanation"><strong>Nota:</strong> <code>setActionCallback</code> solo debe llamarse una vez por cada "tipo" de acción.</p>
         </div>
-    </section>
 
-    <section id="portfolio" class="section portfolio">
-        <div class="container">
-            <h2 class="section-title">Portafolio</h2>
-            <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/600x400.png?text=Bot+de+Reservas" alt="Bot de WhatsApp para Reservas">
-                    <div class="item-overlay">
-                        <div class="item-details">
-                            <h4>Bot de Reservas por WhatsApp</h4>
-                            <p>Un bot inteligente para automatizar el proceso de reservas en un restaurante. Tecnologías: Node.js, Dialogflow.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/600x400.png?text=E-commerce+Moderno" alt="Sitio Web de E-commerce">
-                    <div class="item-overlay">
-                        <div class="item-details">
-                            <h4>Sitio Web E-commerce Moderno</h4>
-                            <p>Plataforma de venta en línea con un diseño minimalista y una API RESTful para gestión de productos. Tecnologías: React, Express.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/600x400.png?text=API+Financiera" alt="API para Aplicación Financiera">
-                    <div class="item-overlay">
-                        <div class="item-details">
-                            <h4>API Financiera Segura</h4>
-                            <p>API robusta y segura para integrar servicios bancarios en una aplicación móvil. Tecnologías: Python, Django, JWT.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        <hr>
 
-    <section id="testimonials" class="section testimonials">
-        <div class="container">
-            <h2 class="section-title">Lo que dicen mis clientes</h2>
-            <div class="testimonial-card">
-                <p class="testimonial-text">"El bot de WhatsApp que desarrollaste ha transformado por completo nuestra atención al cliente. La eficiencia ha aumentado y la satisfacción de nuestros usuarios es increíble. ¡Un trabajo excepcional!"</p>
-                <p class="testimonial-author">- María P., Gerente de Marketing</p>
-            </div>
-        </div>
-    </section>
+        <h2>Resumen Final</h2>
+        <p>Para implementar las reacciones en cualquier plugin:</p>
+        <ol>
+            <li><strong>Importa</strong> <code>createMessageWithReactions</code> y <code>setActionCallback</code>.</li>
+            <li><strong>Define</strong> un objeto <code>actions</code> y llama a <code>createMessageWithReactions</code> en tu <strong>handler</strong>.</li>
+            <li><strong>Crea</strong> las funciones de lógica y regístralas con <code>setActionCallback</code> <strong>fuera del handler</strong>.</li>
+        </ol>
+        <p>¡Con estos 3 pasos, puedes agregar el sistema de reacciones a cualquier plugin de tu bot de WhatsApp!</p>
+    </div>
 
-    <section id="contact" class="section contact">
-        <div class="container">
-            <h2 class="section-title">Contáctame</h2>
-            <p class="contact-subtitle">Hablemos de tu próximo proyecto. Estoy listo para ayudarte a hacerlo realidad.</p>
-            <form id="contact-form" class="contact-form">
-                <input type="text" id="name" name="name" placeholder="Tu Nombre" required>
-                <input type="email" id="email" name="email" placeholder="Tu Correo Electrónico" required>
-                <textarea id="message" name="message" rows="5" placeholder="Tu Mensaje..." required></textarea>
-                <button type="submit" class="cta-btn primary-btn">Enviar Mensaje</button>
-            </form>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Tu Nombre. Todos los derechos reservados.</p>
-            <div class="social-icons">
-                <a href="#" class="social-link"><img src="https://img.icons8.com/material-outlined/24/00F0FF/linkedin--v1.png" alt="LinkedIn"></a>
-                <a href="#" class="social-link"><img src="https://img.icons8.com/material-outlined/24/00F0FF/github.png" alt="GitHub"></a>
-                <a href="#" class="social-link"><img src="https://img.icons8.com/material-outlined/24/00F0FF/whatsapp--v1.png" alt="WhatsApp"></a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Animación de revelado al hacer scroll
-            const sections = document.querySelectorAll('.section');
-            const options = {
-                threshold: 0.1
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, options);
-
-            sections.forEach(section => {
-                section.classList.add('hidden');
-                observer.observe(section);
-            });
-        });
-    </script>
 </body>
 </html>
