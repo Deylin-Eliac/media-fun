@@ -3,140 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guía de Reacciones para Plugins</title>
+    <title>Guía Interactiva: Dominando Reacciones</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 20px;
-            background-color: #f4f4f4;
+            background-color: #f0f4f8;
             color: #333;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: auto;
             background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         h1, h2 {
-            color: #0056b3;
-            border-bottom: 2px solid #0056b3;
-            padding-bottom: 5px;
+            color: #1a4d7d;
+            border-bottom: 3px solid #1a4d7d;
+            padding-bottom: 10px;
+            animation: slideIn 1s ease-in-out;
         }
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        h2 { margin-top: 40px; }
         pre, code {
-            background-color: #e9e9e9;
-            padding: 10px;
-            border-radius: 5px;
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
             white-space: pre-wrap;
             word-wrap: break-word;
             font-family: 'Courier New', Courier, monospace;
             display: block;
             overflow-x: auto;
+            margin-top: 15px;
         }
-        .code-explanation {
-            font-style: italic;
-            color: #555;
-            margin-top: -10px;
-            margin-bottom: 20px;
-            border-left: 3px solid #007bff;
-            padding-left: 10px;
+        strong { color: #d9534f; }
+        .hint {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #ffc107;
+            margin: 20px 0;
+            animation: pulse 1s infinite alternate;
         }
-        strong {
-            color: #d9534f;
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.02); }
         }
-        .step {
-            margin-bottom: 40px;
+        details {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        summary {
+            font-weight: bold;
+            cursor: pointer;
+            outline: none;
+            color: #1a74d2;
+        }
+        details[open] summary {
+            color: #004085;
+        }
+        .solution {
+            margin-top: 15px;
+            background-color: #e2f0d9;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .result.success {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 5px solid #28a745;
+        }
+        .result.fail {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 5px solid #dc3545;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Guía de Reacciones para Plugins</h1>
-        <p>Aprende a implementar la lógica de reacciones en cualquier comando de tu bot. La clave es seguir 3 pasos.</p>
+        <h1>Guía Interactiva: Dominando el Sistema de Reacciones</h1>
+        <p>Esta guía te enseñará, paso a paso, a implementar la lógica de reacciones. Intenta escribir el código tú mismo y luego verifica si lo hiciste bien.</p>
         
         <hr>
 
-        <div class="step">
-            <h2>Paso 1: La Preparación (Importación de Funciones)</h2>
-            <p>En la parte superior de tu archivo de plugin, debes importar las dos funciones de la librería de reacciones. Estas son tus herramientas para comunicarte con la librería.</p>
-            <pre><code>
-// Importa las funciones de la librería de reacciones.
-// Asegúrate de que la ruta sea correcta según la ubicación de tu plugin.
+        <h2>Paso 1: La Preparación</h2>
+        <p>Asegúrate de que tu plugin importe las dos funciones clave de la librería de reacciones.</p>
+        
+        <div class="hint">
+            <strong>Mini-Test 1:</strong> Intenta escribir la línea de importación. Debe ser la primera línea de tu plugin.
+        </div>
+
+        <details>
+            <summary>Click para ver la solución</summary>
+            <div class="solution">
+                <pre><code>
+// Debe ir al inicio del archivo, antes del handler.
 import { createMessageWithReactions, setActionCallback } from '../lib/reacciones.js';
-            </code></pre>
-            <p class="code-explanation"><strong>Nota:</strong> <code>../lib/reacciones.js</code> es la ruta más común. Adáptala si tu archivo de librería está en otro lugar.</p>
+                </code></pre>
+            </div>
+        </details>
+
+        <hr>
+
+        <h2>Paso 2: La Lógica del Comando (Dentro del handler)</h2>
+        <p>Aquí es donde definimos el plan de acción: qué mensaje se envía y qué hará cada emoji. Este es el corazón de tu comando.</p>
+        
+        <div class="hint">
+            <strong>Mini-Test 2:</strong> Escribe el código dentro de un <code>handler</code> que envíe un mensaje y registre las acciones para los emojis 👍 y 👎.
         </div>
         
-        <hr>
+        <details>
+            <summary>Click para ver la solución</summary>
+            <div class="solution">
+                <pre><code>
+let handler = async (m, { conn }) => {
+  const mensajeParaReaccionar = `¡Hola! Prueba las opciones:\n\n👍 = Opción 1\n👎 = Opción 2`;
 
-        <div class="step">
-            <h2>Paso 2: La Lógica del Comando (Dentro del handler)</h2>
-            <p>Dentro de tu <code>handler</code>, harás tres cosas: preparar el mensaje, definir las acciones para los emojis, y registrar el mensaje.</p>
-            <pre><code>
-let handler = async (m, { conn, text, command }) => {
-  // Prepara el mensaje que quieres enviar al usuario.
-  const mensajeParaReaccionar = `¡Hola! ¿Qué quieres hacer?\n\n👍 = Opción 1\n👎 = Opción 2`;
-
-  // Define las acciones. Asigna cada emoji a un 'type' único.
-  // 'data' puede contener cualquier información que necesites para la acción.
   const actions = {
-      '👍': { type: 'opcion_uno', data: { parametro1: 'valorA' } },
-      '👎': { type: 'opcion_dos', data: { parametro2: 'valorB' } },
+      '👍': { type: 'opcion_uno', data: { chat: m.chat } },
+      '👎': { type: 'opcion_dos', data: { chat: m.chat } },
   };
 
   try {
-      // Envía el mensaje y guarda el objeto del mensaje. Esto es CRUCIAL.
       const msg = await conn.sendMessage(m.chat, { text: mensajeParaReaccionar }, { quoted: m });
-
-      // Llama a esta función para decirle a la librería que este mensaje
-      // debe escuchar las reacciones definidas en el objeto 'actions'.
       await createMessageWithReactions(conn, msg, actions);
-
   } catch (error) {
-      console.error(error);
-      return m.reply('Ocurrió un error al procesar tu solicitud.');
+      m.reply('Ocurrió un error.');
   }
 };
-            </code></pre>
-            <p class="code-explanation"><strong>Nota:</strong> El objeto <code>msg</code> que devuelve <code>conn.sendMessage</code> contiene el ID del mensaje, que la librería necesita para funcionar.</p>
-        </div>
+                </code></pre>
+            </div>
+        </details>
 
         <hr>
 
-        <div class="step">
-            <h2>Paso 3: Las Acciones (Fuera del handler)</h2>
-            <p>Ahora tienes que crear las funciones que se ejecutarán cuando se detecten las reacciones. Estas funciones deben ir <strong>fuera de tu <code>handler</code></strong>.</p>
-            <pre><code>
-// Crea la función para la acción 'opcion_uno'
+        <h2>Paso 3: Las Acciones (Fuera del handler)</h2>
+        <p>Ahora, crea las funciones que se ejecutarán para cada "tipo" de acción que definiste en el paso anterior. Estas funciones contienen la lógica real.</p>
+        
+        <div class="hint">
+            <strong>Mini-Test 3:</strong> Escribe el código para las dos funciones de `setActionCallback` (<code>opcion_uno</code> y <code>opcion_dos</code>).
+        </div>
+        
+        <details>
+            <summary>Click para ver la solución</summary>
+            <div class="solution">
+                <pre><code>
+// Lógica para el emoji 👍
 setActionCallback('opcion_uno', async (conn, chat, data) => {
-    // La lógica de esta acción.
-    // 'data' contiene el objeto que le pasaste en el handler.
-    await conn.sendMessage(chat, { text: `Has elegido la Opción 1. Dato extra: ${data.parametro1}` });
+    await conn.sendMessage(chat, { text: '¡Elegiste la Opción 1!' });
 });
 
-// Crea la función para la acción 'opcion_dos'
+// Lógica para el emoji 👎
 setActionCallback('opcion_dos', async (conn, chat, data) => {
-    // La lógica de esta otra acción.
-    await conn.sendMessage(chat, { text: `Has elegido la Opción 2. Dato extra: ${data.parametro2}` });
+    await conn.sendMessage(chat, { text: '¡Elegiste la Opción 2!' });
 });
-            </code></pre>
-            <p class="code-explanation"><strong>Nota:</strong> <code>setActionCallback</code> solo debe llamarse una vez por cada "tipo" de acción.</p>
-        </div>
+                </code></pre>
+            </div>
+        </details>
 
         <hr>
 
-        <h2>Resumen Final</h2>
-        <p>Para implementar las reacciones en cualquier plugin:</p>
-        <ol>
-            <li><strong>Importa</strong> <code>createMessageWithReactions</code> y <code>setActionCallback</code>.</li>
-            <li><strong>Define</strong> un objeto <code>actions</code> y llama a <code>createMessageWithReactions</code> en tu <strong>handler</strong>.</li>
-            <li><strong>Crea</strong> las funciones de lógica y regístralas con <code>setActionCallback</code> <strong>fuera del handler</strong>.</li>
-        </ol>
-        <p>¡Con estos 3 pasos, puedes agregar el sistema de reacciones a cualquier plugin de tu bot de WhatsApp!</p>
+        <h2>Paso 4: Verificación Final (El Test Completo)</h2>
+        <p>Una vez que hayas escrito todo el código, reinicia tu bot. Ahora, ejecuta estos comandos y verifica los resultados.</p>
+
+        <details>
+            <summary>Test de Verificación</summary>
+            <div class="result success">
+                <strong>Acción:</strong> Escribe el comando que creaste (por ejemplo, <code>.mando</code> o <code>.prueba</code>).<br>
+                <strong>Resultado Esperado:</strong> El bot debe responder con el mensaje que contiene las instrucciones para reaccionar.<br>
+                <strong>Acción:</strong> Reacciona con 👍.<br>
+                <strong>Resultado Esperado:</strong> El bot debe responder con "¡Elegiste la Opción 1!".<br>
+                <strong>Acción:</strong> Reacciona con 👎.<br>
+                <strong>Resultado Esperado:</strong> El bot debe responder con "¡Elegiste la Opción 2!".
+            </div>
+        </details>
+
+        <p class="result success">Si todas las pruebas pasaron, ¡felicidades! Has dominado la implementación del sistema de reacciones. Ahora puedes usar este patrón en cualquier plugin que desees.</p>
     </div>
 
 </body>
