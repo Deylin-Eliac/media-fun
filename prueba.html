@@ -3,416 +3,638 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Nombre - Desarrollador de Tecnología</title>
+    <title>Transformando Ideas en Realidad Digital | Tu Nombre</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- ESTILOS GENERALES Y FUENTES --- */
-        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
-
+        /* Variables de Colores */
         :root {
-            --color-bg-dark: #0A0A0E;
-            --color-text: #E0E0E0;
-            --color-accent-1: #00FFFF; /* Cian */
-            --color-accent-2: #FF00FF; /* Magenta */
-            --color-accent-3: #00FF00; /* Verde Neón */
-            --glow-color: #00FFFF;
+            --bg-color: #0d1117;
+            --primary-color: #00F0FF; /* Azul neón */
+            --secondary-color: #8A2BE2; /* Púrpura brillante */
+            --text-color: #e6e6e6;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+        }
+
+        /* Base y Tipografía */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Roboto Mono', monospace;
-            background-color: var(--color-bg-dark);
-            color: var(--color-text);
-            margin: 0;
-            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Evitar scroll horizontal */
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+        h1, h2, h3 {
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 700;
         }
-        
+
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2.5rem; }
+        h3 { font-size: 1.5rem; }
+
         a {
-            color: var(--color-accent-1);
+            color: var(--primary-color);
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         a:hover {
-            color: var(--color-accent-2);
+            color: var(--secondary-color);
         }
 
-        /* --- NAVEGACIÓN --- */
-        header {
-            background-color: rgba(10, 10, 14, 0.8);
-            backdrop-filter: blur(5px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .nav-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--color-accent-1);
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-            margin: 0;
-        }
-
-        .nav-links a {
-            font-weight: bold;
-            font-size: 0.9rem;
-            padding: 5px 10px;
-            border: 1px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            border-color: var(--color-accent-2);
-            color: var(--color-accent-2);
-        }
-
-        /* --- SECCIONES PRINCIPALES --- */
-        section {
-            padding: 100px 0;
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            color: var(--color-accent-3);
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-            text-align: center;
-            margin-bottom: 50px;
+        /* Efecto de Glitch para el Título Principal */
+        .glitch-effect {
             position: relative;
+            color: var(--primary-color);
+            font-size: 3.5rem;
+            text-transform: uppercase;
         }
 
-        h2::after {
-            content: "";
-            display: block;
-            width: 50px;
-            height: 3px;
-            background-color: var(--color-accent-3);
-            margin: 10px auto 0;
-            box-shadow: 0 0 8px var(--color-accent-3);
+        .glitch-effect::before,
+        .glitch-effect::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            overflow: hidden;
+            clip: rect(0, 900px, 0, 0);
         }
 
-        /* --- SECCIÓN DE INICIO --- */
+        .glitch-effect::before {
+            left: 2px;
+            text-shadow: -1px 0 var(--secondary-color);
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+
+        .glitch-effect::after {
+            left: -2px;
+            text-shadow: -1px 0 var(--primary-color);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim-1 {
+            0% { clip: rect(44px, 9999px, 50px, 0); }
+            10% { clip: rect(80px, 9999px, 90px, 0); }
+            20% { clip: rect(10px, 9999px, 20px, 0); }
+            30% { clip: rect(60px, 9999px, 70px, 0); }
+            40% { clip: rect(30px, 9999px, 40px, 0); }
+            50% { clip: rect(75px, 9999px, 85px, 0); }
+            60% { clip: rect(25px, 9999px, 35px, 0); }
+            70% { clip: rect(55px, 9999px, 65px, 0); }
+            80% { clip: rect(95px, 9999px, 105px, 0); }
+            90% { clip: rect(15px, 9999px, 25px, 0); }
+            100% { clip: rect(0, 9999px, 0, 0); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(2px, 9999px, 10px, 0); }
+            15% { clip: rect(90px, 9999px, 100px, 0); }
+            30% { clip: rect(50px, 9999px, 60px, 0); }
+            45% { clip: rect(10px, 9999px, 20px, 0); }
+            60% { clip: rect(70px, 9999px, 80px, 0); }
+            75% { clip: rect(30px, 9999px, 40px, 0); }
+            90% { clip: rect(65px, 9999px, 75px, 0); }
+            100% { clip: rect(0, 9999px, 0, 0); }
+        }
+
+        /* Header (Hero Section) */
         .hero {
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
+            background: linear-gradient(rgba(13, 17, 23, 0.9), rgba(13, 17, 23, 0.9)), url('https://images.unsplash.com/photo-1518770660439-466a9c1e7a57?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+            background-attachment: fixed;
             position: relative;
-            overflow: hidden;
-            border-bottom: 2px solid var(--color-accent-1);
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(0, 255, 255, 0.1), transparent 70%);
-            animation: pulse 10s infinite ease-in-out;
+            border-bottom: 2px solid var(--primary-color);
         }
 
         .hero-content {
-            z-index: 1;
-        }
-        
-        .hero h1 {
-            font-size: 3rem;
-            text-shadow: 0 0 15px var(--color-accent-1);
-            animation: fadeIn 2s ease-in-out;
+            animation: fadeIn 2s ease-out;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.8);
-            animation: fadeIn 2.5s ease-in-out;
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px var(--primary-color);
         }
-        
-        .cta-button {
-            display: inline-block;
-            padding: 12px 25px;
-            margin-top: 20px;
-            border: 2px solid var(--color-accent-1);
-            background: transparent;
-            color: var(--color-text);
-            font-weight: bold;
+
+        .subtitle {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.25rem;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            animation: fadeIn 2.5s ease-out;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .cta-btn {
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-weight: 600;
             text-transform: uppercase;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .primary-btn {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
             position: relative;
             overflow: hidden;
         }
 
-        .cta-button::before {
+        .primary-btn:hover {
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        .secondary-btn {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .secondary-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        /* Secciones Generales */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            position: relative;
+            animation: text-glow 2s infinite alternate;
+        }
+
+        .section-title::after {
             content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
-            transition: left 0.4s ease;
-        }
-        
-        .cta-button:hover {
-            color: var(--color-bg-dark);
-            background-color: var(--color-accent-1);
-            box-shadow: 0 0 15px var(--color-accent-1);
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--secondary-color);
+            margin: 20px auto 0;
+            border-radius: 2px;
         }
 
-        .cta-button:hover::before {
-            left: 100%;
+        /* About Me Section */
+        .about-me {
+            background-color: var(--card-bg);
         }
 
-        /* --- SECCIÓN DE SERVICIOS Y PORTAFOLIO --- */
-        .services-grid, .portfolio-grid {
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text, .about-skills {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-skills h3 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .about-skills ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-item {
+            background: var(--bg-color);
+            border: 1px solid var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            background: var(--primary-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        /* Services Section */
+        .services {
+            background-color: var(--bg-color);
+        }
+
+        .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
 
-        .service-card, .project-card {
-            background-color: #1a1a21;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .service-card {
+            background-color: var(--card-bg);
+            padding: 40px;
             border-radius: 10px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .service-card:hover, .project-card:hover {
+        .service-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
         }
 
-        .service-card h3, .project-card h3 {
-            color: var(--color-accent-2);
-            text-shadow: 0 0 5px var(--color-accent-2);
+        .service-icon {
+            margin-bottom: 20px;
         }
-        
-        /* --- SECCIÓN DE CONTACTO --- */
+
+        .service-card h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            background-color: var(--card-bg);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: scale(1.05);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            display: block;
+            transition: filter 0.3s ease;
+        }
+
+        .portfolio-item:hover img {
+            filter: brightness(0.3);
+        }
+
+        .item-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 240, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover .item-overlay {
+            opacity: 1;
+        }
+
+        .item-details {
+            color: var(--bg-color);
+            text-align: center;
+            padding: 20px;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover .item-details {
+            transform: translateY(0);
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background-color: var(--bg-color);
+        }
+
+        .testimonial-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 10px;
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            text-align: right;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Contact Section */
+        .contact {
+            background-color: var(--card-bg);
+        }
+
+        .contact-subtitle {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
         .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
             gap: 20px;
-            max-width: 600px;
-            margin: 0 auto;
         }
 
-        .contact-form input, .contact-form textarea {
-            background-color: #1a1a21;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--color-text);
+        .contact-form input,
+        .contact-form textarea {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
             padding: 15px;
             border-radius: 5px;
-            font-family: 'Roboto Mono', monospace;
-            font-size: 1rem;
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .contact-form button {
-            background-color: var(--color-accent-3);
-            color: var(--color-bg-dark);
-            border: none;
-            padding: 15px;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
         }
 
-        .contact-form button:hover {
-            background-color: var(--glow-color);
-            box-shadow: 0 0 15px var(--glow-color);
-        }
-
-        /* --- FOOTER --- */
-        footer {
+        /* Footer */
+        .footer {
+            background-color: #000;
+            color: #fff;
             text-align: center;
-            padding: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 50px;
-            font-size: 0.8rem;
+            padding: 40px 0;
+            border-top: 1px solid var(--border-color);
         }
 
-        /* --- ANIMACIONES CSS --- */
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.5; }
+        .footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
+        .social-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-link img {
+            width: 24px;
+            height: 24px;
+            filter: invert(1);
+            transition: transform 0.3s ease;
+        }
+
+        .social-link:hover img {
+            transform: scale(1.2);
+        }
+
+        /* Animaciones CSS */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
-        .fade-in-on-scroll {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+
+        @keyframes text-glow {
+            from { text-shadow: 0 0 5px var(--primary-color); }
+            to { text-shadow: 0 0 15px var(--primary-color); }
         }
 
-        .fade-in-on-scroll.visible {
+        .section.hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .section.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* --- RESPONSIVE DESIGN --- */
+        /* Media Queries para Responsividad */
         @media (max-width: 768px) {
-            .nav-bar {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .nav-links {
-                margin-top: 10px;
-                flex-direction: column;
-                gap: 10px;
+            .hero-content h1 {
+                font-size: 2.5rem;
             }
 
-            .hero h1 {
-                font-size: 2rem;
+            .about-content {
+                flex-direction: column;
             }
 
-            h2 {
-                font-size: 2rem;
+            .footer .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .glitch-effect {
+                font-size: 2.5rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="nav-bar container">
-            <span class="logo">Tu Nombre</span>
-            <ul class="nav-links">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#portafolio">Portafolio</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="glitch-effect" data-text="Transformando Ideas en Realidad Digital">Transformando Ideas en Realidad Digital</h1>
+            <p class="subtitle">Especializado en **bots de WhatsApp inteligentes**, desarrollo web, APIs y software a medida.</p>
+            <div class="cta-buttons">
+                <a href="#portfolio" class="cta-btn primary-btn">Ver mis proyectos</a>
+                <a href="#contact" class="cta-btn secondary-btn">Contáctame</a>
+            </div>
         </div>
     </header>
 
-    <main>
-        <section id="inicio" class="hero">
-            <div class="hero-content">
-                <h1>Desarrollador de Bots de WhatsApp, Sitios Web y Software</h1>
-                <p>Creando experiencias digitales innovadoras para tu negocio.</p>
-                <a href="#contacto" class="cta-button">¡Contáctame Ahora!</a>
-            </div>
-        </section>
-        
-        <section id="servicios" class="fade-in-on-scroll">
-            <div class="container">
-                <h2>Mis Servicios</h2>
-                <div class="services-grid">
-                    <div class="service-card">
-                        <h3>Bots de WhatsApp</h3>
-                        <p>Desarrollo de bots conversacionales inteligentes para automatizar tu atención al cliente y campañas de marketing.</p>
-                    </div>
-                    <div class="service-card">
-                        <h3>Sitios Web y APIs</h3>
-                        <p>Diseño y construcción de sitios web modernos y APIs robustas para conectar tus aplicaciones y servicios.</p>
-                    </div>
-                    <div class="service-card">
-                        <h3>Desarrollo de Software</h3>
-                        <p>Creación de aplicaciones y software a medida para optimizar tus procesos y ofrecer soluciones únicas.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="portafolio" class="fade-in-on-scroll">
-            <div class="container">
-                <h2>Mis Proyectos</h2>
-                <div class="portfolio-grid">
-                    <div class="project-card">
-                        <h3>Bot de Soporte</h3>
-                        <p>Un bot de WhatsApp que resuelve consultas comunes de clientes, reduciendo el tiempo de respuesta en un 70%.</p>
-                    </div>
-                    <div class="project-card">
-                        <h3>Plataforma E-commerce</h3>
-                        <p>Un sitio web de comercio electrónico de alto rendimiento con pasarelas de pago y gestión de inventario.</p>
-                    </div>
-                    <div class="project-card">
-                        <h3>API de Integración</h3>
-                        <p>Una API que conecta el sistema de ventas con el CRM para una sincronización de datos en tiempo real.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contacto" class="fade-in-on-scroll">
-            <div class="container">
-                <h2>Hablemos</h2>
-                <form class="contact-form" action="#" method="POST">
-                    <input type="text" name="name" placeholder="Tu Nombre" required>
-                    <input type="email" name="email" placeholder="Tu Correo Electrónico" required>
-                    <textarea name="message" rows="6" placeholder="Tu Mensaje" required></textarea>
-                    <button type="submit">Enviar Mensaje</button>
-                </form>
-            </div>
-        </section>
-    </main>
-
-    <footer>
+    <section id="about" class="section about-me">
         <div class="container">
-            <p>&copy; 2025 Tu Nombre. Todos los derechos reservados.</p>
+            <h2 class="section-title">Sobre Mí</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Mi pasión es construir soluciones tecnológicas que resuelvan problemas reales. Con años de experiencia en el desarrollo de software, me especializo en crear **productos digitales innovadores** que son escalables, eficientes y fáciles de usar. Mi enfoque se centra en la calidad y la entrega de valor, asegurando que cada proyecto no solo cumpla con los requisitos, sino que también supere las expectativas.</p>
+                    <p>Estoy comprometido con el aprendizaje continuo y la adopción de nuevas tecnologías para ofrecer las soluciones más modernas y efectivas del mercado.</p>
+                </div>
+                <div class="about-skills">
+                    <h3 class="skills-title">Habilidades Clave</h3>
+                    <ul>
+                        <li><span class="skill-item">Bots de WhatsApp</span></li>
+                        <li><span class="skill-item">Desarrollo Frontend & Backend</span></li>
+                        <li><span class="skill-item">APIs & Microservicios</span></li>
+                        <li><span class="skill-item">Bases de Datos</span></li>
+                        <li><span class="skill-item">Cloud & DevOps</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section services">
+        <div class="container">
+            <h2 class="section-title">Mis Servicios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><img src="https://img.icons8.com/material-outlined/48/00F0FF/bot.png" alt="Bot Icon"></div>
+                    <h3>Bots de WhatsApp</h3>
+                    <p>Automatización de atención al cliente, marketing, notificaciones y más, para mantener tu negocio funcionando 24/7.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><img src="https://img.icons8.com/material-outlined/48/00F0FF/web-design.png" alt="Web Icon"></div>
+                    <h3>Sitios Web y APIs</h3>
+                    <p>Diseño y desarrollo de sitios web modernos y funcionales, junto con APIs robustas para conectar tus aplicaciones.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><img src="https://img.icons8.com/material-outlined/48/00F0FF/software.png" alt="Software Icon"></div>
+                    <h3>Desarrollo de Software</h3>
+                    <p>Soluciones de software a medida para gestionar procesos empresariales y optimizar la productividad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="section portfolio">
+        <div class="container">
+            <h2 class="section-title">Portafolio</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="https://via.placeholder.com/600x400.png?text=Bot+de+Reservas" alt="Bot de WhatsApp para Reservas">
+                    <div class="item-overlay">
+                        <div class="item-details">
+                            <h4>Bot de Reservas por WhatsApp</h4>
+                            <p>Un bot inteligente para automatizar el proceso de reservas en un restaurante. Tecnologías: Node.js, Dialogflow.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://via.placeholder.com/600x400.png?text=E-commerce+Moderno" alt="Sitio Web de E-commerce">
+                    <div class="item-overlay">
+                        <div class="item-details">
+                            <h4>Sitio Web E-commerce Moderno</h4>
+                            <p>Plataforma de venta en línea con un diseño minimalista y una API RESTful para gestión de productos. Tecnologías: React, Express.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://via.placeholder.com/600x400.png?text=API+Financiera" alt="API para Aplicación Financiera">
+                    <div class="item-overlay">
+                        <div class="item-details">
+                            <h4>API Financiera Segura</h4>
+                            <p>API robusta y segura para integrar servicios bancarios en una aplicación móvil. Tecnologías: Python, Django, JWT.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="section testimonials">
+        <div class="container">
+            <h2 class="section-title">Lo que dicen mis clientes</h2>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"El bot de WhatsApp que desarrollaste ha transformado por completo nuestra atención al cliente. La eficiencia ha aumentado y la satisfacción de nuestros usuarios es increíble. ¡Un trabajo excepcional!"</p>
+                <p class="testimonial-author">- María P., Gerente de Marketing</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact">
+        <div class="container">
+            <h2 class="section-title">Contáctame</h2>
+            <p class="contact-subtitle">Hablemos de tu próximo proyecto. Estoy listo para ayudarte a hacerlo realidad.</p>
+            <form id="contact-form" class="contact-form">
+                <input type="text" id="name" name="name" placeholder="Tu Nombre" required>
+                <input type="email" id="email" name="email" placeholder="Tu Correo Electrónico" required>
+                <textarea id="message" name="message" rows="5" placeholder="Tu Mensaje..." required></textarea>
+                <button type="submit" class="cta-btn primary-btn">Enviar Mensaje</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Tu Nombre. Todos los derechos reservados.</p>
+            <div class="social-icons">
+                <a href="#" class="social-link"><img src="https://img.icons8.com/material-outlined/24/00F0FF/linkedin--v1.png" alt="LinkedIn"></a>
+                <a href="#" class="social-link"><img src="https://img.icons8.com/material-outlined/24/00F0FF/github.png" alt="GitHub"></a>
+                <a href="#" class="social-link"><img src="https://img.icons8.com/material-outlined/24/00F0FF/whatsapp--v1.png" alt="WhatsApp"></a>
+            </div>
         </div>
     </footer>
 
     <script>
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animación de revelado al hacer scroll
+            const sections = document.querySelectorAll('.section');
+            const options = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
                 });
+            }, options);
+
+            sections.forEach(section => {
+                section.classList.add('hidden');
+                observer.observe(section);
             });
-        });
-
-        // Animation on scroll
-        const elementsToAnimate = document.querySelectorAll('.fade-in-on-scroll');
-
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // Stop observing once animated
-                }
-            });
-        }, {
-            threshold: 0.1
-        });
-
-        elementsToAnimate.forEach(element => {
-            observer.observe(element);
         });
     </script>
 </body>
