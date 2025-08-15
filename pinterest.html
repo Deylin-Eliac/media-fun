@@ -8,9 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
-        /* ====================
-           Estilos Globales y Variables (Mobile-First)
-           ==================== */
+        
         :root {
             --bg-color: #050a1a;
             --primary-color: #00eaff;
@@ -39,9 +37,7 @@
             position: relative;
         }
 
-        /* ====================
-           Efectos de Fondo
-           ==================== */
+        
         .bg-grid {
             position: absolute;
             top: 0;
@@ -63,9 +59,7 @@
             50% { opacity: 0.05; }
         }
 
-        /* ====================
-           Pantalla de Carga
-           ==================== */
+        
         #loader-container {
             position: fixed;
             top: 0;
@@ -152,7 +146,7 @@
             animation: glitch-text 0.2s infinite;
         }
 
-        /* Animaciones para la carga */
+        
         @keyframes spin-sword { to { transform: rotate(360deg); } }
         @keyframes pulse-glow { from { filter: drop-shadow(0 0 10px var(--primary-color)); } to { filter: drop-shadow(0 0 20px var(--accent-color)); } }
         @keyframes flicker-title { 50% { text-shadow: 2px 2px 5px var(--accent-color); opacity: 0.8; } }
@@ -161,9 +155,7 @@
         @keyframes screen-shake { 0%, 100% { transform: scale(1) translateY(0); } 50% { transform: scale(1) translateY(-3px); } }
         @keyframes glitch-text { 0%, 25%, 50%, 75%, 100% { transform: translate(1px, -1px); opacity: 0.8; } 12.5%, 37.5%, 62.5%, 87.5% { transform: translate(-1px, 1px); opacity: 0.7; } }
 
-        /* ====================
-           Página de Búsqueda (Mobile-First)
-           ==================== */
+       
         #search-page {
             display: none;
             flex-direction: column;
@@ -298,7 +290,7 @@
             <h2 class="search-title">Pinterest Search Terminal</h2>
         </header>
         <div class="search-form">
-            <input type="text" id="search-input" placeholder="Ingresa tu búsqueda (ej. 'kirito')...">
+            <input type="text" id="search-input" placeholder="Ingresa tu búsqueda (ej. 'gato')...">
             <button id="search-button">Buscar</button>
         </div>
         <div id="results-container">
@@ -317,7 +309,7 @@
         
         const API_URL = "https://anime-xi-wheat.vercel.app/api/pinterest?q=";
 
-        // Función para simular la carga y mostrar la página de búsqueda
+        
         document.addEventListener('DOMContentLoaded', () => {
             const loadingMessages = ["Inicializando sistema...", "Conectando al servidor principal...", "Cargando interfaces de usuario...", "Autenticación de usuario completada..."];
             let messageIndex = 0;
@@ -339,7 +331,7 @@
             }, 5000);
         });
 
-        // Función para buscar y mostrar las imágenes
+        
         async function fetchImages(query) {
             resultsContainer.innerHTML = `<p class="loading-results">Buscando imágenes de "${query}"...</p>`;
             try {
