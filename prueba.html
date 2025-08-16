@@ -7,15 +7,12 @@
     <link href="style.css" rel="stylesheet" />
     <title>Capsule-Render</title>
     <base href="/" />
-    <script
-      crossorigin
-      src="https://unpkg.com/react@18/umd/react.production.min.js"
-    ></script>
-    <script
-      crossorigin
-      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
-    ></script>
+
+    <!-- React y Babel -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
     <!-- Google Tag Manager -->
     <script>
       (function (w, d, s, l, i) {
@@ -30,39 +27,125 @@
       })(window, document, "script", "dataLayer", "GTM-TVJMBBXW");
     </script>
     <!-- End Google Tag Manager -->
+
     <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-L1N8GXV3L2"
-    ></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L1N8GXV3L2"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
       gtag("config", "G-L1N8GXV3L2");
     </script>
+
     <!-- Google adsense -->
     <script
       async
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9120318334366175"
       crossorigin="anonymous"
     ></script>
+
+    <!-- Animaciones CSS -->
+    <style>
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #1d2671, #c33764);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      #root {
+        animation: fadeIn 1.5s ease-in-out;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        animation: slideDown 1.2s ease-in-out;
+      }
+
+      button {
+        padding: 12px 24px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 12px;
+        background: #ff9800;
+        color: white;
+        cursor: pointer;
+        transition: transform 0.3s ease, background 0.3s ease;
+        animation: zoomIn 1s ease;
+      }
+
+      button:hover {
+        transform: scale(1.1);
+        background: #ff5722;
+      }
+
+      /* Animaciones */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes zoomIn {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+    </style>
   </head>
+
   <body>
     <div id="root"></div>
-    <script type="text/babel" src="index.js"></script>
+
+    <!-- React App -->
+    <script type="text/babel">
+      function App() {
+        return (
+          <div style={{ textAlign: "center" }}>
+            <h1>🚀 Bienvenido a Capsule-Render</h1>
+            <p>Con efectos y animaciones elegantes 😎</p>
+            <button onClick={() => alert("¡Animación activada!")}>Click Aquí</button>
+          </div>
+        );
+      }
+
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
   </body>
+
   <!-- Google Tag Manager (noscript) -->
-  <noscript
-    ><iframe
+  <noscript>
+    <iframe
       src="https://www.googletagmanager.com/ns.html?id=GTM-TVJMBBXW"
       height="0"
       width="0"
       style="display: none; visibility: hidden"
-    ></iframe
-  ></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+    ></iframe>
+  </noscript>
 </html>
