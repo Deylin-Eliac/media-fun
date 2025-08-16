@@ -3,206 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guía Interactiva: Dominando Reacciones</title>
+    <title>Generador de Banners Dinámicos</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
-            background-color: #f0f4f8;
+            background-color: #f0f0f0;
+        }
+
+        #banner-editor {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        #banner-editor label {
+            font-weight: bold;
             color: #333;
         }
-        .container {
-            max-width: 900px;
-            margin: auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            animation: fadeIn 1.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        h1, h2 {
-            color: #1a4d7d;
-            border-bottom: 3px solid #1a4d7d;
-            padding-bottom: 10px;
-            animation: slideIn 1s ease-in-out;
-        }
-        @keyframes slideIn {
-            from { transform: translateX(-20px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        h2 { margin-top: 40px; }
-        pre, code {
-            background-color: #e9ecef;
-            padding: 15px;
-            border-radius: 8px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-family: 'Courier New', Courier, monospace;
-            display: block;
-            overflow-x: auto;
-            margin-top: 15px;
-        }
-        strong { color: #d9534f; }
-        .hint {
-            background-color: #fff3cd;
-            color: #856404;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 5px solid #ffc107;
-            margin: 20px 0;
-            animation: pulse 1s infinite alternate;
-        }
-        @keyframes pulse {
-            from { transform: scale(1); }
-            to { transform: scale(1.02); }
-        }
-        details {
+
+        #banner-editor input[type="text"],
+        #banner-editor input[type="color"] {
+            width: 100%;
+            padding: 8px;
             border: 1px solid #ccc;
-            border-radius: 8px;
-            margin: 20px 0;
-            padding: 10px;
-            background-color: #f9f9f9;
+            border-radius: 4px;
         }
-        summary {
-            font-weight: bold;
+
+        #download-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
-            outline: none;
-            color: #1a74d2;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
         }
-        details[open] summary {
-            color: #004085;
+
+        #download-button:hover {
+            background-color: #0056b3;
         }
-        .solution {
-            margin-top: 15px;
-            background-color: #e2f0d9;
-            padding: 10px;
-            border-radius: 8px;
+
+        #banner-preview {
+            width: 600px;
+            height: 200px;
+            background-color: #ff0000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .result {
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 8px;
-        }
-        .result.success {
-            background-color: #d4edda;
-            color: #155724;
-            border-left: 5px solid #28a745;
-        }
-        .result.fail {
-            background-color: #f8d7da;
-            color: #721c24;
-            border-left: 5px solid #dc3545;
+
+        #banner-text {
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            font-size: 3em;
+            text-align: center;
+            padding: 0 15px;
+            margin: 0;
+            word-wrap: break-word; /* Asegura que el texto largo se ajuste */
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Guía Interactiva: Dominando el Sistema de Reacciones</h1>
-        <p>Esta guía te enseñará, paso a paso, a implementar la lógica de reacciones. Intenta escribir el código tú mismo y luego verifica si lo hiciste bien.</p>
-        
-        <hr>
+    <h1>Generador de Banners</h1>
 
-        <h2>Paso 1: La Preparación</h2>
-        <p>Asegúrate de que tu plugin importe las dos funciones clave de la librería de reacciones.</p>
-        
-        <div class="hint">
-            <strong>Mini-Test 1:</strong> Intenta escribir la línea de importación. Debe ser la primera línea de tu plugin.
-        </div>
+    <div id="banner-editor">
+        <label for="banner-text-input">Texto del Banner:</label>
+        <input type="text" id="banner-text-input" value="¡Oferta Especial!">
 
-        <details>
-            <summary>Click para ver la solución</summary>
-            <div class="solution">
-                <pre><code>
-// Debe ir al inicio del archivo, antes del handler.
-import { createMessageWithReactions, setActionCallback } from '../lib/reacciones.js';
-                </code></pre>
-            </div>
-        </details>
+        <label for="background-color-input">Color de Fondo:</label>
+        <input type="color" id="background-color-input" value="#ff0000">
 
-        <hr>
+        <label for="text-color-input">Color del Texto:</label>
+        <input type="color" id="text-color-input" value="#ffffff">
 
-        <h2>Paso 2: La Lógica del Comando (Dentro del handler)</h2>
-        <p>Aquí es donde definimos el plan de acción: qué mensaje se envía y qué hará cada emoji. Este es el corazón de tu comando.</p>
-        
-        <div class="hint">
-            <strong>Mini-Test 2:</strong> Escribe el código dentro de un <code>handler</code> que envíe un mensaje y registre las acciones para los emojis 👍 y 👎.
-        </div>
-        
-        <details>
-            <summary>Click para ver la solución</summary>
-            <div class="solution">
-                <pre><code>
-let handler = async (m, { conn }) => {
-  const mensajeParaReaccionar = `¡Hola! Prueba las opciones:\n\n👍 = Opción 1\n👎 = Opción 2`;
-
-  const actions = {
-      '👍': { type: 'opcion_uno', data: { chat: m.chat } },
-      '👎': { type: 'opcion_dos', data: { chat: m.chat } },
-  };
-
-  try {
-      const msg = await conn.sendMessage(m.chat, { text: mensajeParaReaccionar }, { quoted: m });
-      await createMessageWithReactions(conn, msg, actions);
-  } catch (error) {
-      m.reply('Ocurrió un error.');
-  }
-};
-                </code></pre>
-            </div>
-        </details>
-
-        <hr>
-
-        <h2>Paso 3: Las Acciones (Fuera del handler)</h2>
-        <p>Ahora, crea las funciones que se ejecutarán para cada "tipo" de acción que definiste en el paso anterior. Estas funciones contienen la lógica real.</p>
-        
-        <div class="hint">
-            <strong>Mini-Test 3:</strong> Escribe el código para las dos funciones de `setActionCallback` (<code>opcion_uno</code> y <code>opcion_dos</code>).
-        </div>
-        
-        <details>
-            <summary>Click para ver la solución</summary>
-            <div class="solution">
-                <pre><code>
-// Lógica para el emoji 👍
-setActionCallback('opcion_uno', async (conn, chat, data) => {
-    await conn.sendMessage(chat, { text: '¡Elegiste la Opción 1!' });
-});
-
-// Lógica para el emoji 👎
-setActionCallback('opcion_dos', async (conn, chat, data) => {
-    await conn.sendMessage(chat, { text: '¡Elegiste la Opción 2!' });
-});
-                </code></pre>
-            </div>
-        </details>
-
-        <hr>
-
-        <h2>Paso 4: Verificación Final (El Test Completo)</h2>
-        <p>Una vez que hayas escrito todo el código, reinicia tu bot. Ahora, ejecuta estos comandos y verifica los resultados.</p>
-
-        <details>
-            <summary>Test de Verificación</summary>
-            <div class="result success">
-                <strong>Acción:</strong> Escribe el comando que creaste (por ejemplo, <code>.mando</code> o <code>.prueba</code>).<br>
-                <strong>Resultado Esperado:</strong> El bot debe responder con el mensaje que contiene las instrucciones para reaccionar.<br>
-                <strong>Acción:</strong> Reacciona con 👍.<br>
-                <strong>Resultado Esperado:</strong> El bot debe responder con "¡Elegiste la Opción 1!".<br>
-                <strong>Acción:</strong> Reacciona con 👎.<br>
-                <strong>Resultado Esperado:</strong> El bot debe responder con "¡Elegiste la Opción 2!".
-            </div>
-        </details>
-
-        <p class="result success">Si todas las pruebas pasaron, ¡felicidades! Has dominado la implementación del sistema de reacciones. Ahora puedes usar este patrón en cualquier plugin que desees.</p>
+        <button id="download-button">Descargar Banner (PNG)</button>
     </div>
+
+    <div id="banner-preview">
+        <h1 id="banner-text">¡Oferta Especial!</h1>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        // Obtiene los elementos del DOM
+        const bannerPreview = document.getElementById('banner-preview');
+        const bannerTextInput = document.getElementById('banner-text-input');
+        const backgroundColorInput = document.getElementById('background-color-input');
+        const textColorInput = document.getElementById('text-color-input');
+        const bannerText = document.getElementById('banner-text');
+        const downloadButton = document.getElementById('download-button');
+
+        // Función para actualizar el banner con los valores de los inputs
+        function updateBanner() {
+            bannerText.textContent = bannerTextInput.value;
+            bannerPreview.style.backgroundColor = backgroundColorInput.value;
+            bannerText.style.color = textColorInput.value;
+        }
+
+        // Escucha los cambios en los inputs para actualizar el banner en tiempo real
+        bannerTextInput.addEventListener('input', updateBanner);
+        backgroundColorInput.addEventListener('input', updateBanner);
+        textColorInput.addEventListener('input', updateBanner);
+
+        // Lógica de descarga usando html2canvas
+        downloadButton.addEventListener('click', () => {
+            // Usa html2canvas para renderizar el elemento #banner-preview como un canvas
+            html2canvas(bannerPreview, {
+                allowTaint: true, // Permite imágenes de dominios externos
+                useCORS: true // Habilita CORS para imágenes
+            }).then(canvas => {
+                // Crea un enlace temporal para la descarga
+                const imageURL = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.href = imageURL;
+                link.download = 'banner-personalizado.png'; // Nombre del archivo
+
+                // Simula un clic en el enlace para iniciar la descarga
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        });
+    </script>
 
 </body>
 </html>
