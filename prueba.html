@@ -3,84 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Banners Dinámicos</title>
+    <title>Generador de Banners Pro</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background-color: #f0f0f0;
-        }
-
-        #banner-editor {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        #banner-editor label {
-            font-weight: bold;
-            color: #333;
-        }
-
-        #banner-editor input[type="text"],
-        #banner-editor input[type="color"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        #download-button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
-        }
-
-        #download-button:hover {
-            background-color: #0056b3;
-        }
-
-        #banner-preview {
-            width: 600px;
-            height: 200px;
-            background-color: #ff0000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        #banner-text {
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            font-size: 3em;
-            text-align: center;
-            padding: 0 15px;
-            margin: 0;
-            word-wrap: break-word; /* Asegura que el texto largo se ajuste */
-        }
+        body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; background-color: #f0f0f0; }
+        #banner-editor { display: flex; flex-direction: column; gap: 15px; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); width: 100%; max-width: 600px; }
+        #banner-editor label { font-weight: bold; color: #333; }
+        #banner-editor input[type="text"], #banner-editor input[type="color"], #banner-editor select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        #generate-button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1em; transition: background-color 0.3s ease; }
+        #generate-button:hover { background-color: #0056b3; }
+        #banner-result { margin-top: 20px; text-align: center; }
+        #banner-url-box { width: 100%; max-width: 600px; padding: 10px; border: 1px solid #ccc; background-color: #e9e9e9; font-family: monospace; }
     </style>
 </head>
 <body>
 
-    <h1>Generador de Banners</h1>
+    <h1>Generador de Banners Pro</h1>
 
     <div id="banner-editor">
         <label for="banner-text-input">Texto del Banner:</label>
@@ -91,56 +28,49 @@
 
         <label for="text-color-input">Color del Texto:</label>
         <input type="color" id="text-color-input" value="#ffffff">
+        
+        <label for="animation-select">Tipo de Animación:</label>
+        <select id="animation-select">
+            <option value="none">Sin animación</option>
+            <option value="pulse">Pulso (cambio de tamaño)</option>
+            <option value="fade">Desvanecimiento</option>
+        </select>
 
-        <button id="download-button">Descargar Banner (PNG)</button>
+        <button id="generate-button">Generar Banner</button>
     </div>
 
-    <div id="banner-preview">
-        <h1 id="banner-text">¡Oferta Especial!</h1>
+    <div id="banner-result" style="display:none;">
+        <h3>Banner Generado:</h3>
+        <img id="generated-banner-img" src="" alt="Banner generado">
+        <p>URL del Banner:</p>
+        <input type="text" id="banner-url-box" readonly>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
-        // Obtiene los elementos del DOM
-        const bannerPreview = document.getElementById('banner-preview');
-        const bannerTextInput = document.getElementById('banner-text-input');
-        const backgroundColorInput = document.getElementById('background-color-input');
-        const textColorInput = document.getElementById('text-color-input');
-        const bannerText = document.getElementById('banner-text');
-        const downloadButton = document.getElementById('download-button');
+        document.getElementById('generate-button').addEventListener('click', async () => {
+            const data = {
+                text: document.getElementById('banner-text-input').value,
+                bgColor: document.getElementById('background-color-input').value,
+                textColor: document.getElementById('text-color-input').value,
+                animation: document.getElementById('animation-select').value
+            };
 
-        // Función para actualizar el banner con los valores de los inputs
-        function updateBanner() {
-            bannerText.textContent = bannerTextInput.value;
-            bannerPreview.style.backgroundColor = backgroundColorInput.value;
-            bannerText.style.color = textColorInput.value;
-        }
-
-        // Escucha los cambios en los inputs para actualizar el banner en tiempo real
-        bannerTextInput.addEventListener('input', updateBanner);
-        backgroundColorInput.addEventListener('input', updateBanner);
-        textColorInput.addEventListener('input', updateBanner);
-
-        // Lógica de descarga usando html2canvas
-        downloadButton.addEventListener('click', () => {
-            // Usa html2canvas para renderizar el elemento #banner-preview como un canvas
-            html2canvas(bannerPreview, {
-                allowTaint: true, // Permite imágenes de dominios externos
-                useCORS: true // Habilita CORS para imágenes
-            }).then(canvas => {
-                // Crea un enlace temporal para la descarga
-                const imageURL = canvas.toDataURL('image/png');
-                const link = document.createElement('a');
-                link.href = imageURL;
-                link.download = 'banner-personalizado.png'; // Nombre del archivo
-
-                // Simula un clic en el enlace para iniciar la descarga
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+            const response = await fetch('http://localhost:3000/generate-banner', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
             });
+
+            const result = await response.json();
+            if (result.success) {
+                const bannerUrl = 'http://localhost:3000' + result.url;
+                document.getElementById('generated-banner-img').src = bannerUrl;
+                document.getElementById('banner-url-box').value = bannerUrl;
+                document.getElementById('banner-result').style.display = 'block';
+            } else {
+                alert('Error al generar el banner.');
+            }
         });
     </script>
-
 </body>
 </html>
