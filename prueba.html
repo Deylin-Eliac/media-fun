@@ -1,151 +1,189 @@
 <!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="style.css" rel="stylesheet" />
-    <title>Capsule-Render</title>
-    <base href="/" />
-
-    <!-- React y Babel -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-    <!-- Google Tag Manager -->
-    <script>
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != "dataLayer" ? "&l=" + l : "";
-        j.async = true;
-        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", "GTM-TVJMBBXW");
-    </script>
-    <!-- End Google Tag Manager -->
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L1N8GXV3L2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-L1N8GXV3L2");
-    </script>
-
-    <!-- Google adsense -->
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9120318334366175"
-      crossorigin="anonymous"
-    ></script>
-
-    <!-- Animaciones CSS -->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redireccionando...</title>
     <style>
-      body {
-        margin: 0;
-        font-family: "Poppins", sans-serif;
-        background: linear-gradient(135deg, #1d2671, #c33764);
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        overflow: hidden;
-      }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
-      #root {
-        animation: fadeIn 1.5s ease-in-out;
-      }
-
-      h1 {
-        font-size: 2.5rem;
-        animation: slideDown 1.2s ease-in-out;
-      }
-
-      button {
-        padding: 12px 24px;
-        font-size: 1rem;
-        border: none;
-        border-radius: 12px;
-        background: #ff9800;
-        color: white;
-        cursor: pointer;
-        transition: transform 0.3s ease, background 0.3s ease;
-        animation: zoomIn 1s ease;
-      }
-
-      button:hover {
-        transform: scale(1.1);
-        background: #ff5722;
-      }
-
-      /* Animaciones */
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
+        :root {
+            --primary-color: #00ff00;
+            --secondary-color: #00ccff;
+            --bg-color: #0a0a0a;
         }
-        to {
-          opacity: 1;
-        }
-      }
 
-      @keyframes slideDown {
-        from {
-          transform: translateY(-50px);
-          opacity: 0;
+        body {
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            text-align: center;
         }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
 
-      @keyframes zoomIn {
-        from {
-          transform: scale(0.8);
-          opacity: 0;
+        .container {
+            z-index: 10;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-color), inset 0 0 10px var(--primary-color);
+            border-radius: 10px;
         }
-        to {
-          transform: scale(1);
-          opacity: 1;
+
+        .glitch-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
         }
-      }
+
+        .glitch {
+            font-size: 3rem;
+            text-transform: uppercase;
+            animation: glitch 1.5s infinite;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--bg-color);
+            overflow: hidden;
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--secondary-color);
+            animation: glitch-before 1.5s infinite;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--primary-color);
+            animation: glitch-after 1.5s infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-5px, 5px); }
+            40% { transform: translate(-5px, -5px); }
+            60% { transform: translate(5px, 5px); }
+            80% { transform: translate(5px, -5px); }
+            100% { transform: translate(0); }
+        }
+
+        @keyframes glitch-before {
+            0% { clip-path: inset(6% 0 75% 0); }
+            20% { clip-path: inset(10% 0 15% 0); }
+            40% { clip-path: inset(5% 0 80% 0); }
+            60% { clip-path: inset(15% 0 10% 0); }
+            80% { clip-path: inset(70% 0 20% 0); }
+            100% { clip-path: inset(6% 0 75% 0); }
+        }
+
+        @keyframes glitch-after {
+            0% { clip-path: inset(40% 0 45% 0); }
+            20% { clip-path: inset(80% 0 5% 0); }
+            40% { clip-path: inset(10% 0 60% 0); }
+            60% { clip-path: inset(20% 0 70% 0); }
+            80% { clip-path: inset(50% 0 10% 0); }
+            100% { clip-path: inset(40% 0 45% 0); }
+        }
+
+        .loading-bar-container {
+            width: 80%;
+            height: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+            margin: 0 auto 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .loading-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            animation: loading-fill 5s forwards;
+        }
+
+        @keyframes loading-fill {
+            to { width: 100%; }
+        }
+
+        .redirect-text {
+            font-size: 1.2rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { text-shadow: 0 0 5px var(--primary-color); }
+            50% { text-shadow: 0 0 20px var(--primary-color), 0 0 30px var(--primary-color); }
+        }
+
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(0, 255, 0, 0.1) 0%,
+                rgba(0, 204, 255, 0.1) 50%,
+                rgba(0, 255, 0, 0.1) 100%
+            );
+            animation: neon-pulse 10s infinite;
+            z-index: 1;
+            opacity: 0.5;
+        }
+
+        @keyframes neon-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
     </style>
-  </head>
+</head>
+<body>
+    <div class="container">
+        <div class="glitch-container">
+            <h1 class="glitch" data-text="Acceso Autorizado">Acceso Autorizado</h1>
+        </div>
+        <div class="loading-bar-container">
+            <div class="loading-bar" id="loadingBar"></div>
+        </div>
+        <p class="redirect-text">Redirigiendo en <span id="countdown">5</span> segundos...</p>
+    </div>
+    <div class="background-animation"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const redirectUrl = 'https://whatsapp.com/channel/0029VbAzn9GGU3BQw830eA0F';
+            let countdownElement = document.getElementById('countdown');
+            let timeLeft = 5;
 
-  <body>
-    <div id="root"></div>
+            const updateCountdown = () => {
+                if (timeLeft > 0) {
+                    countdownElement.textContent = timeLeft;
+                    timeLeft--;
+                } else {
+                    window.location.href = redirectUrl;
+                }
+            };
 
-    <!-- React App -->
-    <script type="text/babel">
-      function App() {
-        return (
-          <div style={{ textAlign: "center" }}>
-            <h1>🚀 Bienvenido a Capsule-Render</h1>
-            <p>Con efectos y animaciones elegantes 😎</p>
-            <button onClick={() => alert("¡Animación activada!")}>Click Aquí</button>
-          </div>
-        );
-      }
-
-      ReactDOM.render(<App />, document.getElementById("root"));
+            setTimeout(() => {
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+            }, 1000);
+        });
     </script>
-  </body>
-
-  <!-- Google Tag Manager (noscript) -->
-  <noscript>
-    <iframe
-      src="https://www.googletagmanager.com/ns.html?id=GTM-TVJMBBXW"
-      height="0"
-      width="0"
-      style="display: none; visibility: hidden"
-    ></iframe>
-  </noscript>
+</body>
 </html>
