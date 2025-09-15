@@ -1,325 +1,72 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KIRITO-BOT MD</title>
-
-  <!-- Fuente externa (Orbitron para títulos) -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-
-  <!-- Iconos (Unicons) -->
-  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-
-  <style>
-    :root {
-      --kirito-blue: #00e5ff;
-      --kirito-dark: #0a0a1a;
-      --kirito-purple: #1f1d36;
-      --kirito-border: rgba(0, 229, 255, 0.5);
-      --text-light: #fff;
-      --text-muted: #99a;
-    }
-
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: var(--kirito-dark);
-      color: var(--text-light);
-      margin: 0;
-      padding: 0;
-      overflow: auto;
-    }
-
-    /* Preloader */
-    #preloader {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: var(--kirito-dark);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      opacity: 1;
-      visibility: visible;
-      transition: opacity 1s ease-out, visibility 1s ease-out;
-    }
-
-    #preloader h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3rem;
-      color: var(--kirito-blue);
-      text-shadow: 0 0 10px var(--kirito-blue);
-      animation: glitch 2s infinite;
-    }
-
-    .loading-bar-container {
-      width: 400px;
-      height: 6px;
-      background: rgba(0, 229, 255, 0.1);
-      border-radius: 3px;
-      overflow: hidden;
-      box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
-    }
-
-    .loading-bar {
-      height: 100%;
-      background: var(--kirito-blue);
-      box-shadow: 0 0 10px var(--kirito-blue);
-      width: 0;
-      animation: load-fill 3s ease-in-out forwards;
-    }
-
-    @keyframes glitch {
-      0%, 100% { transform: translate(0); }
-      20% { transform: translate(-2px, 2px); text-shadow: 2px 2px #ff00ff; }
-      40% { transform: translate(-2px, -2px); text-shadow: -2px -2px #00ffff; }
-      60% { transform: translate(2px, 2px); text-shadow: 2px 2px #ff00ff; }
-      80% { transform: translate(2px, -2px); text-shadow: -2px -2px #00ffff; }
-    }
-
-    @keyframes load-fill {
-      0% { width: 0; }
-      100% { width: 100%; }
-    }
-
-    /* Contenedor principal */
-    .main-container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 30px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--kirito-blue);
-      border-radius: 8px;
-      backdrop-filter: blur(5px);
-      box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 1s ease-in, visibility 1s ease-in;
-    }
-
-    .main-container.loaded {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    /* Sección Hero */
-    .hero-section {
-      text-align: center;
-      padding-bottom: 30px;
-      border-bottom: 1px solid var(--kirito-border);
-      margin-bottom: 30px;
-    }
-
-    .hero-section h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3rem;
-      color: var(--kirito-blue);
-      text-shadow: 0 0 10px var(--kirito-blue);
-      margin-bottom: 15px;
-    }
-
-    .hero-section p {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      max-width: 80%;
-      margin: 0 auto 20px auto;
-    }
-
-    .cta-button {
-      background: linear-gradient(45deg, #00ffff, #008cff);
-      border: none;
-      padding: 1rem 2.5rem;
-      font-size: 1.1rem;
-      border-radius: 25px;
-      color: var(--kirito-dark);
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 8px var(--kirito-blue);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .cta-button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px var(--kirito-blue);
-    }
-
-    /* Funcionalidades */
-    .features-section,
-    .links-section {
-      padding: 30px 0;
-      border-bottom: 1px solid var(--kirito-border);
-      margin-bottom: 30px;
-    }
-
-    .features-section h2,
-    .links-section h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
-      color: var(--kirito-blue);
-      border-bottom: 1px solid var(--kirito-border);
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-    }
-
-    .feature-item,
-    .link-item {
-      display: flex;
-      align-items: center;
-      padding: 15px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(0, 229, 255, 0.1);
-    }
-
-    .link-item {
-      text-decoration: none;
-      color: var(--text-light);
-      transition: background-color 0.3s ease;
-    }
-
-    .link-item:hover {
-      background-color: rgba(0, 229, 255, 0.1);
-    }
-
-    .feature-item i,
-    .link-item i {
-      font-size: 1.8rem;
-      color: var(--kirito-blue);
-      margin-right: 15px;
-      text-shadow: 0 0 5px var(--kirito-blue);
-    }
-
-    .feature-item div h3 {
-      font-size: 1.2rem;
-      color: var(--text-light);
-      margin-bottom: 5px;
-    }
-
-    .feature-item div p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin: 0;
-    }
-
-    .link-item span {
-      font-size: 1rem;
-      color: var(--text-light);
-    }
-
-    .footer {
-      text-align: center;
-      padding: 20px 0;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Facturas</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-  <!-- Preloader -->
-  <div id="preloader">
-    <h1>KIRITO-BOT MD</h1>
-    <div class="loading-bar-container">
-      <div class="loading-bar"></div>
+    <h1>Generador de Facturas</h1>
+
+    <div id="form-container">
+        <input type="text" id="cliente" placeholder="Nombre del Cliente">
+        <input type="email" id="correo" placeholder="Correo del Cliente">
+        <input type="text" id="numero" placeholder="Número de Factura">
+        <input type="url" id="logo-url" placeholder="URL del logo (opcional)">
+
+        <div id="productos-container">
+            <h3>Productos</h3>
+            <div class="producto-item">
+                <input type="text" class="descripcion" placeholder="Descripción">
+                <input type="number" class="cantidad" placeholder="Cantidad" value="1">
+            </div>
+        </div>
+        <button id="add-producto">Añadir Producto</button>
+        
+        <input type="number" id="total" placeholder="Total" step="0.01">
+
+        <button id="generar-btn">Generar Factura</button>
     </div>
-  </div>
 
-  <!-- Contenido principal -->
-  <div class="main-container">
-    <!-- Hero -->
-    <section class="hero-section">
-      <h1>Bienvenido a Kirito-Bot</h1>
-      <p>El bot de WhatsApp más avanzado con funcionalidades increíbles para mejorar tu experiencia.</p>
-      <button class="cta-button">¡Descubre más!</button>
-    </section>
+    <div id="factura-container" style="display:none; width: 600px; height: 800px; background-color: #ff87c7; padding: 50px;">
+        <div id="factura-content" style="background-color: #ffef00; padding: 30px; border-radius: 30px; position: relative;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <h2 style="font-size: 4em; color: #57007f; margin: 0;">FACTURA</h2>
+                <div id="logo-placeholder" style="width: 50px; height: 50px; overflow: hidden; border-radius: 10px;"></div>
+            </div>
+            
+            <div class="section" style="margin-top: 20px;">
+                <p style="font-weight: bold; color: #57007f;">Cliente</p>
+                <p id="factura-cliente"></p>
+                <p id="factura-correo" style="margin-top: 5px;"></p>
+                <p style="font-weight: bold; color: #57007f; position: absolute; top: 110px; right: 40px;">Número</p>
+                <p id="factura-numero" style="position: absolute; top: 140px; right: 40px;"></p>
+                <p style="font-weight: bold; color: #57007f; position: absolute; top: 170px; right: 40px;">Fecha</p>
+                <p style="position: absolute; top: 200px; right: 40px;">20/09/2025</p>
+            </div>
+            
+            <hr style="border-top: 2px solid #57007f; margin: 20px 0;">
 
-    <!-- Funcionalidades -->
-    <section class="features-section">
-      <h2>Funcionalidades Principales</h2>
-      <div class="feature-item">
-        <i class="uil uil-robot"></i>
-        <div>
-          <h3>Interacciones Inteligentes</h3>
-          <p>Respuestas automáticas y comandos basados en inteligencia artificial.</p>
+            <div class="section">
+                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead>
+                        <tr>
+                            <th style="font-weight: bold; color: #57007f;">Descripción</th>
+                            <th style="font-weight: bold; color: #57007f;">Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody id="factura-productos"></tbody>
+                </table>
+            </div>
+
+            <div class="section" style="margin-top: 40px;">
+                <h3 style="font-weight: bold; color: #57007f;">Total</h3>
+                <h2 id="factura-total" style="font-size: 3em; color: #57007f; margin: 5px 0 0;"></h2>
+            </div>
+
+            <p style="text-align: center; margin-top: 40px; font-weight: bold; color: #ff87c7;">¡Gracias por su compra!</p>
         </div>
-      </div>
-      <div class="feature-item">
-        <i class="uil uil-cloud-download"></i>
-        <div>
-          <h3>Descarga de Contenido</h3>
-          <p>Descarga videos, música e imágenes desde diversas plataformas.</p>
-        </div>
-      </div>
-      <div class="feature-item">
-        <i class="uil uil-users-alt"></i>
-        <div>
-          <h3>Administración de Grupos</h3>
-          <p>Herramientas para gestionar y moderar tus grupos de WhatsApp.</p>
-        </div>
-      </div>
-      <div class="feature-item">
-        <i class="uil uil-cog"></i>
-        <div>
-          <h3>Utilidades Adicionales</h3>
-          <p>Variedad de comandos y funciones para facilitar tus tareas.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Enlaces -->
-    <section class="links-section">
-  <h2>Enlaces de Interés</h2>
-  <a href="#" class="link-item">
-    <i class="uil uil-whatsapp"></i><span>Soporte y Contacto</span>
-  </a>
-  <a href="#" class="link-item">
-    <i class="uil uil-github"></i><span>Repositorio en GitHub</span>
-  </a>
-  <a href="#" class="link-item">
-    <i class="uil uil-discord"></i><span>Comunidad de Usuarios</span>
-  </a>
-  <a href="#" class="link-item">
-    <i class="uil uil-book-open"></i><span>Documentación Oficial</span>
-  </a>
-</section>
-
- <section class="links-section">
-  <h2>Super funciones</h2>
-  <!-- Nuevos enlaces -->
-  <a href="https://kirito-bot-md.vercel.app/canvas.html" class="link-item">
-    <i class="uil uil-palette"></i><span>Generador de imágenes</span>
-  </a>
-  <a href="https://kirito-bot-md.vercel.app/pinterest.html" class="link-item">
-    <i class="uil uil-image"></i><span>Buscador Pinterest</span>
-  </a>
-  <a href="https://kirito-bot-md.vercel.app/ia_gemini.html" class="link-item">
-    <i class="uil uil-brain"></i><span>IA Gemini</span>
-  </a>
-</section>
-
-    <!-- Footer -->
-    <footer class="footer">
-      © 2025 Kirito-Bot MD. Todos los derechos reservados.
-    </footer>
-  </div>
-
-  <!-- Script para ocultar el preloader -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const preloader = document.getElementById('preloader');
-      const mainContainer = document.querySelector('.main-container');
-
-      setTimeout(() => {
-        preloader.style.opacity = '0';
-        preloader.style.visibility = 'hidden';
-        mainContainer.classList.add('loaded');
-      }, 3000); // Simula un tiempo de carga de 3 segundos
-    });
-  </script>
+    </div>
 </body>
 </html>
