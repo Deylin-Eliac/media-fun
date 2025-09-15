@@ -1,0 +1,12 @@
+{
+  "name": "generador-facturas-js",
+  "version": "1.0.0",
+  "description": "Un generador de facturas en JavaScript para Vercel",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
