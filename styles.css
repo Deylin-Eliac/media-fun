@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+#form-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 90%;
+    max-width: 500px;
+}
+
+input, button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #57007f;
+    color: white;
+    cursor: pointer;
+}
+
+#factura-container {
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    margin-top: 20px;
+}
+
+h1 {
+    color: #57007f;
+}
+
+#factura-container h2 {
+    color: #57007f;
+}
+
+#factura-container p, #factura-container td {
+    color: #333;
+}
